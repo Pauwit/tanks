@@ -3,12 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Tanks in a Nutshell</title>
+    <link rel="icon" type="image/svg" href="/vite.svg">
+    <style>
+        * {overflow: hidden}
+        #base { display:flex; align-items: center; justify-content: center;}
+        #Container { position: relative;}
+        #fpsDisplay { position: absolute; top: 10px; left: 10px; color: red}
+        #deltaDisplay { position: absolute; top: 10px; right: 10px; color: red}
+        body {background-color: white;}
+    </style>
 </head>
 <body>
-    <div id="fpsDisplay" style="margin-left: 0; margin-top: 0;"></div>
-    <div id="deltaDisplay" style="margin-right: 0; margin-top: 0;"></div>
-    <canvas id="Canvas" height="1400px" width="2520px" style="border:1px solid #000000"></canvas>
+    <div id="all">
+        <div id="fpsDisplay" style="margin-left: 0; margin-top: 0;"></div>
+        <div id="deltaDisplay" style="margin-right: 0; margin-top: 0;"></div>
+        <canvas id="Canvas" height="1400px" width="2520px" style="border:1px solid #000000"></canvas>
+    </div>
 
-    <script type="module" src="dist/main.js"></script>
+    <script type="module" src="src/main.ts"></script>
 </body>
 </html>

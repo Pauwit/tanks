@@ -1,60 +1,67 @@
+import {Window} from "./drawer/window.ts";
 
 console.log("[main] LOG : Starting main...")
 
 document.body.style.overflow = "hidden";
 
 const canvas = <HTMLCanvasElement>document.getElementById('Canvas');
-const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 
 // canvas.style.cursor = 'none';
 
-import {Audios, Images} from "./imports.js";
+import {Audios, Images} from "./imports";
 
 Images.importImages();
 Audios.importAudio();
 
 // Put in different file and research better main loop
 
-let lastFrameTimeMs = 0;
-let maxFPS = 145;
-let delta = 0;
-let fps = 144;                   //144
-let timestep = 1000 / fps;
-let framesThisSecond = 0;
-let lastFpsUpdate = 0;
+import {Drawer, drawCrosshair} from "./drawer/drawer";
 
-function panic() {
-    delta = 0;
-}
-function mainLoop(timestamp : number) {
-    if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
-        requestAnimationFrame(mainLoop);
-        return;
-    }
-    delta += timestamp - lastFrameTimeMs;
-    lastFrameTimeMs = timestamp;
+Drawer.Window.SetInstance(canvas,
+    <HTMLElement>document.getElementById('fpsDisplay'),
+    <HTMLElement>document.getElementById('deltaDisplay'));
 
-    if (timestamp > lastFpsUpdate + 1000) {
-        fps = framesThisSecond; //+ 0.5 * fps;
+let window = Window.Instance;
 
-        lastFpsUpdate = timestamp;
-        framesThisSecond = 0;
-    }
-    framesThisSecond++;
+import {Mouse} from "./input/mouse";
+import {Keyboard} from "./input/keyboard";
 
-    let numUpdateSteps = 0;
-    while (delta >= timestep) {
-        // begin();
-        // update(timestep);
-        delta -= timestep;
-        if (++numUpdateSteps >= 240) {
-            panic();
-            break;
-        }
-    }
-    // draw(timestep);
-    requestAnimationFrame(mainLoop);
+Mouse.Instance;
+Keyboard.Instance;
+
+let rect1 = new Drawer.Rectangle(200, 200, 200, 100, 0);
+let rect2 = new Drawer.Rectangle(200, 200, 10, 10, 45);
+let c1 = new Drawer.Circle(600, 300, 30);
+
+function render() : void {
+    window.clear();
+
+    rect1.draw(window.ctx);
+    rect2.draw(window.ctx, "#f00");
+    c1.draw(window.ctx, "#0f0");
+
+    drawCrosshair(rect2.x, rect2.y);
 }
 
-// @ts-ignore
-window.onload = requestAnimationFrame(mainLoop);
+let speed = 500;
+
+function update(deltaTime: number) {
+    rect1.rotate(50 * deltaTime);
+
+    if (Keyboard.Instance.maintained("w"))
+        rect2.translate(0, -speed * deltaTime);
+    if (Keyboard.Instance.maintained("s"))
+        rect2.translate(0, speed * deltaTime);
+    if (Keyboard.Instance.maintained("a"))
+        rect2.translate(-speed * deltaTime, 0);
+    if (Keyboard.Instance.maintained("d"))
+        rect2.translate(speed * deltaTime, 0);
+
+    if (rectangleCollision(rect1, rect2))
+        console.log("collision");
+}
+
+import {GameLoop} from "./loop";
+import {rectangleCollision} from "./misc/collisions.ts";
+
+GameLoop.Instance.start(update, render);
