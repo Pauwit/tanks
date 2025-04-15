@@ -1,14 +1,10 @@
-import {Point} from "./point.ts";
-
-export abstract class Shape {
+export class Point {
     private _x: number = 0;
     private _y: number = 0;
-    private _rotation: number = 0;
 
-    protected constructor(x: number, y: number, rotation: number) {
+    public constructor(x: number = 0, y: number = 0) {
         this._x = x;
         this._y = y;
-        this._rotation = rotation;
     }
 
     public get x(): number {
@@ -19,8 +15,12 @@ export abstract class Shape {
         return this._y;
     }
 
-    public get rotation(): number {
-        return this._rotation;
+    set x(value: number) {
+        this._x = value;
+    }
+
+    set y(value: number) {
+        this._y = value;
     }
 
     public get position(): Point {
@@ -37,11 +37,13 @@ export abstract class Shape {
         this._y += p.y;
     }
 
-    public rotate(dr: number): void {
-        this._rotation = (this._rotation + dr) % 360;
+    public dot(p: Point): number {
+        return this.x * p.x + this.y * p.y;
     }
 
-    // Abstract Functions
+    public normalize(): Point {
+        const len = Math.hypot(this.x, this.y);
+        return new Point(this.x / len, this.y / len);
+    }
 
-    public abstract draw(ctx: CanvasRenderingContext2D): void;
 }

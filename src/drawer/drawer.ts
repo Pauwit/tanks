@@ -2,12 +2,14 @@ import * as DrawerWindow from "./window"
 import * as DrawerShape from "./shape"
 import * as DrawerRectangle from "./rectangle"
 import * as DrawerCircle from "./circle"
+import * as DrawerPoint from "./point"
 
 export const Drawer = {
     ...DrawerWindow,
     ...DrawerShape,
     ...DrawerRectangle,
     ...DrawerCircle,
+    ...DrawerPoint,
 };
 
 import {Images} from "../imports";

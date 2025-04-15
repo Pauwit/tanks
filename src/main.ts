@@ -45,12 +45,14 @@ function render() : void {
     drawCrosshair(rect2.x, rect2.y);
 }
 
+import {rectangleCollision, rectangleCircleCollision} from "./misc/collisions.ts";
+
 let speed = 500;
 
 function update(deltaTime: number) {
     rect1.rotate(50 * deltaTime);
 
-    let vector: Point = {x: 0, y: 0};
+    let vector = new Drawer.Point();
     if (Keyboard.Instance.maintained("z"))
         vector.y += -1;
     if (Keyboard.Instance.maintained("s"))
@@ -63,8 +65,8 @@ function update(deltaTime: number) {
     if (len != 0)
         rect2.translate(speed * deltaTime * vector.x / len, speed * deltaTime * vector.y / len);
 
-    let mtv: Point | null = null;
-    if ((mtv = rectangleCollision(rect2, rect1)) != null) {
+    let mtv = rectangleCollision(rect2, rect1);
+    if (mtv != null) {
         rect2.translate_point(mtv);
     }
 
@@ -78,7 +80,5 @@ function update(deltaTime: number) {
 }
 
 import {GameLoop} from "./loop";
-import {Point} from "./misc/point.ts";
-import {rectangleCollision, rectangleCircleCollision} from "./misc/collisions.ts";
 
 GameLoop.Instance.start(update, render);
