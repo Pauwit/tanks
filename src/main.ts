@@ -29,9 +29,10 @@ import {Keyboard} from "./input/keyboard";
 Mouse.Instance;
 Keyboard.Instance;
 
-let rect1 = new Drawer.Rectangle(200, 200, 200, 100, 0);
-let rect2 = new Drawer.Rectangle(200, 200, 10, 10, 45);
-let c1 = new Drawer.Circle(600, 300, 30);
+let rect1 = new Drawer.Rectangle(500, 500, 600, 100, 0);
+let rect2 = new Drawer.Rectangle(200, 200, 50, 50, 45);
+let c1 = new Drawer.Circle(900, 300, 30);
+let c2 = new Drawer.Circle(900, 600, 80);
 
 function render() : void {
     window.clear();
@@ -39,6 +40,7 @@ function render() : void {
     rect1.draw(window.ctx);
     rect2.draw(window.ctx, "#f00");
     c1.draw(window.ctx, "#0f0");
+    c2.draw(window.ctx, "#00f");
 
     drawCrosshair(rect2.x, rect2.y);
 }
@@ -48,20 +50,35 @@ let speed = 500;
 function update(deltaTime: number) {
     rect1.rotate(50 * deltaTime);
 
-    if (Keyboard.Instance.maintained("w"))
-        rect2.translate(0, -speed * deltaTime);
+    let vector: Point = {x: 0, y: 0};
+    if (Keyboard.Instance.maintained("z"))
+        vector.y += -1;
     if (Keyboard.Instance.maintained("s"))
-        rect2.translate(0, speed * deltaTime);
-    if (Keyboard.Instance.maintained("a"))
-        rect2.translate(-speed * deltaTime, 0);
+        vector.y += 1;
+    if (Keyboard.Instance.maintained("q"))
+        vector.x += -1;
     if (Keyboard.Instance.maintained("d"))
-        rect2.translate(speed * deltaTime, 0);
+        vector.x += 1;
+    const len = Math.hypot(vector.x, vector.y);
+    if (len != 0)
+        rect2.translate(speed * deltaTime * vector.x / len, speed * deltaTime * vector.y / len);
 
-    if (rectangleCollision(rect1, rect2))
-        console.log("collision");
+    let mtv: Point | null = null;
+    if ((mtv = rectangleCollision(rect2, rect1)) != null) {
+        rect2.translate_point(mtv);
+    }
+
+    if ((mtv = rectangleCircleCollision(rect2, c1)) != null) {
+        rect2.translate_point(mtv);
+    }
+
+    if ((mtv = rectangleCircleCollision(rect2, c2)) != null) {
+        rect2.translate_point(mtv);
+    }
 }
 
 import {GameLoop} from "./loop";
-import {rectangleCollision} from "./misc/collisions.ts";
+import {Point} from "./misc/point.ts";
+import {rectangleCollision, rectangleCircleCollision} from "./misc/collisions.ts";
 
 GameLoop.Instance.start(update, render);

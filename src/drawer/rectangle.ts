@@ -34,12 +34,14 @@ export class Rectangle extends Shape {
 
     public override draw(ctx: CanvasRenderingContext2D, color: string = "#000"): void {
         ctx.save();
+        ctx.beginPath();
 
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation * Math.PI / 180);
         ctx.fillStyle = color;
         ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
 
+        ctx.closePath();
         ctx.restore();
     }
 }

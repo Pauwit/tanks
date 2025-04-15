@@ -1,3 +1,5 @@
+import {Point} from "../misc/point.ts";
+
 export abstract class Shape {
     private _x: number = 0;
     private _y: number = 0;
@@ -24,6 +26,11 @@ export abstract class Shape {
     public translate(dx: number, dy: number): void {
         this._x += dx;
         this._y += dy;
+    }
+
+    public translate_point(p: Point): void {
+        this._x += p.x;
+        this._y += p.y;
     }
 
     public rotate(dr: number): void {

@@ -22,11 +22,13 @@ export class Circle extends Shape {
 
     public override draw(ctx: CanvasRenderingContext2D, color: string = "#000"): void {
         ctx.save();
+        ctx.beginPath();
 
         ctx.fillStyle = color;
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
         ctx.fill();
 
+        ctx.closePath();
         ctx.restore();
     }
 }
