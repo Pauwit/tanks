@@ -6,7 +6,7 @@ document.body.style.overflow = "hidden";
 
 const canvas = <HTMLCanvasElement>document.getElementById('Canvas');
 
-// canvas.style.cursor = 'none';
+canvas.style.cursor = 'none';
 
 import {Audios, Images} from "./imports";
 
