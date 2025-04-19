@@ -6,6 +6,8 @@ export abstract class Shape {
     private _rotation: number = 0;
 
     protected constructor(x: number, y: number, rotation: number) {
+        rotation = rotation % 360;
+
         this._x = x;
         this._y = y;
         this._rotation = rotation;

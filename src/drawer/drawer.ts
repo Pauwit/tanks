@@ -12,7 +12,7 @@ export const Drawer = {
     ...DrawerPoint,
 };
 
-import {Images} from "../imports";
+import {Images} from "../misc/imports.ts";
 import {Window} from "./window";
 import {Mouse} from "../input/mouse";
 

@@ -1,0 +1,16 @@
+The axis in the window are: (positive x to the right, positive y to the bottom)
++-----------
+|  -> x+
+| |
+| V
+| Y
+| +
+
+The rotations are: (to the right is 0 and grows clockwise), valid rotations: [0, 360[
++------------------
+|
+|
+|       -> 0
+|         |
+|         V
+|

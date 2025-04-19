@@ -8,7 +8,7 @@ const canvas = <HTMLCanvasElement>document.getElementById('Canvas');
 
 canvas.style.cursor = 'none';
 
-import {Audios, Images} from "./imports";
+import {Audios, Images} from "./misc/imports";
 
 Images.importImages();
 Audios.importAudio();
