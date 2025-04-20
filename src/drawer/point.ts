@@ -1,3 +1,5 @@
+import {mod, radToDeg} from "../misc/misc.ts";
+
 export class Point {
     private _x: number = 0;
     private _y: number = 0;
@@ -37,6 +39,14 @@ export class Point {
         this._y += p.y;
     }
 
+    public add(p: Point): Point {
+        return new Point(this.x + p.x, this.y + p.y);
+    }
+
+    public sub(p: Point): Point {
+        return new Point(this.x - p.x, this.y - p.y);
+    }
+
     public dot(p: Point): number {
         return this.x * p.x + this.y * p.y;
     }
@@ -44,6 +54,29 @@ export class Point {
     public normalize(): Point {
         const len = Math.hypot(this.x, this.y);
         return new Point(this.x / len, this.y / len);
+    }
+
+    public scale(amount: number): void {
+        this._x *= amount;
+        this._y *= amount;
+    }
+
+    public negate(): Point {
+        return new Point(-this.x, -this.y);
+    }
+
+    public get zero(): boolean {
+        return this.x == 0 && this.y == 0;
+    }
+
+    public get length(): number {
+        return Math.sqrt(this._x * this._x + this._y * this._y);
+    }
+
+    public get rotation(): number {
+        if (this.zero)
+            return 0;
+        return mod(radToDeg(Math.atan2(this.y, this.x)), 360);
     }
 
 }

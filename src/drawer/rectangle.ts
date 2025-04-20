@@ -1,11 +1,12 @@
 import {Shape} from "./shape";
+import {degToRad} from "../misc/misc.ts";
 
 export class Rectangle extends Shape {
     private _width: number;
     private _height: number;
 
-    public constructor(x: number, y: number, width: number, height: number, rotation: number = 0) {
-        super(x, y, rotation);
+    public constructor(x: number, y: number, width: number, height: number, rotation: number = 0, color: string = "#000000") {
+        super(x, y, rotation, color);
         this._width = width;
         this._height = height;
     }
@@ -32,12 +33,12 @@ export class Rectangle extends Shape {
             this._height += dh;
     }
 
-    public override draw(ctx: CanvasRenderingContext2D, color: string = "#000"): void {
+    public override draw(ctx: CanvasRenderingContext2D, color: string = this.color): void {
         ctx.save();
         ctx.beginPath();
 
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.rotate(degToRad(this.rotation));
         ctx.fillStyle = color;
         ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
 

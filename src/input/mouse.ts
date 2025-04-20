@@ -1,5 +1,6 @@
 import {Window} from "../drawer/window.ts";
 import {clamp} from "../misc/misc.ts";
+import {Point} from "../drawer/point.ts";
 
 export class Mouse {
     private static _instance: Mouse = new Mouse();
@@ -55,5 +56,9 @@ export class Mouse {
 
     public get y(): number {
         return this._y;
+    }
+
+    public get position(): Point {
+        return new Point(this.x, this.y);
     }
 }

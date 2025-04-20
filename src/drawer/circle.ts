@@ -3,8 +3,8 @@ import {Shape} from "./shape";
 export class Circle extends Shape {
     private _radius: number;
 
-    public constructor(x: number, y: number, radius: number) {
-        super(x, y, 0);
+    public constructor(x: number, y: number, radius: number, color: string = "#000000") {
+        super(x, y, 0, color);
         this._radius = radius;
     }
 
@@ -20,7 +20,7 @@ export class Circle extends Shape {
             this._radius += dr;
     }
 
-    public override draw(ctx: CanvasRenderingContext2D, color: string = "#000"): void {
+    public override draw(ctx: CanvasRenderingContext2D, color: string = this.color): void {
         ctx.save();
         ctx.beginPath();
 

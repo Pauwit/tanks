@@ -1,16 +1,19 @@
 import {Point} from "./point.ts";
+import {mod} from "../misc/misc.ts";
 
 export abstract class Shape {
-    private _x: number = 0;
-    private _y: number = 0;
-    private _rotation: number = 0;
+    private _x: number;
+    private _y: number;
+    private _rotation: number;
+    private _color: string;
 
-    protected constructor(x: number, y: number, rotation: number) {
-        rotation = rotation % 360;
+    protected constructor(x: number, y: number, rotation: number, color: string) {
+        rotation = mod(rotation, 360);
 
         this._x = x;
         this._y = y;
         this._rotation = rotation;
+        this._color = color;
     }
 
     public get x(): number {
@@ -25,8 +28,28 @@ export abstract class Shape {
         return this._rotation;
     }
 
+    public get color(): string {
+        return this._color;
+    }
+
     public get position(): Point {
         return new Point(this.x, this.y);
+    }
+
+    public set x(value: number) {
+        this._x = value;
+    }
+
+    public set y(value: number) {
+        this._y = value;
+    }
+
+    public set rotation(value: number) {
+        this._rotation = mod(value, 360);
+    }
+
+    public set color(value: string) {
+        this._color = value;
     }
 
     public translate(dx: number, dy: number): void {
@@ -40,7 +63,7 @@ export abstract class Shape {
     }
 
     public rotate(dr: number): void {
-        this._rotation = (this._rotation + dr) % 360;
+        this._rotation = mod(this._rotation + dr, 360);
     }
 
     // Abstract Functions

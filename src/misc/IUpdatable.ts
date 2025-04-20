@@ -1,4 +1,4 @@
 
 export interface IUpdatable {
-    update(): void;
+    update(deltaTime: number): void;
 }

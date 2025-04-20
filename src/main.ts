@@ -13,8 +13,6 @@ import {Audios, Images} from "./misc/imports";
 Images.importImages();
 Audios.importAudio();
 
-// Put in different file and research better main loop
-
 import {Drawer, drawCrosshair} from "./drawer/drawer";
 
 Drawer.Window.SetInstance(canvas,
@@ -34,6 +32,14 @@ let rect2 = new Drawer.Rectangle(200, 200, 50, 50, 45);
 let c1 = new Drawer.Circle(900, 300, 30);
 let c2 = new Drawer.Circle(900, 600, 80);
 
+import {PlayerTank} from "./tank/playerTank.ts";
+import {Point} from "./drawer/point.ts";
+import {Rectangle} from "./drawer/rectangle.ts";
+import {isCircle} from "./misc/cast.ts";
+import {Circle} from "./drawer/circle.ts";
+
+let player = new PlayerTank(100, 100);
+
 function render() : void {
     window.clear();
 
@@ -42,40 +48,31 @@ function render() : void {
     c1.draw(window.ctx, "#0f0");
     c2.draw(window.ctx, "#00f");
 
-    drawCrosshair(rect2.x, rect2.y);
+    player.draw(window.ctx);
+
+    player.drawCrosshair();
 }
 
 import {rectangleCollision, rectangleCircleCollision} from "./misc/collisions.ts";
 
-let speed = 500;
+const shapes = [rect1, rect2, c1, c2];
 
 function update(deltaTime: number) {
     rect1.rotate(50 * deltaTime);
 
-    let vector = new Drawer.Point();
-    if (Keyboard.Instance.maintained("z"))
-        vector.y += -1;
-    if (Keyboard.Instance.maintained("s"))
-        vector.y += 1;
-    if (Keyboard.Instance.maintained("q"))
-        vector.x += -1;
-    if (Keyboard.Instance.maintained("d"))
-        vector.x += 1;
-    const len = Math.hypot(vector.x, vector.y);
-    if (len != 0)
-        rect2.translate(speed * deltaTime * vector.x / len, speed * deltaTime * vector.y / len);
+    player.update(deltaTime);
 
-    let mtv = rectangleCollision(rect2, rect1);
-    if (mtv != null) {
-        rect2.translate_point(mtv);
-    }
+    let mtv: Point | null = null;
+    for (let i = 0; i < shapes.length; i++) {
+        if (isCircle(shapes[i])) {
+            mtv = rectangleCircleCollision(player.base, shapes[i] as Circle);
+        } else { // Supposes there are only Circles and Rectangles
+            mtv = rectangleCollision(player.base, shapes[i] as Rectangle);
+        }
 
-    if ((mtv = rectangleCircleCollision(rect2, c1)) != null) {
-        rect2.translate_point(mtv);
-    }
-
-    if ((mtv = rectangleCircleCollision(rect2, c2)) != null) {
-        rect2.translate_point(mtv);
+        if (mtv != null) {
+            player.applyCollision(mtv);
+        }
     }
 }
 
