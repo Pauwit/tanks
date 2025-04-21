@@ -79,4 +79,8 @@ export class Point {
         return mod(radToDeg(Math.atan2(this.y, this.x)), 360);
     }
 
+    public equal(point: Point): boolean {
+        return this.x == point.x && this.y == point.y;
+    }
+
 }

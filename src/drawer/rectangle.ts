@@ -5,7 +5,7 @@ export class Rectangle extends Shape {
     private _width: number;
     private _height: number;
 
-    public constructor(x: number, y: number, width: number, height: number, rotation: number = 0, color: string = "#000000") {
+    public constructor(x: number, y: number, width: number, height: number, rotation: number = 0, color: string = "#fff") {
         super(x, y, rotation, color);
         this._width = width;
         this._height = height;

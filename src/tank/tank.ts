@@ -65,6 +65,10 @@ export abstract class Tank implements IUpdatable, IDrawable {
         this._turret.rotation = rotation;
     }
 
+    protected get turretRotation(): number {
+        return this._turret.rotation;
+    }
+
     protected set moving(moving: boolean) {
         this._moving = moving;
     }
@@ -100,9 +104,12 @@ export abstract class Tank implements IUpdatable, IDrawable {
         }
     }
 
-    public applyCollision(force: Point): void {
-        this._base.translate_point(force);
-        this._turret.translate_point(force);
+    public applyCollision(rect: Rectangle | null): void {
+        if (rect == null)
+            return;
+
+        this._base.setPosition(rect);
+        this._turret.setPosition(rect);
     }
 
     private drawTurretCannon(ctx: CanvasRenderingContext2D): void {

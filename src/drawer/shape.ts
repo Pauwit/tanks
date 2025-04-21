@@ -62,6 +62,11 @@ export abstract class Shape {
         this._y += p.y;
     }
 
+    public setPosition(shape: Shape): void {
+        this._x = shape.x;
+        this._y = shape.y;
+    }
+
     public rotate(dr: number): void {
         this._rotation = mod(this._rotation + dr, 360);
     }

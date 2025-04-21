@@ -3,7 +3,7 @@ import {Shape} from "./shape";
 export class Circle extends Shape {
     private _radius: number;
 
-    public constructor(x: number, y: number, radius: number, color: string = "#000000") {
+    public constructor(x: number, y: number, radius: number, color: string = "#fff") {
         super(x, y, 0, color);
         this._radius = radius;
     }

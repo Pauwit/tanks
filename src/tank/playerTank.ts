@@ -6,6 +6,9 @@ import {Keyboard} from "../input/keyboard.ts";
 import {KeyBindings} from "../input/keyBindings.ts";
 import {drawCrosshair} from "../drawer/drawer.ts";
 import {Mouse} from "../input/mouse.ts";
+import {BulletManager} from "../bullet/bulletManager.ts";
+import {Bullet} from "../bullet/bullet.ts";
+import {AudioManager} from "../misc/audioManager.ts";
 
 export class PlayerTank extends Tank {
 
@@ -48,6 +51,11 @@ export class PlayerTank extends Tank {
     private handleMouseInput(): void {
         const direction = Mouse.Instance.position.sub(this.position);
         this.turretRotation = direction.rotation;
+
+        if (Mouse.Instance.clicked) {
+            AudioManager.playShoot();
+            BulletManager.add(this.x, this.y, this.turretRotation);
+        }
     }
 
     public drawCrosshair(): void {

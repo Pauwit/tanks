@@ -113,7 +113,7 @@ export class GameLoop {
             this._deltaTime = this.calculateDeltaTime(timestamp);
             this.updateGameLogic(update);
             this.callRender(render);
-            this.discoverScreenFPS();
+            // this.discoverScreenFPS();
         };
 
         requestAnimationFrame(loop);
