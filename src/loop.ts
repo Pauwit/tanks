@@ -8,8 +8,8 @@ export class GameLoop {
 
     private readonly DEFAULT_FPS = 60;
     private readonly MIN_FPS = 20;
-    private readonly MAX_FPS = 144;
-    private targetFps: number = this.DEFAULT_FPS;
+    private readonly MAX_FPS = 165;
+    private targetFps: number = this.DEFAULT_FPS; // This has to change with the screen fps
 
     // Stores the animation frame ID for cleanup when stopping the loop
     private _lastRequestId?: number;
@@ -100,7 +100,8 @@ export class GameLoop {
         if (this._isRunning)
             return;
 
-        console.log("[GameLoop] LOG : Starting...")
+        console.log("[GameLoop] LOG : Starting...");
+        console.log("[GameLoop] LOG : Target FPS is set to", this.targetFps);
 
         this._isRunning = true;
         this._lastTimestamp = performance.now();
@@ -112,6 +113,7 @@ export class GameLoop {
             this._deltaTime = this.calculateDeltaTime(timestamp);
             this.updateGameLogic(update);
             this.callRender(render);
+            this.discoverScreenFPS();
         };
 
         requestAnimationFrame(loop);
@@ -129,6 +131,21 @@ export class GameLoop {
     // The setTargetFPS() method controls game speed
     public setTargetFPS(fps: number) {
         this.targetFps = clamp(fps, this.MIN_FPS, this.MAX_FPS);
+    }
+
+    private discoverScreenFPS(): void {
+        if (this.targetFps < 165 && GameLoop.Instance.fps >= 165) {
+            console.warn("[GameLoop] WAR : Changed target FPS from", this.targetFps, "to", 165);
+            this.targetFps = 165;
+        }
+        if (this.targetFps < 144 && GameLoop.Instance.fps >= 144) {
+            console.warn("[GameLoop] WAR : Changed target FPS from", this.targetFps, "to", 144);
+            this.targetFps = 144;
+        }
+        if (this.targetFps < 120 && GameLoop.Instance.fps >= 120) {
+            console.warn("[GameLoop] WAR : Changed target FPS from", this.targetFps, "to", 120);
+            this.targetFps = 120;
+        }
     }
 
 }
