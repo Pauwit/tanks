@@ -73,9 +73,11 @@ export abstract class Tank implements IUpdatable, IDrawable {
         this._moving = moving;
     }
 
-    update(deltaTime: number): void {
+    update(deltaTime: number): boolean {
         this.handleBaseRotationUpdate(deltaTime);
         this.handleBaseMovementUpdate(deltaTime);
+
+        return true;
     }
 
     draw(ctx: CanvasRenderingContext2D): void {

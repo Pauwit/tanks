@@ -7,8 +7,8 @@ import {KeyBindings} from "../input/keyBindings.ts";
 import {drawCrosshair} from "../drawer/drawer.ts";
 import {Mouse} from "../input/mouse.ts";
 import {BulletManager} from "../bullet/bulletManager.ts";
-import {Bullet} from "../bullet/bullet.ts";
 import {AudioManager} from "../misc/audioManager.ts";
+import {MapManager} from "../map/mapManager.ts";
 
 export class PlayerTank extends Tank {
 
@@ -17,11 +17,12 @@ export class PlayerTank extends Tank {
         super(x, y, turretRotation, baseRotation, tankStats, "#004d86", "#0088c0"); // wheels: "#002845"
     }
 
-    override update(deltaTime: number) {
+    override update(deltaTime: number): boolean {
         this.handleKeyboardInput();
         this.handleMouseInput();
+        this.checkDeath();
 
-        super.update(deltaTime);
+        return super.update(deltaTime);
     }
 
     private handleKeyboardInput(): void {
@@ -55,6 +56,13 @@ export class PlayerTank extends Tank {
         if (Mouse.Instance.clicked) {
             AudioManager.playShoot();
             BulletManager.add(this.x, this.y, this.turretRotation);
+        }
+    }
+
+    private checkDeath(): void {
+        const hit = BulletManager.checkCollision(this.base);
+        if (hit) {
+            console.log("Death");
         }
     }
 

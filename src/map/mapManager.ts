@@ -5,14 +5,15 @@ import {isCircle, isRectangle} from "../misc/cast.ts";
 import {rectangleCircleCollision, rectangleCollision} from "../misc/collisions.ts";
 import {Circle} from "../drawer/circle.ts";
 import {IDrawable} from "../misc/IDrawable.ts";
+import {LinkedList} from "../misc/linkedList.ts";
 
 export class MapManager implements IDrawable {
     private static instance: MapManager = new MapManager();
 
-    private readonly _map: Array<Shape>;
+    private readonly _map: LinkedList<Shape>;
 
     private constructor() {
-        this._map = new Array<Shape>();
+        this._map = new LinkedList<Shape>();
     }
 
     public static get Instance() {
@@ -20,7 +21,7 @@ export class MapManager implements IDrawable {
     }
 
     public static add(shape: Shape): void {
-        this.Instance._map.push(shape);
+        this.Instance._map.pushBack(shape);
     }
 
     public static get map() {
@@ -31,24 +32,24 @@ export class MapManager implements IDrawable {
         MapManager.Instance._map.forEach(shape => {shape.draw(ctx)});
     }
 
-    public static applyCollision(rect: Rectangle): Rectangle | null {
-        let m = this.map;
+    public static applyCollision(rect: Rectangle, multiplier: number = 1): Rectangle | null {
         let found: boolean = false;
 
         let mtv: Point | null;
-        for (let i = 0; i < m.length; i++) {
+        this.map.forEach((shape) => {
             mtv = null;
-            if (isCircle(m[i])) {
-                mtv = rectangleCircleCollision(rect, m[i] as Circle);
-            } else if (isRectangle(m[i])) {
-                mtv = rectangleCollision(rect, m[i] as Rectangle);
+            if (isCircle(shape)) {
+                mtv = rectangleCircleCollision(rect, shape as Circle);
+            } else if (isRectangle(shape)) {
+                mtv = rectangleCollision(rect, shape as Rectangle);
             }
 
             if (mtv != null) {
                 found = true;
+                mtv.scale(multiplier);
                 rect.translate_point(mtv);
             }
-        }
+        });
 
         return found ? rect : null;
     }

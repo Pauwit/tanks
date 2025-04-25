@@ -77,4 +77,8 @@ export class Window {
         this.fpsDisplay.textContent = Math.round(fps) + ' FPS';
     }
 
+    public outOfBounds(x: number, y: number) {
+        return x < 0 || y < 0 || x >= this._windowWidth || y >= this._windowHeight;
+    }
+
 }

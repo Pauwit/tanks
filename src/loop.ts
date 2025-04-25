@@ -6,9 +6,9 @@ import {clamp} from "./misc/misc";
 export class GameLoop {
     // FPS settings
 
-    private readonly DEFAULT_FPS = 60;
+    private readonly DEFAULT_FPS = 180;
     private readonly MIN_FPS = 20;
-    private readonly MAX_FPS = 165;
+    private readonly MAX_FPS = this.DEFAULT_FPS;
     private targetFps: number = this.DEFAULT_FPS; // This has to change with the screen fps
 
     // Stores the animation frame ID for cleanup when stopping the loop
