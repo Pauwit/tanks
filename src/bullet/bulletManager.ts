@@ -38,7 +38,20 @@ export class BulletManager implements IDrawable, IUpdatable {
         });
 
         // Detect collision between bullets
-        // TODO
+        BulletManager.Instance.bullets.forEachDestroy((bullet1, i1) => {
+            let other = -1;
+            BulletManager.Instance.bullets.forEach((bullet2, i2) => {
+                if (other == -1 && i1 != i2) {
+                    let mtv = rectangleCollision(bullet1.rectangle, bullet2.rectangle);
+
+                    if (mtv != null) {
+                        other = i2;
+                    }
+                }
+            });
+
+            return other != -1;
+        });
 
         return true;
     }
