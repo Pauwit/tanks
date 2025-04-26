@@ -206,8 +206,9 @@ export class LinkedList<T> {
         let cur = this._first;
         let i = 0;
         while(cur) {
+            let next = cur.next;
             fct(cur.value, i);
-            cur = cur.next;
+            cur = next;
             i++;
         }
     }
@@ -215,15 +216,22 @@ export class LinkedList<T> {
     public forEachDestroy(fct: (value: T, index: number) => boolean): void {
         let cur = this._first;
         let i = 0;
+        let toDestroy = new LinkedList<number>();
         while(cur) {
             const res = fct(cur.value, i);
             cur = cur.next;
             i++;
 
             if (res) {
-                this.remove(i - 1);
+                toDestroy.pushBack(i - 1);
             }
         }
+
+        let destroyed = 0;
+        toDestroy.forEach((index) => {
+            this.remove(index - destroyed);
+            destroyed++;
+        });
     }
 
     public print(): void {
