@@ -15,16 +15,22 @@ export class Bullet implements IDrawable, IUpdatable {
     private _stats: BulletStats;
 
     private _currentBounce: number;
+    private _ownerId: string;
 
-    constructor(x: number, y: number, rotation: number, stats: BulletStats = Constants.defaultBulletStats) {
+    constructor(ownerId: string, x: number, y: number, rotation: number, stats: BulletStats = Constants.defaultBulletStats) {
         this._rectangle = new Rectangle(x, y, Constants.defaultBulletWidth, Constants.defaultBulletHeight, rotation, "#f00");
 
         this._stats = stats;
         this._currentBounce = 0;
+        this._ownerId = ownerId;
     }
 
     get rectangle(): Rectangle {
         return this._rectangle;
+    }
+
+    get ownerId(): string {
+        return this._ownerId;
     }
 
     update(deltaTime: number): boolean {

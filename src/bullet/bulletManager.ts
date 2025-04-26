@@ -26,10 +26,21 @@ export class BulletManager implements IDrawable, IUpdatable {
         return this._bullets;
     }
 
-    public static add(x: number, y: number, rotation: number, stats: BulletStats = Constants.defaultBulletStats): void {
+    public add(playerId: string, x: number, y: number, rotation: number, stats: BulletStats = Constants.defaultBulletStats): void {
         x = x + Math.cos(-degToRad(rotation)) * Constants.defaultBulletSpawnDistance;
         y = y + Math.sin(degToRad(rotation)) * Constants.defaultBulletSpawnDistance;
-        this.Instance.bullets.pushBack(new Bullet(x, y, rotation, stats));
+        this.bullets.pushBack(new Bullet(playerId, x, y, rotation, stats));
+    }
+
+    public getNBPlayerBullets(id: string): number {
+        let nb = 0;
+        this.bullets.forEach(bullet => {
+            if (bullet.ownerId === id) {
+                nb++;
+            }
+        });
+
+        return nb;
     }
 
     update(deltaTime: number): boolean {
@@ -60,11 +71,11 @@ export class BulletManager implements IDrawable, IUpdatable {
         BulletManager.Instance.bullets.forEach(bullet => {bullet.draw(ctx)});
     }
 
-    public static checkCollision(rect: Rectangle): boolean {
+    public checkCollision(rect: Rectangle): boolean {
         let found = false;
 
         let mtv: Point | null;
-        this.Instance.bullets.forEach((bullet) => {
+        this.bullets.forEach((bullet) => {
             mtv = rectangleCollision(rect, bullet.rectangle);
 
             if (mtv != null) {

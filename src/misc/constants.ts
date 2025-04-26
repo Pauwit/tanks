@@ -2,7 +2,7 @@ import {TankStats} from "../tank/tankStats.ts";
 import {BulletStats} from "../bullet/bulletStats.ts";
 
 export namespace Constants {
-    export const defaultTankStats: TankStats = {moveSpeed: 300, rotationSpeed: 140};
+    export const defaultTankStats: TankStats = {moveSpeed: 300, rotationSpeed: 140, maxBullets: 5};
     export const defaultBulletStats: BulletStats = {moveSpeed: 400, maxBounces: 1};
 
     export const defaultTankBaseWidth: number = 55;

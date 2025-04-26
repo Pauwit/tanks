@@ -35,7 +35,7 @@ let c2 = new Drawer.Circle(900, 600, 80, "#00f");
 import {PlayerTank} from "./tank/playerTank.ts";
 import {BulletManager} from "./bullet/bulletManager.ts";
 
-let player = new PlayerTank(100, 100);
+let player = new PlayerTank("0", 100, 100);
 MapManager.add(rect1);
 MapManager.add(rect2);
 MapManager.add(c1);

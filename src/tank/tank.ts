@@ -45,6 +45,10 @@ export abstract class Tank implements IUpdatable, IDrawable {
         return this._base;
     }
 
+    get tankStats(): TankStats {
+        return this._tankStats;
+    }
+
     protected set baseRotation(desired: number) {
         desired = mod(desired, 360);
         if (desired == this._baseDesiredRotation) {

@@ -8,13 +8,19 @@ import {drawCrosshair} from "../drawer/drawer.ts";
 import {Mouse} from "../input/mouse.ts";
 import {BulletManager} from "../bullet/bulletManager.ts";
 import {AudioManager} from "../misc/audioManager.ts";
-import {MapManager} from "../map/mapManager.ts";
 
 export class PlayerTank extends Tank {
 
-    constructor(x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
+    private readonly _id: string;
+
+    constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
                 tankStats: TankStats = Constants.defaultTankStats) {
         super(x, y, turretRotation, baseRotation, tankStats, "#004d86", "#0088c0"); // wheels: "#002845"
+        this._id = id;
+    }
+
+    get id(): string {
+        return this._id;
     }
 
     override update(deltaTime: number): boolean {
@@ -54,13 +60,15 @@ export class PlayerTank extends Tank {
         this.turretRotation = direction.rotation;
 
         if (Mouse.Instance.clicked) {
-            AudioManager.playShoot();
-            BulletManager.add(this.x, this.y, this.turretRotation);
+            if (BulletManager.Instance.getNBPlayerBullets(this.id) < this.tankStats.maxBullets) {
+                AudioManager.playShoot();
+                BulletManager.Instance.add(this.id, this.x, this.y, this.turretRotation);
+            }
         }
     }
 
     private checkDeath(): void {
-        const hit = BulletManager.checkCollision(this.base);
+        const hit = BulletManager.Instance.checkCollision(this.base);
         if (hit) {
             console.log("Death");
         }
