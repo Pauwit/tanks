@@ -20,8 +20,8 @@ export abstract class Tank implements IUpdatable, IDrawable {
     protected constructor(x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
                           tankStats: TankStats = Constants.defaultTankStats, baseColor: string, turretColor: string) {
 
-        this._base = new Rectangle(x, y, Constants.defaultTankBaseWidth, Constants.defaultTankBaseHeight, baseRotation, baseColor);
-        this._turret = new Rectangle(x, y, Constants.defaultTankTurretSize, Constants.defaultTankTurretSize, turretRotation, turretColor);
+        this._base = new Rectangle(x, y, Constants.tankBaseWidth, Constants.tankBaseHeight, baseRotation, baseColor);
+        this._turret = new Rectangle(x, y, Constants.tankTurretSize, Constants.tankTurretSize, turretRotation, turretColor);
 
         this._tankStats = tankStats;
         this._baseDesiredRotation = mod(baseRotation, 360);
@@ -125,8 +125,8 @@ export abstract class Tank implements IUpdatable, IDrawable {
         ctx.translate(this.x, this.y);
         ctx.rotate(degToRad(this._turret.rotation));
         ctx.fillStyle = this._turret.color;
-        ctx.fillRect(0, -Constants.defaultTankTurretCannonHeight / 2,
-            Constants.defaultTankTurretCannonWidth, Constants.defaultTankTurretCannonHeight);
+        ctx.fillRect(0, -Constants.tankTurretCannonHeight / 2,
+            Constants.tankTurretCannonWidth, Constants.tankTurretCannonHeight);
 
         ctx.closePath();
         ctx.restore();

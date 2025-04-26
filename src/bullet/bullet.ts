@@ -18,7 +18,7 @@ export class Bullet implements IDrawable, IUpdatable {
     private _ownerId: string;
 
     constructor(ownerId: string, x: number, y: number, rotation: number, stats: BulletStats = Constants.defaultBulletStats) {
-        this._rectangle = new Rectangle(x, y, Constants.defaultBulletWidth, Constants.defaultBulletHeight, rotation, "#f00");
+        this._rectangle = new Rectangle(x, y, Constants.bulletWidth, Constants.bulletHeight, rotation, "#f00");
 
         this._stats = stats;
         this._currentBounce = 0;

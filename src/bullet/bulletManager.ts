@@ -27,8 +27,8 @@ export class BulletManager implements IDrawable, IUpdatable {
     }
 
     public add(playerId: string, x: number, y: number, rotation: number, stats: BulletStats = Constants.defaultBulletStats): void {
-        x = x + Math.cos(-degToRad(rotation)) * Constants.defaultBulletSpawnDistance;
-        y = y + Math.sin(degToRad(rotation)) * Constants.defaultBulletSpawnDistance;
+        x = x + Math.cos(-degToRad(rotation)) * Constants.bulletSpawnDistance;
+        y = y + Math.sin(degToRad(rotation)) * Constants.bulletSpawnDistance;
         this.bullets.pushBack(new Bullet(playerId, x, y, rotation, stats));
     }
 
