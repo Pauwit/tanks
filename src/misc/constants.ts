@@ -1,15 +1,20 @@
 import {TankStats} from "../tank/tankStats.ts";
 import {BulletStats} from "../bullet/bulletStats.ts";
+import {BombStats} from "../bomb/bombStats.ts";
 
 export namespace Constants {
-    export const defaultTankStats: TankStats = {moveSpeed: 300, rotationSpeed: 140, maxBullets: 5};
+    export const defaultTankStats: TankStats = {moveSpeed: 300, rotationSpeed: 140, maxBullets: 5, maxBombs: 2};
     export const defaultBulletStats: BulletStats = {moveSpeed: 400, maxBounces: 1};
+    export const defaultBombStats: BombStats = {tickTime: 6, explosionSize: 100};
 
     export const tankBaseWidth: number = 55;
     export const tankBaseHeight: number = 40;
     export const tankTurretSize: number = 22;
     export const tankTurretCannonWidth: number = 30;
     export const tankTurretCannonHeight: number = 8;
+
+    export const playerTankBaseColor = "#004d86";
+    export const playerTankTurretColor = "#0088c0";
 
     export const moveAngleThreshold: number = 3;
 

@@ -3,7 +3,7 @@ The axis in the window are: (positive x to the right, positive y to the bottom)
 |  -> x+
 | |
 | V
-| Y
+| y
 | +
 
 The rotations are: (to the right is 0 and grows clockwise), valid rotations: [0, 360[
@@ -14,3 +14,11 @@ The rotations are: (to the right is 0 and grows clockwise), valid rotations: [0,
 |         |
 |         V
 |
+
+Gamepad :
+- Left Stick :
+  - Up/Down    : Axis 1 (Positive down)
+  - Left/Right : Axis 0 (Positive right)
+- Right Stick :
+  - Up/Down    : Axis 5 (Positive down)
+  - Left/Right : Axis 2 (Positive right)

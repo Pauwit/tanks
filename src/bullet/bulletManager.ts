@@ -7,7 +7,8 @@ import {degToRad} from "../misc/misc.ts";
 import {LinkedList} from "../misc/linkedList.ts";
 import {Rectangle} from "../drawer/rectangle.ts";
 import {Point} from "../drawer/point.ts";
-import {rectangleCollision} from "../misc/collisions.ts";
+import {rectangleCircleCollision, rectangleCollision} from "../misc/collisions.ts";
+import {BombManager} from "../bomb/bombManager.ts";
 
 export class BulletManager implements IDrawable, IUpdatable {
     private static instance: BulletManager = new BulletManager();
@@ -32,6 +33,14 @@ export class BulletManager implements IDrawable, IUpdatable {
         this.bullets.pushBack(new Bullet(playerId, x, y, rotation, stats));
     }
 
+    public remove(index: number): Bullet | null {
+        if (index < 0 || index >= this.bullets.length) {
+            return null;
+        }
+
+        return this.bullets.remove(index);
+    }
+
     public getNBPlayerBullets(id: string): number {
         let nb = 0;
         this.bullets.forEach(bullet => {
@@ -44,31 +53,52 @@ export class BulletManager implements IDrawable, IUpdatable {
     }
 
     update(deltaTime: number): boolean {
-        BulletManager.Instance.bullets.forEachDestroy((bullet) => {
+        this.bullets.forEachDestroy((bullet) => {
             return !bullet.update(deltaTime);
         });
 
         // Detect collision between bullets
-        BulletManager.Instance.bullets.forEachDestroy((bullet1, i1) => {
+        this.bullets.forEachDestroy((bullet1, i1) => {
             let other = -1;
-            BulletManager.Instance.bullets.forEach((bullet2, i2) => {
-                if (other == -1 && i1 != i2) {
+            this.bullets.forEach((bullet2, i2) => {
+                if (other === -1 && i1 !== i2) {
                     let mtv = rectangleCollision(bullet1.rectangle, bullet2.rectangle);
 
-                    if (mtv != null) {
+                    if (mtv !== null) {
                         other = i2;
                     }
                 }
             });
 
-            return other != -1;
+            return other !== -1;
+        });
+
+        // Detect collision with bombs
+        BombManager.Instance.bombs.forEachDestroy((bomb) => {
+            let other = -1;
+            this.bullets.forEach((bullet, i) => {
+                if (other === -1) {
+                    let mtv = rectangleCircleCollision(bullet.rectangle, bomb.circle);
+
+                    if (mtv !== null) {
+                        other = i;
+                    }
+                }
+            });
+
+            if (other !== -1) {
+                this.remove(other);
+                return true;
+            }
+
+            return false;
         });
 
         return true;
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
-        BulletManager.Instance.bullets.forEach(bullet => {bullet.draw(ctx)});
+        this.bullets.forEach(bullet => {bullet.draw(ctx)});
     }
 
     public checkCollision(rect: Rectangle): boolean {

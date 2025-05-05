@@ -202,6 +202,23 @@ export class LinkedList<T> {
         return node.value;
     }
 
+    public removes(indexes: number[]): T[] {
+        let res: T[] = [];
+
+        // Sorts in reverse order for safe deletion
+        indexes.sort((a, b) => b - a);
+
+        // Removes all and pushes on res
+        for (const index of indexes) {
+            const cur = this.remove(index);
+            if (cur !== null) {
+                res.push(cur);
+            }
+        }
+
+        return res;
+    }
+
     public forEach(fct: (value: T, index: number) => void): void {
         let cur = this._first;
         let i = 0;

@@ -5,6 +5,7 @@ import {IDrawable} from "../misc/IDrawable.ts";
 import {Rectangle} from "../drawer/rectangle.ts";
 import {degToPoint, degToRad, mod, shortestAngleDirection} from "../misc/misc.ts";
 import {Point} from "../drawer/point.ts";
+import {BulletManager} from "../bullet/bulletManager.ts";
 
 export abstract class Tank implements IUpdatable, IDrawable {
     private _base: Rectangle;
@@ -130,6 +131,13 @@ export abstract class Tank implements IUpdatable, IDrawable {
 
         ctx.closePath();
         ctx.restore();
+    }
+
+    protected checkDeath(): void {
+        const hit = BulletManager.Instance.checkCollision(this.base);
+        if (hit) {
+            console.log("Death");
+        }
     }
 
 }

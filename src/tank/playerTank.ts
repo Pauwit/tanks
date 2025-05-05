@@ -8,6 +8,7 @@ import {drawCrosshair} from "../drawer/drawer.ts";
 import {Mouse} from "../input/mouse.ts";
 import {BulletManager} from "../bullet/bulletManager.ts";
 import {AudioManager} from "../misc/audioManager.ts";
+import {BombManager} from "../bomb/bombManager.ts";
 
 export class PlayerTank extends Tank {
 
@@ -15,7 +16,7 @@ export class PlayerTank extends Tank {
 
     constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
                 tankStats: TankStats = Constants.defaultTankStats) {
-        super(x, y, turretRotation, baseRotation, tankStats, "#004d86", "#0088c0"); // wheels: "#002845"
+        super(x, y, turretRotation, baseRotation, tankStats, Constants.playerTankBaseColor, Constants.playerTankTurretColor); // wheels: "#002845"
         this._id = id;
     }
 
@@ -32,6 +33,7 @@ export class PlayerTank extends Tank {
     }
 
     private handleKeyboardInput(): void {
+        // Movement
         const direction: Point = new Point();
         if (Keyboard.Instance.maintained(KeyBindings.moveUp)) {
             direction.translate(0, -1);
@@ -53,6 +55,18 @@ export class PlayerTank extends Tank {
 
         this.moving = true;
         this.baseRotation = direction.rotation;
+
+        // Place bomb
+        if (Keyboard.Instance.pressed(KeyBindings.placeBomb)) {
+            this.placeBomb();
+        }
+    }
+
+    private placeBomb(): void {
+        if(BombManager.Instance.getNBPlayerBullets(this.id) < this.tankStats.maxBombs) {
+            AudioManager.playBombPlace();
+            BombManager.Instance.add(this.id, this.x, this.y);
+        }
     }
 
     private handleMouseInput(): void {
@@ -64,13 +78,6 @@ export class PlayerTank extends Tank {
                 AudioManager.playShoot();
                 BulletManager.Instance.add(this.id, this.x, this.y, this.turretRotation);
             }
-        }
-    }
-
-    private checkDeath(): void {
-        const hit = BulletManager.Instance.checkCollision(this.base);
-        if (hit) {
-            console.log("Death");
         }
     }
 

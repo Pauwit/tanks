@@ -4,4 +4,5 @@ export const KeyBindings = {
     moveDown: 's',
     moveLeft: 'q',
     moveRight: 'd',
+    placeBomb: ' ',
 }
