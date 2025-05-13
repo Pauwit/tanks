@@ -172,3 +172,17 @@ export function rectangleCircleCollision(rect: Rectangle, circle: Circle): null 
 
     return new Point();
 }
+
+export function circleCollision(c1: Circle, c2: Circle): null | Point {
+    const direction = c2.position.sub(c1.position);
+    const distance = direction.length;
+    const overlap = c1.radius + c2.radius - distance;
+
+    if (overlap <= 0) {
+        return null;
+    }
+
+    const mtv = direction.normalize();
+    mtv.scale(-overlap);
+    return mtv;
+}

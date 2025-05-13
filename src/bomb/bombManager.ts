@@ -6,6 +6,7 @@ import {Bomb} from "./bomb.ts";
 import {BombStats} from "./bombStats.ts";
 import {BulletManager} from "../bullet/bulletManager.ts";
 import {rectangleCircleCollision} from "../misc/collisions.ts";
+import {ExplosionManager} from "../explosion/explosionManager.ts";
 
 export class BombManager implements IDrawable, IUpdatable {
     private static instance: BombManager = new BombManager();
@@ -48,21 +49,15 @@ export class BombManager implements IDrawable, IUpdatable {
             return false;
         });
 
-        // Detect collision with bullets
         this.bombs.forEachDestroy((bomb) => {
-            let other = -1;
-            BulletManager.Instance.bullets.forEach((bullet, i) => {
-                if (other === -1) {
-                    let mtv = rectangleCircleCollision(bullet.rectangle, bomb.circle);
+            // Detect collision with bullets
+            if (BulletManager.Instance.checkCollisionCircle(bomb.circle)) {
+                bomb.explode();
+                return true;
+            }
 
-                    if (mtv !== null) {
-                        other = i;
-                    }
-                }
-            });
-
-            if (other !== -1) {
-                BulletManager.Instance.remove(other);
+            // Detect collision with explosions
+            if (ExplosionManager.Instance.checkCollisionCircle(bomb.circle)) {
                 bomb.explode();
                 return true;
             }

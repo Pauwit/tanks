@@ -50,11 +50,10 @@ export class PlayerTank extends Tank {
 
         if (direction.zero) {
             this.moving = false;
-            return;
+        } else {
+            this.moving = true;
+            this.baseRotation = direction.rotation;
         }
-
-        this.moving = true;
-        this.baseRotation = direction.rotation;
 
         // Place bomb
         if (Keyboard.Instance.pressed(KeyBindings.placeBomb)) {

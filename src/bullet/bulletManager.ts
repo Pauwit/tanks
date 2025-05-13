@@ -10,6 +10,7 @@ import {Point} from "../drawer/point.ts";
 import {rectangleCircleCollision, rectangleCollision} from "../misc/collisions.ts";
 import {BombManager} from "../bomb/bombManager.ts";
 import {AudioManager} from "../misc/audioManager.ts";
+import {Circle} from "../drawer/circle.ts";
 
 export class BulletManager implements IDrawable, IUpdatable {
     private static instance: BulletManager = new BulletManager();
@@ -96,6 +97,26 @@ export class BulletManager implements IDrawable, IUpdatable {
             }
 
             mtv = rectangleCollision(rect, bullet.rectangle);
+
+            if (mtv != null) {
+                found = true;
+                return;
+            }
+        });
+
+        return found;
+    }
+
+    public checkCollisionCircle(circle: Circle): boolean {
+        let found = false;
+
+        let mtv: Point | null;
+        this.bullets.forEach((bullet) => {
+            if (found) {
+                return;
+            }
+
+            mtv = rectangleCircleCollision(bullet.rectangle, circle);
 
             if (mtv != null) {
                 found = true;

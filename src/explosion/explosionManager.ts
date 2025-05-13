@@ -6,7 +6,9 @@ import {Constants} from "../misc/constants.ts";
 import {ExplosionStats} from "./explosionStats.ts";
 import {Rectangle} from "../drawer/rectangle.ts";
 import {Point} from "../drawer/point.ts";
-import {rectangleCircleCollision} from "../misc/collisions.ts";
+import {circleCollision, rectangleCircleCollision} from "../misc/collisions.ts";
+import {BulletManager} from "../bullet/bulletManager.ts";
+import {Circle} from "../drawer/circle.ts";
 
 export class ExplosionManager implements IUpdatable, IDrawable {
     private static instance: ExplosionManager = new ExplosionManager();
@@ -36,6 +38,15 @@ export class ExplosionManager implements IUpdatable, IDrawable {
     public update(deltaTime: number): boolean {
         this.explosions.forEachDestroy((explosion) => !explosion.update(deltaTime));
 
+        // Check collision with bullets
+        this.explosions.forEach((explosion) => {
+            BulletManager.Instance.bullets.forEachDestroy((bullet) => {
+                let mtv = rectangleCircleCollision(bullet.rectangle, explosion.circle);
+
+                return mtv !== null;
+            });
+        });
+
         return true;
     }
 
@@ -49,6 +60,26 @@ export class ExplosionManager implements IUpdatable, IDrawable {
             }
 
             mtv = rectangleCircleCollision(rect, explosion.circle);
+
+            if (mtv != null) {
+                found = true;
+                return;
+            }
+        });
+
+        return found;
+    }
+
+    public checkCollisionCircle(circle: Circle): boolean {
+        let found = false;
+
+        let mtv: Point | null;
+        this.explosions.forEach((explosion) => {
+            if (found) {
+                return;
+            }
+
+            mtv = circleCollision(explosion.circle, circle);
 
             if (mtv != null) {
                 found = true;
