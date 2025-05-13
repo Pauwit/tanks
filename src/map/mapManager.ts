@@ -4,7 +4,7 @@ import {Point} from "../drawer/point.ts";
 import {isCircle, isRectangle} from "../misc/cast.ts";
 import {rectangleCircleCollision, rectangleCollision} from "../misc/collisions.ts";
 import {Circle} from "../drawer/circle.ts";
-import {IDrawable} from "../misc/IDrawable.ts";
+import {IDrawable} from "../interfaces/IDrawable.ts";
 import {LinkedList} from "../misc/linkedList.ts";
 
 export class MapManager implements IDrawable {

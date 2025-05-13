@@ -1,7 +1,7 @@
-import {IUpdatable} from "../misc/IUpdatable.ts";
+import {IUpdatable} from "../interfaces/IUpdatable.ts";
 import {TankStats} from "./tankStats.ts";
-import {Constants} from "../misc/constants.ts";
-import {IDrawable} from "../misc/IDrawable.ts";
+import {Constants} from "../constants.ts";
+import {IDrawable} from "../interfaces/IDrawable.ts";
 import {Rectangle} from "../drawer/rectangle.ts";
 import {degToPoint, degToRad, mod, shortestAngleDirection} from "../misc/misc.ts";
 import {Point} from "../drawer/point.ts";

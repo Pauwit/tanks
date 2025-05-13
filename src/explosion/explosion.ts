@@ -1,8 +1,8 @@
-import {IUpdatable} from "../misc/IUpdatable.ts";
-import {IDrawable} from "../misc/IDrawable.ts";
+import {IUpdatable} from "../interfaces/IUpdatable.ts";
+import {IDrawable} from "../interfaces/IDrawable.ts";
 import {Circle} from "../drawer/circle.ts";
 import {ExplosionStats} from "./explosionStats.ts";
-import {Constants} from "../misc/constants.ts";
+import {Constants} from "../constants.ts";
 
 export class Explosion implements IUpdatable, IDrawable {
     private readonly _circle: Circle;

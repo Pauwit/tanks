@@ -1,6 +1,6 @@
 import {Tank} from "./tank";
 import {TankStats} from "./tankStats.ts";
-import {Constants} from "../misc/constants.ts";
+import {Constants} from "../constants.ts";
 import {Point} from "../drawer/point.ts";
 import {Keyboard} from "../input/keyboard.ts";
 import {KeyBindings} from "../input/keyBindings.ts";

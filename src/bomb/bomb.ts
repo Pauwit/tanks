@@ -1,7 +1,7 @@
 import {Circle} from "../drawer/circle.ts";
-import {Constants} from "../misc/constants.ts";
-import {IUpdatable} from "../misc/IUpdatable.ts";
-import {IDrawable} from "../misc/IDrawable.ts";
+import {Constants} from "../constants.ts";
+import {IUpdatable} from "../interfaces/IUpdatable.ts";
+import {IDrawable} from "../interfaces/IDrawable.ts";
 import {BombStats} from "./bombStats.ts";
 import {ExplosionManager} from "../explosion/explosionManager.ts";
 

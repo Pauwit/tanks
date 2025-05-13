@@ -1,7 +1,7 @@
-import {TankStats} from "../tank/tankStats.ts";
-import {BulletStats} from "../bullet/bulletStats.ts";
-import {BombStats} from "../bomb/bombStats.ts";
-import {ExplosionStats} from "../explosion/explosionStats.ts";
+import {TankStats} from "./tank/tankStats.ts";
+import {BulletStats} from "./bullet/bulletStats.ts";
+import {BombStats} from "./bomb/bombStats.ts";
+import {ExplosionStats} from "./explosion/explosionStats.ts";
 
 export namespace Constants {
     export const defaultTankStats: TankStats = {moveSpeed: 300, rotationSpeed: 140, maxBullets: 5, maxBombs: 2};

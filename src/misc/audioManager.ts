@@ -62,7 +62,7 @@ export class AudioManager {
     }
 
     private importAudio() : void {
-        console.log("[imports] LOG : Importing audio...");
+        console.log("[AudioManager] LOG : Importing audio...");
 
         this._moveSound.src = this.audioPath("move.wav");
         this._destroyedBullet.src = this.audioPath("bullet_des.wav");
@@ -82,7 +82,7 @@ export class AudioManager {
         this._explosion.volume = 0.5;
         this._destroyedTank.volume = 0.4;
 
-        console.log("[imports] LOG : Finished importing audio");
+        console.log("[AudioManager] LOG : Finished importing audio");
     }
 
     private audioPath(name: string): string {
