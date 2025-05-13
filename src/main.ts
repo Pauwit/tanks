@@ -38,6 +38,7 @@ import {PlayerTank} from "./tank/playerTank.ts";
 import {BulletManager} from "./bullet/bulletManager.ts";
 import {MapManager} from "./map/mapManager.ts";
 import {BombManager} from "./bomb/bombManager.ts";
+import {ExplosionManager} from "./explosion/explosionManager.ts";
 
 let player = new PlayerTank("0", 100, 100);
 MapManager.add(rect1);
@@ -53,6 +54,7 @@ function render() : void {
     BombManager.Instance.draw(window.ctx);
     player.draw(window.ctx);
     MapManager.Instance.draw(window.ctx);
+    ExplosionManager.Instance.draw(window.ctx);
 
     player.drawCrosshair();
 }
@@ -62,6 +64,7 @@ function update(deltaTime: number) {
 
     BulletManager.Instance.update(deltaTime);
     BombManager.Instance.update(deltaTime);
+    ExplosionManager.Instance.update(deltaTime);
     player.update(deltaTime);
 
     player.applyCollision(MapManager.applyCollision(player.base));

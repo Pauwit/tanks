@@ -9,6 +9,7 @@ import {Rectangle} from "../drawer/rectangle.ts";
 import {Point} from "../drawer/point.ts";
 import {rectangleCircleCollision, rectangleCollision} from "../misc/collisions.ts";
 import {BombManager} from "../bomb/bombManager.ts";
+import {AudioManager} from "../misc/audioManager.ts";
 
 export class BulletManager implements IDrawable, IUpdatable {
     private static instance: BulletManager = new BulletManager();
@@ -52,7 +53,7 @@ export class BulletManager implements IDrawable, IUpdatable {
         return nb;
     }
 
-    update(deltaTime: number): boolean {
+    public update(deltaTime: number): boolean {
         this.bullets.forEachDestroy((bullet) => {
             return !bullet.update(deltaTime);
         });
@@ -70,24 +71,8 @@ export class BulletManager implements IDrawable, IUpdatable {
                 }
             });
 
-            return other !== -1;
-        });
-
-        // Detect collision with bombs
-        BombManager.Instance.bombs.forEachDestroy((bomb) => {
-            let other = -1;
-            this.bullets.forEach((bullet, i) => {
-                if (other === -1) {
-                    let mtv = rectangleCircleCollision(bullet.rectangle, bomb.circle);
-
-                    if (mtv !== null) {
-                        other = i;
-                    }
-                }
-            });
-
             if (other !== -1) {
-                this.remove(other);
+                AudioManager.playDestroyedBullet();
                 return true;
             }
 
@@ -97,7 +82,7 @@ export class BulletManager implements IDrawable, IUpdatable {
         return true;
     }
 
-    draw(ctx: CanvasRenderingContext2D): void {
+    public draw(ctx: CanvasRenderingContext2D): void {
         this.bullets.forEach(bullet => {bullet.draw(ctx)});
     }
 
@@ -106,6 +91,10 @@ export class BulletManager implements IDrawable, IUpdatable {
 
         let mtv: Point | null;
         this.bullets.forEach((bullet) => {
+            if (found) {
+                return;
+            }
+
             mtv = rectangleCollision(rect, bullet.rectangle);
 
             if (mtv != null) {
