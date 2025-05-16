@@ -4,6 +4,7 @@ import {IUpdatable} from "../interfaces/IUpdatable.ts";
 import {IDrawable} from "../interfaces/IDrawable.ts";
 import {BombStats} from "./bombStats.ts";
 import {ExplosionManager} from "../explosion/explosionManager.ts";
+import {AudioManager} from "../misc/audioManager.ts";
 
 export class Bomb implements IUpdatable, IDrawable {
     private readonly _circle: Circle;
@@ -12,12 +13,22 @@ export class Bomb implements IUpdatable, IDrawable {
     private readonly _ownerId: string;
 
     private _time: number;
+    private _bip: boolean;
+    private _redCircle: boolean;
+    private _times: number[];
 
     public constructor(ownerId: string, x: number, y: number, bombStats: BombStats = Constants.defaultBombStats) {
         this._circle = new Circle(x, y, Constants.bombRadius, Constants.bombColor);
         this._ownerId = ownerId;
         this._time = 0;
         this._stats = bombStats;
+        this._bip = false;
+        this._redCircle = false;
+
+        const tot = this._stats.tickTime;
+        this._times = [0.05, tot/8, tot/4, 3*tot/8, tot/2, 9*tot/16, 5*tot/8, 11*tot/16, 3*tot/4,
+            25*tot/32, 13*tot/16, 27*tot/32, 7*tot/8, 57*tot/64, 29*tot/32, 59*tot/64, 15*tot/16,
+            61*tot/64, 31*tot/32, 63*tot/64];
     }
 
     public get circle(): Circle {
@@ -33,15 +44,45 @@ export class Bomb implements IUpdatable, IDrawable {
     }
 
     public update(deltaTime: number): boolean {
-        // Add time
+        const oldTime = this._time;
         this._time += deltaTime;
+
+        for (const t of this._times) {
+            if (oldTime < t && this._time >= t) {
+                this._bip = true;
+            }
+            if (this._time >= t && this._time <= t + Constants.bombMiddleDuration) {
+                this._redCircle = true;
+                break;
+            }
+            else {
+                this._redCircle = false;
+            }
+        }
+
         return this._time < this._stats.tickTime;
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
         this._circle.draw(ctx);
 
-        // Draw little red circle and play bip noise
-        // TODO
+        // Draw little red circle
+        if (this._bip) {
+            AudioManager.playBombBip();
+            this._bip = false;
+        }
+
+        // Play bip noise
+        if (this._redCircle) {
+            ctx.save();
+            ctx.beginPath();
+
+            ctx.fillStyle = Constants.bombMiddleColor;
+            ctx.arc(this.circle.x, this.circle.y, Constants.bombMiddleRadius, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.closePath();
+            ctx.restore();
+        }
     }
 }

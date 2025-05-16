@@ -26,6 +26,9 @@ export namespace Constants {
 
     export const bombRadius: number = 10;
     export const bombColor: string = "#ff0";
+    export const bombMiddleColor: string = "#f00";
+    export const bombMiddleRadius: number = 7;
+    export const bombMiddleDuration: number = 0.07;
 
     export const explosionStartRadius: number = 10;
     export const explosionColor: string = "#fa0";
