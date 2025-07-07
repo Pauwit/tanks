@@ -5,7 +5,6 @@ import {Constants} from "../constants.ts";
 import {Bomb} from "./bomb.ts";
 import {BombStats} from "./bombStats.ts";
 import {BulletManager} from "../bullet/bulletManager.ts";
-import {rectangleCircleCollision} from "../misc/collisions.ts";
 import {ExplosionManager} from "../explosion/explosionManager.ts";
 
 export class BombManager implements IDrawable, IUpdatable {

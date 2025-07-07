@@ -29,6 +29,7 @@ export class Bomb implements IUpdatable, IDrawable {
         this._times = [0.05, tot/8, tot/4, 3*tot/8, tot/2, 9*tot/16, 5*tot/8, 11*tot/16, 3*tot/4,
             25*tot/32, 13*tot/16, 27*tot/32, 7*tot/8, 57*tot/64, 29*tot/32, 59*tot/64, 15*tot/16,
             61*tot/64, 31*tot/32, 63*tot/64];
+        console.log(this._times.length);
     }
 
     public get circle(): Circle {
@@ -69,6 +70,7 @@ export class Bomb implements IUpdatable, IDrawable {
         // Draw little red circle
         if (this._bip) {
             AudioManager.playBombBip();
+            console.log("bip");
             this._bip = false;
         }
 
