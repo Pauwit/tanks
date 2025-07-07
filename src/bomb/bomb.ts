@@ -26,10 +26,7 @@ export class Bomb implements IUpdatable, IDrawable {
         this._redCircle = false;
 
         const tot = this._stats.tickTime;
-        this._times = [0.05, tot/8, tot/4, 3*tot/8, tot/2, 9*tot/16, 5*tot/8, 11*tot/16, 3*tot/4,
-            25*tot/32, 13*tot/16, 27*tot/32, 7*tot/8, 57*tot/64, 29*tot/32, 59*tot/64, 15*tot/16,
-            61*tot/64, 31*tot/32, 63*tot/64];
-        console.log(this._times.length);
+        this._times = [0.05, 3*tot/4, 3*tot/4 + tot/16, 3*tot/4 + tot/8, 3*tot/4 + 3*tot/16];
     }
 
     public get circle(): Circle {
@@ -67,14 +64,13 @@ export class Bomb implements IUpdatable, IDrawable {
     public draw(ctx: CanvasRenderingContext2D): void {
         this._circle.draw(ctx);
 
-        // Draw little red circle
+        // Play bip noise
         if (this._bip) {
             AudioManager.playBombBip();
-            console.log("bip");
             this._bip = false;
         }
 
-        // Play bip noise
+        // Draw little red circle
         if (this._redCircle) {
             ctx.save();
             ctx.beginPath();
