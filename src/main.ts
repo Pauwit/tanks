@@ -8,10 +8,6 @@ const canvas = <HTMLCanvasElement>document.getElementById('Canvas');
 
 canvas.style.cursor = 'none';
 
-import {Images} from "./misc/imports";
-
-Images.importImages();
-
 import {Drawer} from "./drawer/drawer";
 
 Drawer.Window.SetInstance(canvas,

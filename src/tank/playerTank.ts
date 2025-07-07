@@ -25,6 +25,8 @@ export class PlayerTank extends Tank {
     }
 
     override update(deltaTime: number): boolean {
+        if (this._dead) return super.update(deltaTime);
+
         this.handleKeyboardInput();
         this.handleMouseInput();
         this.checkDeath();
@@ -80,7 +82,12 @@ export class PlayerTank extends Tank {
         }
     }
 
-    public drawCrosshair(): void {
-        drawCrosshair(this.x, this.y);
+    public drawCrosshair(): boolean {
+        if (!this._dead) {
+            drawCrosshair(this.x, this.y);
+            return true;
+        }
+
+        return false;
     }
 }

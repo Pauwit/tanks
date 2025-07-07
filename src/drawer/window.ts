@@ -24,6 +24,14 @@ export class Window {
 
         this._deltaDisplay = deltaDisplay;
         this._fpsDisplay = fpsDisplay;
+
+        // Prevent right click and tab
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', (event) => {
+            if (event.code === "Tab") {
+                event.preventDefault();
+            }
+        });
     }
 
     get canvas(): HTMLCanvasElement {
@@ -79,6 +87,14 @@ export class Window {
 
     public outOfBounds(x: number, y: number) {
         return x < 0 || y < 0 || x >= this._windowWidth || y >= this._windowHeight;
+    }
+
+    public changeCursor(visible: boolean) {
+        if (visible) {
+            this._canvas.style.cursor = 'auto';
+        } else {
+            this._canvas.style.cursor = 'none';
+        }
     }
 
 }

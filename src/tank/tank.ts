@@ -7,6 +7,8 @@ import {degToPoint, degToRad, mod, shortestAngleDirection} from "../misc/misc.ts
 import {Point} from "../drawer/point.ts";
 import {BulletManager} from "../bullet/bulletManager.ts";
 import {ExplosionManager} from "../explosion/explosionManager.ts";
+import {ImageManager} from "../misc/imageManager.ts";
+import {Window} from "../drawer/window.ts";
 
 export abstract class Tank implements IUpdatable, IDrawable {
     private _base: Rectangle;
@@ -17,6 +19,8 @@ export abstract class Tank implements IUpdatable, IDrawable {
     private _baseDesiredRotation: number;
     private _baseRotationDirection: boolean;
     private _moving: boolean;
+
+    protected _dead: boolean;
 
 
     protected constructor(x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
@@ -29,6 +33,8 @@ export abstract class Tank implements IUpdatable, IDrawable {
         this._baseDesiredRotation = mod(baseRotation, 360);
         this._moving = false;
         this._baseRotationDirection = false;
+
+        this._dead = false;
     }
 
     protected get x(): number {
@@ -80,6 +86,8 @@ export abstract class Tank implements IUpdatable, IDrawable {
     }
 
     update(deltaTime: number): boolean {
+        if (this._dead) return true;
+
         this.handleBaseRotationUpdate(deltaTime);
         this.handleBaseMovementUpdate(deltaTime);
 
@@ -87,9 +95,15 @@ export abstract class Tank implements IUpdatable, IDrawable {
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
-        this._base.draw(ctx);
-        this.drawTurretCannon(ctx);
-        this._turret.draw(ctx);
+        if (this._dead) {
+            const img = ImageManager.playerDeath;
+            ctx.drawImage(img, this.x - img.width/2, this.y - img.height/2);
+        }
+        else {
+            this._base.draw(ctx);
+            this.drawTurretCannon(ctx);
+            this._turret.draw(ctx);
+        }
     }
 
     private handleBaseRotationUpdate(deltaTime: number): void {
@@ -128,7 +142,7 @@ export abstract class Tank implements IUpdatable, IDrawable {
         ctx.rotate(degToRad(this._turret.rotation));
         ctx.fillStyle = this._turret.color;
         ctx.fillRect(0, -Constants.tankTurretCannonHeight / 2,
-            Constants.tankTurretCannonWidth, Constants.tankTurretCannonHeight);
+          Constants.tankTurretCannonWidth, Constants.tankTurretCannonHeight);
 
         ctx.closePath();
         ctx.restore();
@@ -138,11 +152,23 @@ export abstract class Tank implements IUpdatable, IDrawable {
         let hit = BulletManager.Instance.checkCollision(this.base);
         if (hit) {
             console.log("Death by Bullet");
+            this.death();
         }
         hit = ExplosionManager.Instance.checkCollision(this.base);
         if (hit) {
             console.log("Death by Explosion");
+            this.death();
         }
+    }
+
+    public death(): void {
+        this._dead = true;
+        Window.Instance.changeCursor(true);
+    }
+
+    public respawn(): void {
+        this._dead = false;
+        Window.Instance.changeCursor(false);
     }
 
 }

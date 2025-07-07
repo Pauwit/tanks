@@ -12,14 +12,14 @@ export const Drawer = {
     ...DrawerPoint,
 };
 
-import {Images} from "../misc/imports.ts";
+import {ImageManager} from "../misc/imageManager.ts";
 import {Window} from "./window";
 import {Mouse} from "../input/mouse";
 
 // Draws the crosshair with the dots
 export function drawCrosshair(pX: number, pY: number): void {
     let ctx = Window.Instance.ctx;
-    let c_dot = Images.crosshair_dot;
+    let c_dot = ImageManager.crosshairDot;
     let x = Mouse.Instance.x;
     let y = Mouse.Instance.y;
 
@@ -29,6 +29,6 @@ export function drawCrosshair(pX: number, pY: number): void {
     ctx.drawImage(c_dot, pX+(x-pX)*0.6-10, pY+(y-pY)*0.6-10, 20, 20);
     ctx.drawImage(c_dot, pX+(x-pX)*0.8-10, pY+(y-pY)*0.8-10, 20, 20);
     ctx.globalAlpha = 0.9;
-    ctx.drawImage(Images.crosshair, x-30, y-30);
+    ctx.drawImage(ImageManager.crosshair, x-30, y-30);
     ctx.globalAlpha = 1;
 }
