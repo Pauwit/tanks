@@ -3,6 +3,7 @@ import {IDrawable} from "../interfaces/IDrawable.ts";
 import {Circle} from "../drawer/circle.ts";
 import {ExplosionStats} from "./explosionStats.ts";
 import {Constants} from "../constants.ts";
+import {AudioManager} from "../misc/audioManager.ts";
 
 export class Explosion implements IUpdatable, IDrawable {
     private readonly _circle: Circle;
@@ -15,6 +16,9 @@ export class Explosion implements IUpdatable, IDrawable {
 
         this._stats = explosionStats;
         this._time = 0;
+
+        // Play explosion sound
+        AudioManager.playExplosion();
     }
 
     public get circle(): Circle {
@@ -22,12 +26,22 @@ export class Explosion implements IUpdatable, IDrawable {
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
+        ctx.save();
+        const sub = this._stats.explosionDuration - this._time;
+        if (sub < 1) {
+            ctx.globalAlpha = sub;
+        }
         this._circle.draw(ctx);
+        ctx.restore();
     }
 
     update(deltaTime: number): boolean {
-        const inc = (this._stats.explosionSize - Constants.explosionStartRadius) / this._stats.explosionDuration;
-        this._circle.resize(inc * deltaTime);
+        if (this._time < this._stats.explosionExpansionTime) {
+            const inc = (this._stats.explosionSize - Constants.explosionStartRadius) / this._stats.explosionExpansionTime;
+            this._circle.resize(inc * deltaTime);
+        } else {
+            this._circle.resize(-Constants.explosionDecrease * deltaTime);
+        }
 
         this._time += deltaTime;
         return this._time < this._stats.explosionDuration;
