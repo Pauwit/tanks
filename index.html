@@ -1,26 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tanks in a Nutshell</title>
-    <link rel="icon" type="image/svg" href="/vite.svg">
-    <style>
-        * {overflow: hidden}
-        #base { display:flex; align-items: center; justify-content: center;}
-        #Container { position: relative;}
-        #fpsDisplay { position: absolute; top: 10px; left: 10px; color: red}
-        #deltaDisplay { position: absolute; top: 10px; right: 10px; color: red}
-        body {background-color: black;}
-    </style>
-</head>
-<body>
-    <div id="all">
-        <div id="fpsDisplay" style="margin-left: 0; margin-top: 0;"></div>
-        <div id="deltaDisplay" style="margin-right: 0; margin-top: 0;"></div>
-        <canvas id="Canvas" height="1400px" width="2520px" style="border:1px solid #f00"></canvas>
-    </div>
-
-    <script type="module" src="src/main.ts"></script>
-    <script type="module" src="src/firebase.ts"></script>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
