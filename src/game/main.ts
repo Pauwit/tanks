@@ -12,8 +12,11 @@ Drawer.Window.SetInstance(canvas,
     <HTMLElement>document.getElementById('fpsDisplay'),
     <HTMLElement>document.getElementById('deltaDisplay'));
 
+
 import {Window} from "./drawer/window.ts";
-const window = Window.Instance;
+const myWindow = Window.Instance;
+myWindow.handleResize(canvas);
+window.addEventListener('resize', () => myWindow.handleResize(canvas));
 
 import {Mouse} from "./input/mouse.ts";
 import {Keyboard} from "./input/keyboard.ts";
@@ -43,13 +46,13 @@ MapManager.add(c2);
 MapManager.add(rect3);
 
 function render() : void {
-    window.clear();
+    myWindow.clear();
 
-    BulletManager.Instance.draw(window.ctx);
-    BombManager.Instance.draw(window.ctx);
-    player.draw(window.ctx);
-    MapManager.Instance.draw(window.ctx);
-    ExplosionManager.Instance.draw(window.ctx);
+    BulletManager.Instance.draw(myWindow.ctx);
+    BombManager.Instance.draw(myWindow.ctx);
+    player.draw(myWindow.ctx);
+    MapManager.Instance.draw(myWindow.ctx);
+    ExplosionManager.Instance.draw(myWindow.ctx);
 
     player.drawCrosshair();
 }

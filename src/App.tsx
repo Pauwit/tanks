@@ -12,7 +12,7 @@ function App() {
             <div id="all">
                 <div id="fpsDisplay"></div>
                 <div id="deltaDisplay"></div>
-                <canvas id="canvas" height="1400px" width="2520px"></canvas>
+                <canvas id="canvas"></canvas>
             </div>
         </>
     );

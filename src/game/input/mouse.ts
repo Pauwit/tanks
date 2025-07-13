@@ -22,9 +22,9 @@ export class Mouse {
 
     private onMove(e: MouseEvent): void {
         Mouse.Instance._x = e.clientX - Window.Instance.canvas.getBoundingClientRect().left;
-        Mouse.Instance._x = clamp(Mouse.Instance._x, 0, Window.Instance.windowWidth);
+        Mouse.Instance._x = clamp(Mouse.Instance._x, 0, Window.Instance.windowWidth) / Window.Instance.scaleX;
         Mouse.Instance._y = e.clientY - Window.Instance.canvas.getBoundingClientRect().top;
-        Mouse.Instance._y = clamp(Mouse.Instance._y, 0, Window.Instance.windowHeight);
+        Mouse.Instance._y = clamp(Mouse.Instance._y, 0, Window.Instance.windowHeight) / Window.Instance.scaleY;
     }
 
     private onUp(e: MouseEvent): void {

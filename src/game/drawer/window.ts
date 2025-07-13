@@ -1,4 +1,8 @@
 export class Window {
+    private readonly LOGICAL_WIDTH = 1920;
+    private readonly LOGICAL_HEIGHT = 1080;
+    private readonly ASPECT_RATIO = this.LOGICAL_WIDTH / this.LOGICAL_HEIGHT;
+
     private static _instance: Window;
 
     public static SetInstance(canvas: HTMLCanvasElement, deltaDisplay : HTMLElement, fpsDisplay : HTMLElement): void {
@@ -15,6 +19,7 @@ export class Window {
     private _windowHeight : number;
     private readonly _deltaDisplay : HTMLElement;
     private readonly _fpsDisplay : HTMLElement;
+    private _scale = {x: 1, y: 1};
 
     private constructor(canvas: HTMLCanvasElement, deltaDisplay : HTMLElement, fpsDisplay : HTMLElement) {
         this._canvas = canvas;
@@ -58,18 +63,45 @@ export class Window {
         return this._fpsDisplay;
     }
 
-    public resizeWindow(width : number, height : number) {
-        if (width <= 0) {
-            console.error("[ERR] Window - width cannot be negative.");
-            throw new Error("[ERR] Window - width cannot be negative.");
-        }
-        if (height <= 0) {
-            console.error("[ERR] Window - height cannot be negative.");
-            throw new Error("[ERR] Window - height cannot be negative.");
+    get scaleX(): number {
+        return this._scale.x;
+    }
+
+    get scaleY(): number {
+        return this._scale.y;
+    }
+
+    public handleResize(canvas: HTMLCanvasElement) {
+        const parent = canvas.parentElement!;
+        const maxWidth = parent.clientWidth;
+        const maxHeight = parent.clientHeight;
+
+        let newWidth = maxWidth - 2;
+        let newHeight = newWidth / this.ASPECT_RATIO;
+
+        if (newHeight > maxHeight) {
+            newHeight = maxHeight - 2;
+            newWidth = newHeight * this.ASPECT_RATIO;
         }
 
-        this._windowWidth = width;
-        this._windowHeight = height;
+        // Set physical size for rendering
+        canvas.width = this.LOGICAL_WIDTH;
+        canvas.height = this.LOGICAL_HEIGHT;
+
+        // Set displayed size via CSS
+        canvas.style.width = `${newWidth}px`;
+        canvas.style.height = `${newHeight}px`;
+
+        // Scale the drawing context to map logical -> actual
+        this._ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset any existing transform
+        this._ctx.scale(newWidth / this.LOGICAL_WIDTH, newHeight / this.LOGICAL_HEIGHT);
+        this._scale.x = newWidth / this.LOGICAL_WIDTH;
+        this._scale.y = newHeight / this.LOGICAL_HEIGHT;
+
+        console.warn("[WAR] Window - Resize to :", newWidth, newHeight);
+
+        this._windowWidth = this.LOGICAL_WIDTH;
+        this._windowHeight = this.LOGICAL_HEIGHT;
     }
 
     public clear() : void {
