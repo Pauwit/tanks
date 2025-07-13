@@ -21,14 +21,14 @@ export class Rectangle extends Shape {
 
     public resize(dw: number, dh: number): void {
         if (this._width + dw <= 0) {
-            console.error("[Rectangle] ERR : width cannot be negative.");
-            throw new Error("[Rectangle] ERR : width cannot be negative.");
+            console.error("[ERR] Rectangle - width cannot be negative.");
+            throw new Error("[ERR] Rectangle - width cannot be negative.");
         } else
             this._width += dw;
 
         if (this._height + dh <= 0) {
-            console.error("[Rectangle] ERR : height cannot be negative.");
-            throw new Error("[Rectangle] ERR : height cannot be negative.");
+            console.error("[ERR] Rectangle - height cannot be negative.");
+            throw new Error("[ERR] Rectangle - height cannot be negative.");
         } else
             this._height += dh;
     }

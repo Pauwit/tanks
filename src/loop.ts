@@ -100,8 +100,8 @@ export class GameLoop {
         if (this._isRunning)
             return;
 
-        console.log("[GameLoop] LOG : Starting...");
-        console.log("[GameLoop] LOG : Target FPS is set to", this.targetFps);
+        console.log("[LOG] GameLoop - Starting...");
+        console.log("[LOG] GameLoop - Target FPS is set to", this.targetFps);
 
         this._isRunning = true;
         this._lastTimestamp = performance.now();
@@ -135,15 +135,15 @@ export class GameLoop {
 
     private discoverScreenFPS(): void {
         if (this.targetFps < 165 && GameLoop.Instance.fps >= 165) {
-            console.warn("[GameLoop] WAR : Changed target FPS from", this.targetFps, "to", 165);
+            console.warn("[WAR] GameLoop - Changed target FPS from", this.targetFps, "to", 165);
             this.targetFps = 165;
         }
         if (this.targetFps < 144 && GameLoop.Instance.fps >= 144) {
-            console.warn("[GameLoop] WAR : Changed target FPS from", this.targetFps, "to", 144);
+            console.warn("[WAR] GameLoop - Changed target FPS from", this.targetFps, "to", 144);
             this.targetFps = 144;
         }
         if (this.targetFps < 120 && GameLoop.Instance.fps >= 120) {
-            console.warn("[GameLoop] WAR : Changed target FPS from", this.targetFps, "to", 120);
+            console.warn("[WAR] GameLoop - Changed target FPS from", this.targetFps, "to", 120);
             this.targetFps = 120;
         }
     }

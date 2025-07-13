@@ -60,12 +60,12 @@ export class Window {
 
     public resizeWindow(width : number, height : number) {
         if (width <= 0) {
-            console.error("[Window] ERR : width cannot be negative.");
-            throw new Error("[Window] ERR : width cannot be negative.");
+            console.error("[ERR] Window - width cannot be negative.");
+            throw new Error("[ERR] Window - width cannot be negative.");
         }
         if (height <= 0) {
-            console.error("[Window] ERR : height cannot be negative.");
-            throw new Error("[Window] ERR : height cannot be negative.");
+            console.error("[ERR] Window - height cannot be negative.");
+            throw new Error("[ERR] Window - height cannot be negative.");
         }
 
         this._windowWidth = width;

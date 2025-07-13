@@ -14,8 +14,8 @@ export class Circle extends Shape {
 
     public resize(dr: number): void {
         if (this.radius + dr <= 0) {
-            console.error("[Circle] ERR : radius cannot be negative.");
-            throw new Error("[Circle] ERR : radius cannot be negative.");
+            console.error("[ERR] Circle - radius cannot be negative.");
+            throw new Error("[ERR] Circle - radius cannot be negative.");
         } else
             this._radius += dr;
     }

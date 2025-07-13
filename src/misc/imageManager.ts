@@ -49,7 +49,7 @@ export class ImageManager {
     }
 
     private importImages() : void {
-        console.log("[ImageManager] LOG : Importing images...");
+        console.log("[LOG] ImageManager - Importing images...");
 
         this._background.src = this.imagePath("background.png");
         this._wall.src = this.imagePath("wall1.png");
@@ -59,7 +59,7 @@ export class ImageManager {
         this._crosshairDot.src = this.imagePath("aimdot.png");
         this._playerDeath.src = this.imagePath("playerDeath.png");
 
-        console.log("[ImageManager] LOG : Finished importing images");
+        console.log("[LOG] ImageManager - Finished importing images");
     }
 
     private imagePath(name : string) : string {

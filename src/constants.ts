@@ -2,6 +2,9 @@ import {TankStats} from "./tank/tankStats.ts";
 import {BulletStats} from "./bullet/bulletStats.ts";
 import {BombStats} from "./bomb/bombStats.ts";
 import {ExplosionStats} from "./explosion/explosionStats.ts";
+import {Map} from "./map/map.ts";
+import {Point} from "./drawer/point.ts";
+import {BlockType} from "./map/blockType.ts";
 
 export namespace Constants {
     export const defaultTankStats: TankStats = {moveSpeed: 300, rotationSpeed: 250, maxBullets: 5, maxBombs: 2};
@@ -33,4 +36,16 @@ export namespace Constants {
     export const explosionStartRadius: number = 10;
     export const explosionColor: string = "#fa0";
     export const explosionDecrease: number = 5;
+
+    export const mapWidth: number = 20;
+    export const mapHeight: number = 10;
+
+    export const emptyMap: Map = {
+        name: "Empty Map",
+        description: "Empty Map for testing",
+        spawns: [new Point(100, 100)],
+        blocks: new Array<BlockType>(mapHeight)
+            .fill(BlockType.None)
+            .map(() => new Array(mapWidth).fill(BlockType.None)),
+    };
 }

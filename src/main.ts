@@ -1,6 +1,6 @@
 import {Window} from "./drawer/window.ts";
 
-console.log("[main] LOG : Starting main...")
+console.log("[LOG] main - Starting main...")
 
 document.body.style.overflow = "hidden";
 

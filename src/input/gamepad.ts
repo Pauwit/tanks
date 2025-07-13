@@ -9,7 +9,7 @@ export class Gamepad {
     private constructor() {
         globalThis.window.addEventListener("gamepadconnected", (e) => {
             console.log(
-                "[Gamepad] LOG : Gamepad connected at index %d: %s. %d buttons, %d axes.",
+                "[LOG] Gamepad - Gamepad connected at index %d: %s. %d buttons, %d axes.",
                 e.gamepad.index,
                 e.gamepad.id,
                 e.gamepad.buttons.length,
@@ -20,7 +20,7 @@ export class Gamepad {
 
         globalThis.window.addEventListener("gamepaddisconnected", (e) => {
             console.log(
-                "[Gamepad] LOG : Gamepad disconnected from index %d: %s",
+                "[LOG] Gamepad - Gamepad disconnected from index %d: %s",
                 e.gamepad.index,
                 e.gamepad.id,
             );
