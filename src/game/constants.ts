@@ -4,7 +4,7 @@ import type {BombStats} from "./bomb/bombStats.ts";
 import type {ExplosionStats} from "./explosion/explosionStats.ts";
 import type {Map} from "./map/map.ts";
 import {Point} from "./drawer/point.ts";
-import {BlockType} from "./map/blockType.ts";
+import {BlockType} from "./enums/blockType.ts";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Constants {

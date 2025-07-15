@@ -22,3 +22,60 @@ Gamepad :
 - Right Stick :
   - Up/Down    : Axis 5 (Positive down)
   - Left/Right : Axis 2 (Positive right)
+
+Firebase Structure :
+lobbies:
+    - 43FQ243 :
+        name : "Lobby name"
+        players :
+            - uid : uid1
+              name : name1
+            - uid : uid2
+              name : name2
+        status : "waiting"
+        config :
+            owner : uid1
+            gamemode : "classic"
+            maxPlayers : 4
+            map : ...?
+        game : (only filled by owner when game starts)
+            players :
+                - uid1 :
+                    dead : false
+                    position :
+                        x : 102
+                        y : 62
+                    rotation : 15
+                    look : 144
+                - uid2 : ...
+            bullets :
+                - id1 :
+                    position :
+                        x : 54
+                        y : 32
+                    rotation : 75
+                - ...
+            mines :
+                - id1 :
+                    position :
+                        x: 100
+                        y: 100
+                - ...
+            explosions :
+                - id1 :
+                    position :
+                        x: 100
+                        y: 100
+                    times :
+                        total : 100
+                        current : 24
+                - ...
+    - 8SQ9SQ : ...
+(Can evolve with time)
+
+TODO :
+- When signing in, verify if name is present in DB. If not, it is the first login. So ask for a name and add it into the DB
+- Settings to change name in menu
+- Create Lobby button
+- Adding joining user to lobby players
+- Removing player when leaving lobby

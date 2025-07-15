@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase } from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,10 +22,34 @@ const firebaseConfig = {
 console.log("[LOG] firebase - Connecting to firebase...");
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+export const APP = initializeApp(firebaseConfig);
+console.log("[LOG] firebase - Returned app :", APP);
 
 // Get a reference to the Realtime Database service
-const database = getDatabase(app);
+export const DB = getDatabase(APP);
+console.log("[LOG] firebase - Returned database :", DB);
 
-console.log("[LOG] firebase - Returned app :", app);
-console.log("[LOG] firebase - Returned database :", database);
+// Get authentication service
+export const AUTH = getAuth(APP);
+
+
+// Authenticate and get uid
+
+export let UID: string = "";
+// Get the UID when the user is signed in
+onAuthStateChanged(AUTH, (user) => {
+    if (user) {
+        UID = user.uid;
+        console.log("[LOG] firebase - User ID:", UID);
+    }
+});
+
+import {getLobbies} from "./calls/getLobbies.ts";
+import {authenticate} from "./auth.ts";
+import {createLobby} from "./calls/createLobby.ts";
+(async () => {
+    await authenticate();
+    // test
+    //console.log(await getLobbies());
+    //console.log(await createLobby("Test"))
+})();

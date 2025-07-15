@@ -1,20 +1,21 @@
 import './App.css';
-import './firebase.ts';
-import {useEffect} from "react";
+import './game/firebase/firebase.ts';
+import LobbiesTable from "./ui/components/LobbiesTable/LobbiesTable.tsx";
+import {ErrorToastProvider} from "./ui/components/ErrorContext/ErrorContext.tsx";
+import LobbyDetails from "./ui/components/LobbyDetails/LobbyDetails.tsx";
+import {useState} from "react";
 
 function App() {
-    useEffect(() => {
-        import('./game/main.ts'); // Will run after canvas exists
-    }, []);
+    const [selectedLobbyId, setSelectedLobbyId] = useState<string | null>(null);
 
     return (
-        <>
-            <div id="all">
-                <div id="fpsDisplay"></div>
-                <div id="deltaDisplay"></div>
-                <canvas id="canvas"></canvas>
-            </div>
-        </>
+        <ErrorToastProvider>
+            {selectedLobbyId ? (
+                <LobbyDetails id={selectedLobbyId} onBack={() => setSelectedLobbyId(null)} />
+            ) : (
+                <LobbiesTable onSelectLobby={setSelectedLobbyId} />
+            )}
+        </ErrorToastProvider>
     );
 }
 

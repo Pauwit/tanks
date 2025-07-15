@@ -1,4 +1,4 @@
-import {BlockType} from "./blockType.ts";
+import {BlockType} from "../enums/blockType.ts";
 import {Point} from "../drawer/point.ts";
 
 export interface Map {

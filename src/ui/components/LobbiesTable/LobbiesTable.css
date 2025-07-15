@@ -1,0 +1,138 @@
+.lobby-table-title {
+    color: #eee;
+    text-align: center;
+}
+
+.lobby-table-container {
+    padding: 1.5rem;
+    background-color: #111;
+    color: #eee;
+    border-radius: 14px;
+    max-width: 800px;
+    margin: 2rem auto;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.lobby-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    table-layout: fixed;
+}
+
+.lobby-table th {
+    text-align: left;
+    padding: 10px;
+    font-size: 0.95rem;
+    color: #ccc;
+    border-bottom: 1px solid #333;
+}
+
+.name-col {
+    width: 60%;
+}
+
+.players-col {
+    width: 20%;
+}
+
+.status-col {
+    width: 20%;
+}
+
+.lobby-row {
+    transition: background-color 0.2s ease;
+}
+
+.lobby-row td {
+    padding: 14px 10px;
+    background-color: transparent;
+}
+
+.lobby-row > td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #1a1a1a;
+}
+
+.lobby-row > td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #1a1a1a;
+}
+
+.lobby-row > td:not(:first-child):not(:last-child) {
+    background-color: #1a1a1a;
+}
+
+.lobby-row.clickable:hover td {
+    background-color: #2a2a2a;
+    cursor: pointer;
+}
+
+.lobby-row.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.lobby-name {
+    text-align: left;
+}
+
+.lobby-players,
+.lobby-status {
+    text-align: left;
+}
+
+.lobby-status {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    padding-right: 10px;
+}
+
+.join-icon {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    color: #4caf50;
+}
+
+.header-with-icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.refresh-button {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.refresh-button:hover {
+    color: #fff;
+}
+
+.refresh-button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
