@@ -3,7 +3,7 @@ import type {GamePlayerModel} from "./gamePlayerModel.ts";
 import type {GameBulletModel} from "./gameBulletModel.ts";
 import type {GameMineModel} from "./gameMineModel.ts";
 import type {GameExplosionModel} from "./gameExplosionModel.ts";
-import type {LobbyStatus} from "../../enums/lobbyStatus.ts";
+import type {LobbyStatus} from "../../game/enums/lobbyStatus.ts";
 import type {LobbyPlayerModel} from "./lobbyPlayerModel.ts";
 
 export type LobbyDataModel = {

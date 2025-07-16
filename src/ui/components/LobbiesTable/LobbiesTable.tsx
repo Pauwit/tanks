@@ -39,7 +39,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
     }, []);
 
     const handleJoin = async (id: string) => {
-        function joinLobby(id: string) {
+        function join(id: string) {
             console.log("[LOG] lobby - Joining lobby:", id);
             onSelectLobby?.(id);
         }
@@ -54,7 +54,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
         // If player already in playerList, can join
         for (const player of lobby.players) {
             if (player.uid === Firebase.uid) {
-                joinLobby(id);
+                join(id);
                 return;
             }
         }
@@ -65,7 +65,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
             return;
         }
 
-        joinLobby(id);
+        join(id);
     };
 
     function isLobbyJoinable(lobby: LobbySummaryModel): boolean {

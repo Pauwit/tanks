@@ -5,6 +5,8 @@ import type {LobbyDataModel} from "../../../firebase/models/lobbyDataModel.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
 import {ref, onValue} from "firebase/database";
 import {Firebase} from "../../../firebase/firebase.ts";
+import {deleteLobby} from "../../../firebase/calls/deleteLobby.ts";
+import {joinLobby} from "../../../firebase/calls/joinLobby.ts";
 
 type LobbyDetailsProps = {
     id : string;
@@ -31,8 +33,13 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
 
         const unsubscribe = onValue(lobbyRef, (snapshot) => {
             if (snapshot.exists()) {
-                setLobby(snapshot.val() as LobbyDataModel);
+                const tmp = snapshot.val() as LobbyDataModel
+                setLobby(tmp);
                 setLoading(false);
+                joinLobby(tmp, id);
+            } else {
+                console.error("[ERR] lobby - Lobby got deleted with id :", id);
+                onBack?.();
             }
         });
 
@@ -44,9 +51,12 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
         // TODO
     }
 
-    function handleBack() {
+    async function handleBack() {
         console.log("[LOG] lobby - Leaving lobby :", id);
         // TODO
+        if (lobby.players.length <= 1) {
+            await deleteLobby(id);
+        }
         onBack?.();
     }
 
