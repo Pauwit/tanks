@@ -74,7 +74,6 @@ lobbies:
 (Can evolve with time)
 
 TODO :
-- When signing in, verify if name is present in DB. If not, it is the first login. So ask for a name and add it into the DB
 - Settings to change name in menu
 - Create Lobby button
 - Adding joining user to lobby players

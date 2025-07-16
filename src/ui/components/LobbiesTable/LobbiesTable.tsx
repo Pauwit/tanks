@@ -77,7 +77,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
 
     return (
         <>
-            <h1 className="lobby-table-title">Welcome, {Firebase.name}</h1>
+            <h1 className="lobby-table-title">{"Welcome, " + Firebase.name}</h1>
             <div className="lobby-table-container">
                 <table className="lobby-table">
                     <thead>

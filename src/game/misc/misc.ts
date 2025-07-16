@@ -49,3 +49,22 @@ export function mod(nb: number, m: number): number {
 export function shortestAngleDirection(angleA: number, angleB: number): boolean {
     return (mod(angleA, 360) - mod(angleB, 360) + 720) % 360 > 180;
 }
+
+// Sleep function in ms
+export function sleep(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
+// Test if a string is alphanumerical or not
+export function isAlphaNumerical(str: string): boolean {
+    for (const char of str) {
+        if (!(
+            (char >= 'a' && char <= 'z') ||
+            (char >= 'A' && char <= 'Z') ||
+            (char >= '0' && char <= '9')
+        )) {
+            return false;
+        }
+    }
+    return true;
+}

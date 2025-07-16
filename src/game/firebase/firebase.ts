@@ -73,11 +73,15 @@ export class Firebase {
         return Firebase.Instance.AUTH;
     }
 
-    public static get uid() {
+    public static get uid(): string {
         return Firebase.Instance._uid;
     }
 
-    public static get name() {
+    public static get name(): string {
         return Firebase.Instance._name;
+    }
+
+    public static set name(name: string) {
+        Firebase.Instance._name = name;
     }
 }
