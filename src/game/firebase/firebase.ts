@@ -53,7 +53,7 @@ export class Firebase {
         });
 
         Firebase.Instance = this;
-
+        console.log("[LOG] firebase - Connected successfully");
     }
 
     public static async connectToFirebase() {
