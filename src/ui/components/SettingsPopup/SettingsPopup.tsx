@@ -3,7 +3,7 @@ import "./SettingsPopup.css";
 import {X, Upload, RefreshCw} from "lucide-react";
 import {Firebase} from "../../../game/firebase/firebase.ts";
 import {showError} from "../ErrorContext/errorStore.ts";
-import {isAlphaNumerical, sleep} from "../../../game/misc/misc.ts";
+import {isAlphaNumerical} from "../../../game/misc/misc.ts";
 import {setName} from "../../../game/firebase/calls/setName.ts";
 
 type SettingsPopupProps = {

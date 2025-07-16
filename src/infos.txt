@@ -74,6 +74,5 @@ lobbies:
 (Can evolve with time)
 
 TODO :
-- Create Lobby button
 - Adding joining user to lobby players
 - Removing player when leaving lobby

@@ -109,7 +109,7 @@
     padding: 6px;
     display: flex;
     align-items: center;
-    margin-right: 0.1rem;
+    margin-right: 0.5rem;
     background-color: #222;
     border-radius: 12px;
     transition: background-color 0.2s ease, color 0.2s ease;
@@ -121,6 +121,29 @@
 }
 
 .refresh-button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.add-button {
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    margin-right: 0.1rem;
+    background-color: #222;
+    border-radius: 12px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.add-button:hover {
+    color: #fff;
+    background-color: #444;
+}
+
+.add-button:disabled {
     opacity: 0.4;
     cursor: default;
 }

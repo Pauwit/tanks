@@ -1,0 +1,8 @@
+.error-text {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    font-size: 14px;
+}

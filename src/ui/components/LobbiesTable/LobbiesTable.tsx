@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react";
 import "./LobbiesTable.css";
 import type {LobbySummaryModel} from "../../../game/firebase/models/lobbySummaryModel.ts";
 import {getLobbies} from "../../../game/firebase/calls/getLobbies.ts";
-import {LogIn, RefreshCw, Settings} from "lucide-react";
+import {LogIn, Plus, RefreshCw, Settings} from "lucide-react";
 import {showError} from "../ErrorContext/errorStore.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
 import {getLobby} from "../../../game/firebase/calls/getLobby.ts";
 import {Firebase} from "../../../game/firebase/firebase.ts";
 import SettingsPopup from "../SettingsPopup/SettingsPopup.tsx";
+import LobbyCreationPopup from "../LobbyCreationPopup/LobbyCreationPopup.tsx";
 
 
 type LobbiesTableProps = {
@@ -18,6 +19,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
     const [lobbies, setLobbies] = useState<LobbySummaryModel[]>([]);
     const [loading, setLoading] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+    const [addLobby, setAddLobby] = useState(false);
 
     const handleRefresh = async () => {
         setLoading(true);
@@ -77,6 +79,10 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
         return lobby.status === 'waiting' && lobby.players.length < lobby.maxPlayers;
     }
 
+    function handleAddLobby() {
+        setAddLobby(true);
+    }
+
     return (
         <>
             {showSettings && (
@@ -85,6 +91,20 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
                     <div onClick={(e) => e.stopPropagation()}>
                         <SettingsPopup
                             onClose={() => setShowSettings(false)}
+                        />
+                    </div>
+                </div>
+            )}
+            {addLobby && (
+                <div className="popup-backdrop"
+                     onClick={() => setAddLobby(false)}>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <LobbyCreationPopup
+                            onClose={() => setAddLobby(false)}
+                            onCreation={(id: string) => {
+                                setAddLobby(false);
+                                onSelectLobby?.(id);
+                            }}
                         />
                     </div>
                 </div>
@@ -107,14 +127,24 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
                         <th className="status-col">
                             <div className="header-with-icon">
                                 <span>Status</span>
-                                <button
-                                    onClick={handleRefresh}
-                                    className="refresh-button"
-                                    title="Refresh"
-                                    disabled={loading}
-                                >
-                                    <RefreshCw size={16} className={loading ? 'spinning' : ''} />
-                                </button>
+                                <div className="button-container">
+                                    <button
+                                        onClick={handleRefresh}
+                                        className="refresh-button"
+                                        title="Refresh"
+                                        disabled={loading}
+                                    >
+                                        <RefreshCw size={16} className={loading ? 'spinning' : ''} />
+                                    </button>
+                                    <button
+                                        onClick={handleAddLobby}
+                                        className="add-button"
+                                        title="Add"
+                                        disabled={loading}
+                                    >
+                                        <Plus size={16} />
+                                    </button>
+                                </div>
                             </div>
                         </th>
                     </tr>

@@ -3,6 +3,7 @@ import type {LobbyConfigModel} from "../models/lobbyConfigModel.ts";
 import {LobbyStatus} from "../../enums/lobbyStatus.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import {Firebase} from "../firebase.ts";
+import {showError} from "../../../ui/components/ErrorContext/errorStore.ts";
 
 const DEFAULT_CONFIG: LobbyConfigModel = {
     gamemode: "classic",
@@ -11,23 +12,30 @@ const DEFAULT_CONFIG: LobbyConfigModel = {
     map: null, // define structure later if needed
 };
 
-export async function createLobby(name: string): Promise<string> {
-    const lobbiesRef = ref(Firebase.db, "lobbies");
+export async function createLobby(name: string): Promise<string | null> {
+    try {
+        const lobbiesRef = ref(Firebase.db, "lobbies");
 
-    // Create a new lobby key
-    const newLobbyRef = push(lobbiesRef);
+        // Create a new lobby key
+        const newLobbyRef = push(lobbiesRef);
 
-    const lobbyData: LobbyDataModel = {
-        name,
-        players: [{uid: Firebase.uid, name: "sample"}],
-        status: LobbyStatus.Waiting,
-        config: {
-            ...DEFAULT_CONFIG,
-            owner: Firebase.uid, // set owner
-        },
-    };
+        const lobbyData: LobbyDataModel = {
+            name,
+            players: [{uid: Firebase.uid, name: Firebase.name}],
+            status: LobbyStatus.Waiting,
+            config: {
+                ...DEFAULT_CONFIG,
+                owner: Firebase.uid, // set owner
+            },
+        };
 
-    await set(newLobbyRef, lobbyData);
+        await set(newLobbyRef, lobbyData);
 
-    return newLobbyRef.key as string;
+        console.log("[LOG] firebase - Created lobby successfully :", newLobbyRef.key);
+        return newLobbyRef.key as string;
+    } catch (e) {
+        showError("Error while creating lobby :", e);
+        console.error("[ERR] firebase - Error while creating lobby :", e);
+        return null;
+    }
 }

@@ -55,13 +55,28 @@ export function sleep(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
 }
 
-// Test if a string is alphanumerical or not
+// Test if a string is alphanumerical
 export function isAlphaNumerical(str: string): boolean {
     for (const char of str) {
         if (!(
             (char >= 'a' && char <= 'z') ||
             (char >= 'A' && char <= 'Z') ||
             (char >= '0' && char <= '9')
+        )) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Test if a string is alphanumerical with spaces
+export function isAlphaNumericalWithSpaces(str: string): boolean {
+    for (const char of str) {
+        if (!(
+            (char >= 'a' && char <= 'z') ||
+            (char >= 'A' && char <= 'Z') ||
+            (char >= '0' && char <= '9') ||
+            char === ' '
         )) {
             return false;
         }
