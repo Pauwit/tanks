@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./SettingsPopup.css";
 import {X, Upload, RefreshCw} from "lucide-react";
-import {Firebase} from "../../../game/firebase/firebase.ts";
+import {Firebase} from "../../../firebase/firebase.ts";
 import {showError} from "../ErrorContext/errorStore.ts";
 import {isAlphaNumerical} from "../../../game/misc/misc.ts";
-import {setName} from "../../../game/firebase/calls/setName.ts";
+import {setName} from "../../../firebase/calls/setName.ts";
 
 type SettingsPopupProps = {
     onClose: () => void;

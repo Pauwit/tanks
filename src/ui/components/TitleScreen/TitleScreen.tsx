@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './TitleScreen.css';
-import {Firebase} from "../../../game/firebase/firebase.ts";
-import {getName} from "../../../game/firebase/calls/getName.ts";
+import {Firebase} from "../../../firebase/firebase.ts";
+import {getName} from "../../../firebase/calls/getName.ts";
 import {isAlphaNumerical} from "../../../game/misc/misc.ts";
-import {setName} from "../../../game/firebase/calls/setName.ts";
+import {setName} from "../../../firebase/calls/setName.ts";
 
 type TitleScreenProps = {
     onStart: () => void;

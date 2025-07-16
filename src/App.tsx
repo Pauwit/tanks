@@ -1,5 +1,5 @@
 import './App.css';
-import './game/firebase/firebase.ts';
+import './firebase/firebase.ts';
 import LobbiesTable from "./ui/components/LobbiesTable/LobbiesTable.tsx";
 import {ErrorToastProvider} from "./ui/components/ErrorContext/ErrorContext.tsx";
 import LobbyDetails from "./ui/components/LobbyDetails/LobbyDetails.tsx";

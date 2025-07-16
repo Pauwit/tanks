@@ -1,9 +1,9 @@
 import { ref, push, set } from "firebase/database";
 import type {LobbyConfigModel} from "../models/lobbyConfigModel.ts";
-import {LobbyStatus} from "../../enums/lobbyStatus.ts";
+import {LobbyStatus} from "../../game/enums/lobbyStatus.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import {Firebase} from "../firebase.ts";
-import {showError} from "../../../ui/components/ErrorContext/errorStore.ts";
+import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
 
 const DEFAULT_CONFIG: LobbyConfigModel = {
     gamemode: "classic",

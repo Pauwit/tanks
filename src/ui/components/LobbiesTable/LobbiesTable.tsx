@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import "./LobbiesTable.css";
-import type {LobbySummaryModel} from "../../../game/firebase/models/lobbySummaryModel.ts";
-import {getLobbies} from "../../../game/firebase/calls/getLobbies.ts";
+import type {LobbySummaryModel} from "../../../firebase/models/lobbySummaryModel.ts";
+import {getLobbies} from "../../../firebase/calls/getLobbies.ts";
 import {LogIn, Plus, RefreshCw, Settings} from "lucide-react";
 import {showError} from "../ErrorContext/errorStore.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
-import {getLobby} from "../../../game/firebase/calls/getLobby.ts";
-import {Firebase} from "../../../game/firebase/firebase.ts";
+import {getLobby} from "../../../firebase/calls/getLobby.ts";
+import {Firebase} from "../../../firebase/firebase.ts";
 import SettingsPopup from "../SettingsPopup/SettingsPopup.tsx";
 import LobbyCreationPopup from "../LobbyCreationPopup/LobbyCreationPopup.tsx";
 

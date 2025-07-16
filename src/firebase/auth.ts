@@ -1,6 +1,6 @@
 import { signInAnonymously } from 'firebase/auth';
 import {Firebase} from "./firebase.ts";
-import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
+import {showError} from "../ui/components/ErrorContext/errorStore.ts";
 
 export async function authenticate() {
     // Sign in anonymously (or use another method)

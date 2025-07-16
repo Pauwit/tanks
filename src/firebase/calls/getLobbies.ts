@@ -1,7 +1,7 @@
 import {get, ref} from "firebase/database";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import type {LobbySummaryModel} from "../models/lobbySummaryModel.ts";
-import {LobbyStatus} from "../../enums/lobbyStatus.ts";
+import {LobbyStatus} from "../../game/enums/lobbyStatus.ts";
 import {Firebase} from "../firebase.ts";
 
 export async function getLobbies(): Promise<LobbySummaryModel[]> {

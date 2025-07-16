@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./LobbyCreationPopup.css";
 import {X} from "lucide-react";
 import {isAlphaNumericalWithSpaces} from "../../../game/misc/misc.ts";
-import {createLobby} from "../../../game/firebase/calls/createLobby.ts";
+import {createLobby} from "../../../firebase/calls/createLobby.ts";
 
 type LobbyCreationPopupProps = {
     onClose: () => void;

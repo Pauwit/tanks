@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import './LobbyDetails.css';
 import {FaCrown} from 'react-icons/fa';
-import type {LobbyDataModel} from "../../../game/firebase/models/lobbyDataModel.ts";
+import type {LobbyDataModel} from "../../../firebase/models/lobbyDataModel.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
 import {ref, onValue} from "firebase/database";
-import {Firebase} from "../../../game/firebase/firebase.ts";
+import {Firebase} from "../../../firebase/firebase.ts";
 
 type LobbyDetailsProps = {
     id : string;
