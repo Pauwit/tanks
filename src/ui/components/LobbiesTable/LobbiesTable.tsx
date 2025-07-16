@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react";
 import "./LobbiesTable.css";
 import type {LobbySummaryModel} from "../../../game/firebase/models/lobbySummaryModel.ts";
 import {getLobbies} from "../../../game/firebase/calls/getLobbies.ts";
-import {LogIn, RefreshCw} from "lucide-react";
+import {LogIn, RefreshCw, Settings} from "lucide-react";
 import {showError} from "../ErrorContext/errorStore.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
 import {getLobby} from "../../../game/firebase/calls/getLobby.ts";
 import {Firebase} from "../../../game/firebase/firebase.ts";
+import SettingsPopup from "../SettingsPopup/SettingsPopup.tsx";
 
 
 type LobbiesTableProps = {
@@ -16,6 +17,7 @@ type LobbiesTableProps = {
 const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
     const [lobbies, setLobbies] = useState<LobbySummaryModel[]>([]);
     const [loading, setLoading] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
 
     const handleRefresh = async () => {
         setLoading(true);
@@ -77,8 +79,26 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
 
     return (
         <>
-            <h1 className="lobby-table-title">{"Welcome, " + Firebase.name}</h1>
+            {showSettings && (
+                <div className="popup-backdrop"
+                     onClick={() => setShowSettings(false)}>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <SettingsPopup
+                            onClose={() => setShowSettings(false)}
+                        />
+                    </div>
+                </div>
+            )}
             <div className="lobby-table-container">
+                <div className="lobby-header">
+                    <div className="spacer" />
+                    <h1 className="lobby-table-title">
+                        {"Welcome, " + Firebase.name}
+                    </h1>
+                    <button className="settings-button" onClick={() => setShowSettings(true)} title="Settings">
+                        <Settings size={20} />
+                    </button>
+                </div>
                 <table className="lobby-table">
                     <thead>
                     <tr>

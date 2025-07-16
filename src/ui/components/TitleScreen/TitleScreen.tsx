@@ -4,7 +4,6 @@ import {Firebase} from "../../../game/firebase/firebase.ts";
 import {getName} from "../../../game/firebase/calls/getName.ts";
 import {isAlphaNumerical} from "../../../game/misc/misc.ts";
 import {setName} from "../../../game/firebase/calls/setName.ts";
-import {showError} from "../ErrorContext/errorStore.ts";
 
 type TitleScreenProps = {
     onStart: () => void;
@@ -30,8 +29,8 @@ const TitleScreen: React.FC<TitleScreenProps> = ({ onStart }) => {
         }
     }
 
-    async function handleNameSubmit(e?: React.FormEvent<HTMLFormElement>) {
-        if (e) e.preventDefault();
+    async function handleNameSubmit(e: React.FormEvent) {
+        e.preventDefault();
 
         // Test validity
         if (selectName === null) {
