@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './LobbyDetails.css';
 import {FaCrown} from 'react-icons/fa';
 import type {LobbyDataModel} from "../../../firebase/models/lobbyDataModel.ts";
@@ -7,6 +7,8 @@ import {ref, onValue} from "firebase/database";
 import {Firebase} from "../../../firebase/firebase.ts";
 import {deleteLobby} from "../../../firebase/calls/deleteLobby.ts";
 import {joinLobby} from "../../../firebase/calls/joinLobby.ts";
+import {leaveLobby} from "../../../firebase/calls/leaveLobby.ts";
+import {setLobbyOwner} from "../../../firebase/calls/setLobbyOwner.ts";
 
 type LobbyDetailsProps = {
     id : string;
@@ -27,6 +29,7 @@ const defaultLobby: LobbyDataModel = {
 const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsProps) => {
     const [lobby, setLobby] = useState<LobbyDataModel>(defaultLobby);
     const [loading, setLoading] = useState<boolean>(true);
+    const unsubscribeRef = useRef<() => void>(() => {});
 
     useEffect(() => {
         const lobbyRef = ref(Firebase.db, `lobbies/${id}`);
@@ -43,6 +46,8 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
             }
         });
 
+        unsubscribeRef.current = unsubscribe;
+
         return () => unsubscribe();
     }, [id]);
 
@@ -53,9 +58,16 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
 
     async function handleBack() {
         console.log("[LOG] lobby - Leaving lobby :", id);
-        // TODO
+        unsubscribeRef.current?.();
+
         if (lobby.players.length <= 1) {
             await deleteLobby(id);
+        } else {
+            if (lobby.config.owner === Firebase.uid) {
+                const newOwner: string = lobby.players[0].uid === lobby.config.owner ? lobby.players[1].uid : lobby.players[0].uid;
+                await setLobbyOwner(id, lobby, newOwner);
+            }
+            await leaveLobby(lobby, id);
         }
         onBack?.();
     }

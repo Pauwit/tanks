@@ -14,7 +14,7 @@ export async function setName(name: string): Promise<boolean> {
     } catch (e) {
         showError("Could not set name :", e);
         console.error("[ERR] firebase - Could not set name :", e);
-        return false
+        return false;
     }
 
     return true;
