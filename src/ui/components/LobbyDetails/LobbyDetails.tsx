@@ -3,8 +3,8 @@ import './LobbyDetails.css';
 import {FaCrown} from 'react-icons/fa';
 import type {LobbyDataModel} from "../../../game/firebase/models/lobbyDataModel.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
-import {DB, UID} from "../../../game/firebase/firebase.ts";
 import {ref, onValue} from "firebase/database";
+import {Firebase} from "../../../game/firebase/firebase.ts";
 
 type LobbyDetailsProps = {
     id : string;
@@ -27,7 +27,7 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const lobbyRef = ref(DB, `lobbies/${id}`);
+        const lobbyRef = ref(Firebase.db, `lobbies/${id}`);
 
         const unsubscribe = onValue(lobbyRef, (snapshot) => {
             if (snapshot.exists()) {
@@ -103,7 +103,7 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
                         ← Back to lobbies
                     </button>
                 )}
-                {UID === lobby.config.owner && (
+                {Firebase.uid === lobby.config.owner && (
                     <button className="start-game-button" onClick={handleStartGame}>
                         ▶ Start game
                     </button>

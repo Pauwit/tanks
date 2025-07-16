@@ -1,7 +1,6 @@
 import {useEffect} from "react";
 
-
-function GameCanvas() {
+export function GameCanvas() {
     useEffect(() => {
         import('../../../game/main.ts'); // Will run after canvas exists
     }, []);

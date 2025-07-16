@@ -6,7 +6,7 @@ import {LogIn, RefreshCw} from "lucide-react";
 import {showError} from "../ErrorContext/errorStore.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
 import {getLobby} from "../../../game/firebase/calls/getLobby.ts";
-import {UID} from "../../../game/firebase/firebase.ts";
+import {Firebase} from "../../../game/firebase/firebase.ts";
 
 
 type LobbiesTableProps = {
@@ -49,7 +49,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
 
         // If player already in playerList, can join
         for (const player of lobby.players) {
-            if (player.uid === UID) {
+            if (player.uid === Firebase.uid) {
                 joinLobby(id);
                 return;
             }
@@ -67,7 +67,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
     function isLobbyJoinable(lobby: LobbySummaryModel): boolean {
         // If player already in playerList, can join
         for (const player of lobby.players) {
-            if (player.uid === UID) {
+            if (player.uid === Firebase.uid) {
                 return true;
             }
         }
@@ -77,7 +77,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
 
     return (
         <>
-            <h1 className="lobby-table-title">Welcome, </h1>
+            <h1 className="lobby-table-title">Welcome, {Firebase.name}</h1>
             <div className="lobby-table-container">
                 <table className="lobby-table">
                     <thead>

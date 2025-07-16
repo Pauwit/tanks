@@ -1,11 +1,11 @@
 import {get, ref} from "firebase/database";
-import {DB} from "../firebase.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import type {LobbySummaryModel} from "../models/lobbySummaryModel.ts";
 import {LobbyStatus} from "../../enums/lobbyStatus.ts";
+import {Firebase} from "../firebase.ts";
 
 export async function getLobbies(): Promise<LobbySummaryModel[]> {
-    const lobbiesRef = ref(DB, "lobbies");
+    const lobbiesRef = ref(Firebase.db, "lobbies");
 
     const snapshot = await get(lobbiesRef);
     if (!snapshot.exists()) return [];
