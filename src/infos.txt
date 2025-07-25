@@ -74,5 +74,5 @@ lobbies:
 (Can evolve with time)
 
 TODO :
-- Adding joining user to lobby players
-- Removing player when leaving lobby
+- Lobby start and loading canvas
+- Game and firebase sync
