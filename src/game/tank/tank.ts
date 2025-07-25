@@ -9,6 +9,7 @@ import {BulletManager} from "../bullet/bulletManager.ts";
 import {ExplosionManager} from "../explosion/explosionManager.ts";
 import {ImageManager} from "../misc/imageManager.ts";
 import {Window} from "../drawer/window.ts";
+import {Logger} from "../misc/Logger.ts";
 
 export abstract class Tank implements IUpdatable, IDrawable {
     private _base: Rectangle;
@@ -151,12 +152,12 @@ export abstract class Tank implements IUpdatable, IDrawable {
     protected checkDeath(): void {
         let hit = BulletManager.Instance.checkCollision(this.base);
         if (hit) {
-            console.log("Death by Bullet");
+            Logger.log(null, "Death by Bullet");
             this.death();
         }
         hit = ExplosionManager.Instance.checkCollision(this.base);
         if (hit) {
-            console.log("Death by Explosion");
+            Logger.log(null, "Death by Explosion");
             this.death();
         }
     }

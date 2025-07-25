@@ -1,6 +1,7 @@
 import {set, ref} from "firebase/database";
 import {Firebase} from "../firebase.ts";
 import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
+import {Logger} from "../../game/misc/Logger.ts";
 
 export async function setName(name: string): Promise<boolean> {
     if (name === "") {
@@ -11,9 +12,10 @@ export async function setName(name: string): Promise<boolean> {
 
     try {
         await set(nameRef, name);
+        Logger.log("firebase", "Successfully changed name to :", name);
     } catch (e) {
         showError("Could not set name :", e);
-        console.error("[ERR] firebase - Could not set name :", e);
+        Logger.error("firebase", "Could not set name :", e);
         return false;
     }
 

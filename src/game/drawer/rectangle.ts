@@ -1,5 +1,6 @@
 import {Shape} from "./shape.ts";
 import {degToRad} from "../misc/misc.ts";
+import {Logger} from "../misc/Logger.ts";
 
 export class Rectangle extends Shape {
     private _width: number;
@@ -21,14 +22,14 @@ export class Rectangle extends Shape {
 
     public resize(dw: number, dh: number): void {
         if (this._width + dw <= 0) {
-            console.error("[ERR] Rectangle - width cannot be negative.");
-            throw new Error("[ERR] Rectangle - width cannot be negative.");
+            Logger.error("Rectangle", "Width cannot be negative.");
+            throw new Error("Width cannot be negative.");
         } else
             this._width += dw;
 
         if (this._height + dh <= 0) {
-            console.error("[ERR] Rectangle - height cannot be negative.");
-            throw new Error("[ERR] Rectangle - height cannot be negative.");
+            Logger.error("Rectangle", "Height cannot be negative.");
+            throw new Error("Height cannot be negative.");
         } else
             this._height += dh;
     }

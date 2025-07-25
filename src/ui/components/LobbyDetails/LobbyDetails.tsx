@@ -3,12 +3,13 @@ import './LobbyDetails.css';
 import {FaCrown} from 'react-icons/fa';
 import type {LobbyDataModel} from "../../../firebase/models/lobbyDataModel.ts";
 import {LobbyStatus} from "../../../game/enums/lobbyStatus.ts";
-import {ref, onValue} from "firebase/database";
+import {onValue, ref} from "firebase/database";
 import {Firebase} from "../../../firebase/firebase.ts";
 import {deleteLobby} from "../../../firebase/calls/deleteLobby.ts";
-import {joinLobby} from "../../../firebase/calls/joinLobby.ts";
 import {leaveLobby} from "../../../firebase/calls/leaveLobby.ts";
 import {setLobbyOwner} from "../../../firebase/calls/setLobbyOwner.ts";
+import {setStatus} from "../../../firebase/calls/setStatus.ts";
+import {Logger} from "../../../game/misc/Logger.ts";
 
 type LobbyDetailsProps = {
     id : string;
@@ -36,12 +37,12 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
 
         const unsubscribe = onValue(lobbyRef, (snapshot) => {
             if (snapshot.exists()) {
-                const tmp = snapshot.val() as LobbyDataModel
+                const tmp = snapshot.val() as LobbyDataModel;
                 setLobby(tmp);
                 setLoading(false);
-                joinLobby(tmp, id);
+                // TODO : when status changes, load canvas
             } else {
-                console.error("[ERR] lobby - Lobby got deleted with id :", id);
+                Logger.error("lobby", "Lobby got deleted with id :", id);
                 onBack?.();
             }
         });
@@ -51,13 +52,14 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
         return () => unsubscribe();
     }, [id]);
 
-    function handleStartGame() {
-        console.log("[LOG] LobbyDetails - Clicked on Start Game");
-        // TODO
+    async function handleStartGame() {
+        Logger.log("LobbyDetails", "Clicked on Start Game");
+        await setStatus(id, LobbyStatus.Loading);
+        // TODO : show canvas
     }
 
     async function handleBack() {
-        console.log("[LOG] lobby - Leaving lobby :", id);
+        Logger.log("lobby", "Leaving lobby :", id);
         unsubscribeRef.current?.();
 
         if (lobby.players.length <= 1) {

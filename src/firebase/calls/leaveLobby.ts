@@ -2,10 +2,11 @@ import { ref, update } from "firebase/database";
 import {Firebase} from "../firebase.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import type {LobbyPlayerModel} from "../models/lobbyPlayerModel.ts";
+import {Logger} from "../../game/misc/Logger.ts";
 
 export async function leaveLobby(lobby: LobbyDataModel, lobbyId: string): Promise<boolean> {
     if (lobby === null) {
-        console.error("[ERR] lobby - Lobby does not exist");
+        Logger.error("lobby", "Lobby does not exist");
         return false;
     }
 
@@ -19,7 +20,7 @@ export async function leaveLobby(lobby: LobbyDataModel, lobbyId: string): Promis
     }
 
     if (!found) {
-        console.warn("[WAR] lobby - Player is not in this lobby");
+        Logger.warn("lobby", "Player is not in this lobby");
         return true;
     }
 
@@ -27,10 +28,10 @@ export async function leaveLobby(lobby: LobbyDataModel, lobbyId: string): Promis
 
     try {
         await update(lobbyRef, {players: updatedPlayers});
-        console.log("[LOG] lobby - Left lobby successfully");
+        Logger.log("lobby", "Left lobby successfully");
         return true;
     } catch (error) {
-        console.error("[ERR] lobby - Failed to leave lobby :", error);
+        Logger.error("lobby", "Failed to leave lobby :", error);
         return false;
     }
 }

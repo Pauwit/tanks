@@ -1,3 +1,4 @@
+import {Logger} from "./Logger.ts";
 
 export class ImageManager {
     private readonly PATH_IMAGES : string = "/public/images/";
@@ -49,7 +50,7 @@ export class ImageManager {
     }
 
     private importImages() : void {
-        console.log("[LOG] ImageManager - Importing images...");
+        Logger.log("ImageManager", "Importing images...");
 
         this._background.src = this.imagePath("background.png");
         this._wall.src = this.imagePath("wall1.png");
@@ -59,7 +60,7 @@ export class ImageManager {
         this._crosshairDot.src = this.imagePath("aimdot.png");
         this._playerDeath.src = this.imagePath("playerDeath.png");
 
-        console.log("[LOG] ImageManager - Finished importing images");
+        Logger.log("ImageManager", "Finished importing images");
     }
 
     private imagePath(name : string) : string {

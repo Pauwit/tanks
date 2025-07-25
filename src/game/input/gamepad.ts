@@ -1,3 +1,4 @@
+import {Logger} from "../misc/Logger.ts";
 
 export class Gamepad {
     private static instance: Gamepad = new Gamepad();
@@ -8,8 +9,8 @@ export class Gamepad {
 
     private constructor() {
         globalThis.window.addEventListener("gamepadconnected", (e) => {
-            console.log(
-                "[LOG] Gamepad - Gamepad connected at index %d: %s. %d buttons, %d axes.",
+            Logger.log(
+                "Gamepad", "Gamepad connected at index %d: %s. %d buttons, %d axes.",
                 e.gamepad.index,
                 e.gamepad.id,
                 e.gamepad.buttons.length,
@@ -19,8 +20,8 @@ export class Gamepad {
         });
 
         globalThis.window.addEventListener("gamepaddisconnected", (e) => {
-            console.log(
-                "[LOG] Gamepad - Gamepad disconnected from index %d: %s",
+            Logger.log(
+                "Gamepad", "Gamepad disconnected from index %d: %s",
                 e.gamepad.index,
                 e.gamepad.id,
             );

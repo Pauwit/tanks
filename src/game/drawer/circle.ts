@@ -1,4 +1,5 @@
 import {Shape} from "./shape.ts";
+import {Logger} from "../misc/Logger.ts";
 
 export class Circle extends Shape {
     private _radius: number;
@@ -14,8 +15,8 @@ export class Circle extends Shape {
 
     public resize(dr: number): void {
         if (this.radius + dr <= 0) {
-            console.error("[ERR] Circle - radius cannot be negative.");
-            throw new Error("[ERR] Circle - radius cannot be negative.");
+            Logger.error("Circle", "Radius cannot be negative.");
+            throw new Error("Radius cannot be negative.");
         } else
             this._radius += dr;
     }

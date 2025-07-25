@@ -1,4 +1,5 @@
 import { getDatabase, ref, remove } from "firebase/database";
+import {Logger} from "../../game/misc/Logger.ts";
 
 /**
  * Deletes a lobby by its ID from the Firebase Realtime Database.
@@ -15,9 +16,9 @@ export async function deleteLobby(lobbyId: string): Promise<void> {
 
     try {
         await remove(lobbyRef);
-        console.log(`[LOG] lobby - Successfully deleted lobby: ${lobbyId}`);
+        Logger.log("lobby", "Successfully deleted lobby:", lobbyId);
     } catch (error) {
-        console.error(`[ERR] lobby - Failed to delete lobby: ${lobbyId}`, error);
+        Logger.error("lobby", "Failed to delete lobby:", lobbyId, error);
         throw error;
     }
 }

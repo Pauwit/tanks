@@ -4,6 +4,7 @@ import {LobbyStatus} from "../../game/enums/lobbyStatus.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import {Firebase} from "../firebase.ts";
 import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
+import {Logger} from "../../game/misc/Logger.ts";
 
 const DEFAULT_CONFIG: LobbyConfigModel = {
     gamemode: "classic",
@@ -31,11 +32,11 @@ export async function createLobby(name: string): Promise<string | null> {
 
         await set(newLobbyRef, lobbyData);
 
-        console.log("[LOG] firebase - Created lobby successfully :", newLobbyRef.key);
+        Logger.log("firebase", "Created lobby successfully :", newLobbyRef.key);
         return newLobbyRef.key as string;
     } catch (e) {
         showError("Error while creating lobby :", e);
-        console.error("[ERR] firebase - Error while creating lobby :", e);
+        Logger.error("firebase", "Error while creating lobby :", e);
         return null;
     }
 }

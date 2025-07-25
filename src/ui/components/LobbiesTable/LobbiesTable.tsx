@@ -9,6 +9,8 @@ import {getLobby} from "../../../firebase/calls/getLobby.ts";
 import {Firebase} from "../../../firebase/firebase.ts";
 import SettingsPopup from "../SettingsPopup/SettingsPopup.tsx";
 import LobbyCreationPopup from "../LobbyCreationPopup/LobbyCreationPopup.tsx";
+import {Logger} from "../../../game/misc/Logger.ts";
+import {joinLobby} from "../../../firebase/calls/joinLobby.ts";
 
 
 type LobbiesTableProps = {
@@ -26,8 +28,8 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
         try {
             setLobbies(await getLobbies());
         } catch (error) {
-            console.error('[ERR] lobby - Failed to fetch lobbies :', error);
-            showError('Failed to fetch lobbies :', error);
+            Logger.error("lobby", "Failed to fetch lobbies :", error);
+            showError("Failed to fetch lobbies :", error);
         }
         setLoading(false);
     };
@@ -39,14 +41,20 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
     }, []);
 
     const handleJoin = async (id: string) => {
-        function join(id: string) {
-            console.log("[LOG] lobby - Joining lobby:", id);
-            onSelectLobby?.(id);
+        async function join(id: string) {
+            Logger.log("lobby", "Joining lobby:", id);
+            setLoading(true);
+            if (await joinLobby(id)) {
+                onSelectLobby?.(id);
+            } else {
+                showError("Failed to join lobby");
+            }
+            setLoading(false);
         }
 
         const lobby = await getLobby(id);
         if (lobby === null) {
-            console.error("[ERR] lobby - Lobby does not exist anymore");
+            Logger.error("lobby", "Lobby does not exist anymore");
             showError("Lobby does not exist anymore");
             return;
         }
@@ -60,7 +68,7 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
         }
 
         if (lobby.status !== LobbyStatus.Waiting || lobby.players.length >= lobby.config.maxPlayers) {
-            console.error("[ERR] lobby - Unable to join this lobby");
+            Logger.error("lobby", "Unable to join this lobby");
             showError("Unable to join this lobby");
             return;
         }

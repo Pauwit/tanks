@@ -28,8 +28,13 @@ const SettingsPopup: React.FC<SettingsPopupProps> = ({ onClose }: SettingsPopupP
             return;
         }
 
-        if (name.length < 4) {
-            showError("Name must be at least 4 characters long");
+        if (name.length < Firebase.MIN_NAME_SIZE) {
+            showError(`Name must be at least ${Firebase.MIN_NAME_SIZE} characters long`);
+            return;
+        }
+
+        if (name.length > Firebase.MAX_NAME_SIZE) {
+            showError(`Name must be at most ${Firebase.MAX_NAME_SIZE} characters long`);
             return;
         }
 

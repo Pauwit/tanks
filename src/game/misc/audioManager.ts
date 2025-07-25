@@ -1,3 +1,4 @@
+import {Logger} from "./Logger.ts";
 
 export class AudioManager {
     private readonly PATH_AUDIO : string = "/public/audio/";
@@ -62,7 +63,7 @@ export class AudioManager {
     }
 
     private importAudio() : void {
-        console.log("[LOG] AudioManager - Importing audio...");
+        Logger.log("AudioManager", "Importing audio...");
 
         this._moveSound.src = this.audioPath("move.wav");
         this._destroyedBullet.src = this.audioPath("bullet_des.wav");
@@ -82,7 +83,7 @@ export class AudioManager {
         this._explosion.volume = 0.5;
         this._destroyedTank.volume = 0.4;
 
-        console.log("[LOG] AudioManager - Finished importing audio");
+        Logger.log("AudioManager", "Finished importing audio");
     }
 
     private audioPath(name: string): string {

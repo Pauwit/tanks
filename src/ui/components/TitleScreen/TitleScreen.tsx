@@ -4,6 +4,7 @@ import {Firebase} from "../../../firebase/firebase.ts";
 import {getName} from "../../../firebase/calls/getName.ts";
 import {isAlphaNumerical} from "../../../game/misc/misc.ts";
 import {setName} from "../../../firebase/calls/setName.ts";
+import {showError} from "../ErrorContext/errorStore.ts";
 
 type TitleScreenProps = {
     onStart: () => void;
@@ -44,8 +45,13 @@ const TitleScreen: React.FC<TitleScreenProps> = ({ onStart }) => {
             return;
         }
 
-        if (name.length < 4) {
-            setErrorText("Name must be at least 4 characters long");
+        if (name.length < Firebase.MIN_NAME_SIZE) {
+            setErrorText(`Name must be at least ${Firebase.MIN_NAME_SIZE} characters long`);
+            return;
+        }
+
+        if (name.length > Firebase.MAX_NAME_SIZE) {
+            setErrorText(`Name must be at most ${Firebase.MAX_NAME_SIZE} characters long`);
             return;
         }
 

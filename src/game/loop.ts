@@ -2,6 +2,7 @@ import {Mouse} from "./input/mouse.ts";
 import {Keyboard} from "./input/keyboard.ts";
 import {Window} from "./drawer/window.ts";
 import {clamp} from "./misc/misc.ts";
+import {Logger} from "./misc/Logger.ts";
 
 export class GameLoop {
     // FPS settings
@@ -100,8 +101,8 @@ export class GameLoop {
         if (this._isRunning)
             return;
 
-        console.log("[LOG] GameLoop - Starting...");
-        console.log("[LOG] GameLoop - Target FPS is set to", this.targetFps);
+        Logger.log("GameLoop", "Starting...");
+        Logger.log("GameLoop", "Target FPS is set to", this.targetFps);
 
         this._isRunning = true;
         this._lastTimestamp = performance.now();
@@ -135,15 +136,15 @@ export class GameLoop {
 
     private discoverScreenFPS(): void {
         if (this.targetFps < 165 && GameLoop.Instance.fps >= 165) {
-            console.warn("[WAR] GameLoop - Changed target FPS from", this.targetFps, "to", 165);
+            Logger.warn("GameLoop", "Changed target FPS from", this.targetFps, "to", 165);
             this.targetFps = 165;
         }
         if (this.targetFps < 144 && GameLoop.Instance.fps >= 144) {
-            console.warn("[WAR] GameLoop - Changed target FPS from", this.targetFps, "to", 144);
+            Logger.warn("GameLoop", "Changed target FPS from", this.targetFps, "to", 144);
             this.targetFps = 144;
         }
         if (this.targetFps < 120 && GameLoop.Instance.fps >= 120) {
-            console.warn("[WAR] GameLoop - Changed target FPS from", this.targetFps, "to", 120);
+            Logger.warn("GameLoop", "Changed target FPS from", this.targetFps, "to", 120);
             this.targetFps = 120;
         }
     }

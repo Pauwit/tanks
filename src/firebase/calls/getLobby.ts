@@ -1,12 +1,16 @@
 import {get, ref} from "firebase/database";
 import {Firebase} from "../firebase.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
+import {Logger} from "../../game/misc/Logger.ts";
 
 export async function getLobby(id: string): Promise<LobbyDataModel | null> {
     const lobbyRef = ref(Firebase.db, `lobbies/${id}`);
 
     const snapshot = await get(lobbyRef);
-    if (!snapshot.exists()) return null;
+    if (!snapshot.exists()) {
+        Logger.error("lobby", "Lobby does not exist with id :", id);
+        return null;
+    }
 
     return snapshot.val() as LobbyDataModel;
 }

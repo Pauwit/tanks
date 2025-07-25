@@ -1,3 +1,5 @@
+import {Logger} from "../misc/Logger.ts";
+
 export class Window {
     private readonly LOGICAL_WIDTH = 1920;
     private readonly LOGICAL_HEIGHT = 1080;
@@ -98,7 +100,7 @@ export class Window {
         this._scale.x = newWidth / this.LOGICAL_WIDTH;
         this._scale.y = newHeight / this.LOGICAL_HEIGHT;
 
-        console.warn("[WAR] Window - Resize to :", newWidth, newHeight);
+        Logger.warn("Window", "Resize to :", newWidth, newHeight);
 
         this._windowWidth = this.LOGICAL_WIDTH;
         this._windowHeight = this.LOGICAL_HEIGHT;

@@ -1,4 +1,6 @@
-console.log("[LOG] main - Starting main...")
+import {Logger} from "./misc/Logger.ts";
+
+Logger.log("main", "Starting main...")
 
 document.body.style.overflow = "hidden";
 

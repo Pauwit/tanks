@@ -1,3 +1,4 @@
+import {Logger} from "./Logger.ts";
 
 class Node<T> {
     private _prev: Node<T> | null;
@@ -65,8 +66,8 @@ export class LinkedList<T> {
 
     private getNode(index: number): Node<T> {
         if (index < 0 || index >= this._length) {
-            console.error("[ERR] LinkedList - Index is out of bounds");
-            throw new Error("[ERR] LinkedList - Index is out of bounds");
+            Logger.error("LinkedList", "Index is out of bounds");
+            throw new Error("Index is out of bounds");
         }
 
         if (index <= this._length / 2) {
@@ -145,8 +146,8 @@ export class LinkedList<T> {
 
     public popFront(): T {
         if (!this._first) {
-            console.error("[ERR] LinkedList - Nothing to pop");
-            throw new Error("[ERR] LinkedList - Nothing to pop");
+            Logger.error("LinkedList", "Nothing to pop");
+            throw new Error("Nothing to pop");
         }
 
         const res = this._first.value;
@@ -166,8 +167,8 @@ export class LinkedList<T> {
 
     public popBack(): T {
         if (!this._last) {
-            console.error("[ERR] LinkedList - Nothing to pop");
-            throw new Error("[ERR] LinkedList - Nothing to pop");
+            Logger.error("LinkedList", "Nothing to pop");
+            throw new Error("Nothing to pop");
         }
 
         const res = this._last.value;

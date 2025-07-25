@@ -1,18 +1,19 @@
 import { ref, update } from "firebase/database";
 import {Firebase} from "../firebase.ts";
-import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
+import {Logger} from "../../game/misc/Logger.ts";
+import {getLobby} from "./getLobby.ts";
 
-export async function joinLobby(lobby: LobbyDataModel, lobbyId: string): Promise<boolean> {
-    if (lobby === null) {
-        console.error("[ERR] lobby - Lobby does not exist");
+export async function joinLobby(lobbyId: string): Promise<boolean> {
+    const lobby = await getLobby(lobbyId);
+    if (!lobby) {
+        Logger.error("lobby", "Failed to join lobby");
         return false;
     }
 
     // Check if player is already in the lobby
     for (const player of lobby.players) {
-        console.log(Firebase.uid, player.uid);
         if (player.uid === Firebase.uid) {
-            console.log("[LOG] lobby - Player already in the lobby");
+            Logger.log("lobby", "Player already in the lobby");
             return true;
         }
     }
@@ -27,10 +28,10 @@ export async function joinLobby(lobby: LobbyDataModel, lobbyId: string): Promise
 
     try {
         await update(lobbyRef, {players: updatedPlayers});
-        console.log("[LOG] lobby - Joined lobby successfully");
+        Logger.log("lobby", "Joined lobby successfully");
         return true;
     } catch (error) {
-        console.error("[ERR] lobby - Failed to join lobby :", error);
+        Logger.error("lobby", "Failed to join lobby :", error);
         return false;
     }
 }

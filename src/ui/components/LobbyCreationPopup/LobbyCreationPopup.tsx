@@ -3,6 +3,7 @@ import "./LobbyCreationPopup.css";
 import {X} from "lucide-react";
 import {isAlphaNumericalWithSpaces} from "../../../game/misc/misc.ts";
 import {createLobby} from "../../../firebase/calls/createLobby.ts";
+import {Firebase} from "../../../firebase/firebase.ts";
 
 type LobbyCreationPopupProps = {
     onClose: () => void;
@@ -10,7 +11,7 @@ type LobbyCreationPopupProps = {
 };
 
 const LobbyCreationPopup: React.FC<LobbyCreationPopupProps> = ({ onClose, onCreation }: LobbyCreationPopupProps) => {
-    const [name, setName] = useState("");
+    const [name, setName] = useState("Lobby by " + Firebase.name);
     const [loading, setLoading] = useState<boolean>(false);
     const [errorText, setErrorText] = useState<string | null>(null);
 
@@ -25,8 +26,13 @@ const LobbyCreationPopup: React.FC<LobbyCreationPopupProps> = ({ onClose, onCrea
             return;
         }
 
-        if (nl.length < 4) {
-            setErrorText("Name must be at least 4 characters long");
+        if (nl.length < Firebase.MIN_LOBBY_NAME_SIZE) {
+            setErrorText(`Name must be at least ${Firebase.MIN_LOBBY_NAME_SIZE} characters long`);
+            return;
+        }
+
+        if (nl.length > Firebase.MAX_LOBBY_NAME_SIZE) {
+            setErrorText(`Name must be at most ${Firebase.MAX_LOBBY_NAME_SIZE} characters long`);
             return;
         }
 

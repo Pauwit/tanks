@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {authenticate} from "./auth.ts";
+import {Logger} from "../game/misc/Logger.ts";
 
 // T ODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,6 +22,11 @@ export class Firebase {
         measurementId: "G-L79P1VMSPP"
     };
 
+    public static readonly MIN_NAME_SIZE = 4;
+    public static readonly MAX_NAME_SIZE = 16;
+    public static readonly MIN_LOBBY_NAME_SIZE = 4;
+    public static readonly MAX_LOBBY_NAME_SIZE = 32;
+
     private static Instance: Firebase;
 
     private readonly APP;
@@ -31,29 +37,29 @@ export class Firebase {
     private _name: string = "";
 
     private constructor() {
-        console.log("[LOG] firebase - Connecting to firebase...");
+        Logger.log("firebase", "Connecting to firebase...");
 
         // Initialize Firebase
         this.APP = initializeApp(this._firebaseConfig);
-        console.log("[LOG] firebase - Returned app :", this.APP);
+        Logger.log("firebase", "Returned app :", this.APP);
 
         // Get a reference to the Realtime Database service
         this.DB = getDatabase(this.APP);
-        console.log("[LOG] firebase - Returned database :", this.DB);
+        Logger.log("firebase", "Returned database :", this.DB);
 
         // Get authentication service
         this.AUTH = getAuth(this.APP);
-        console.log("[LOG] firebase - Returned auth :", this.AUTH);
+        Logger.log("firebase", "Returned auth :", this.AUTH);
 
         onAuthStateChanged(this.AUTH, (user) => {
             if (user) {
                 this._uid = user.uid;
-                console.log("[LOG] firebase - User ID:", this._uid);
+                Logger.log("firebase", "User ID:", this._uid);
             }
         });
 
         Firebase.Instance = this;
-        console.log("[LOG] firebase - Connected successfully");
+        Logger.log("firebase", "Connected successfully");
     }
 
     public static async connectToFirebase() {
