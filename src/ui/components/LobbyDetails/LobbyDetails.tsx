@@ -14,6 +14,7 @@ import {Logger} from "../../../game/misc/Logger.ts";
 type LobbyDetailsProps = {
     id : string;
     onBack?: () => void;
+    onStart?: () => void;
 };
 
 const defaultLobby: LobbyDataModel = {
@@ -27,7 +28,7 @@ const defaultLobby: LobbyDataModel = {
     },
 }
 
-const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsProps) => {
+const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack, onStart}: LobbyDetailsProps) => {
     const [lobby, setLobby] = useState<LobbyDataModel>(defaultLobby);
     const [loading, setLoading] = useState<boolean>(true);
     const unsubscribeRef = useRef<() => void>(() => {});
@@ -56,6 +57,7 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack}: LobbyDetailsPro
         Logger.log("LobbyDetails", "Clicked on Start Game");
         await setStatus(id, LobbyStatus.Loading);
         // TODO : show canvas
+        onStart?.();
     }
 
     async function handleBack() {

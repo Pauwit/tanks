@@ -24,11 +24,11 @@ export function drawCrosshair(pX: number, pY: number): void {
     const y = Mouse.Instance.y;
 
     ctx.globalAlpha = 0.6;
-    ctx.drawImage(c_dot, pX+(x-pX)*0.2-10, pY+(y-pY)*0.2-10, 20, 20);
-    ctx.drawImage(c_dot, pX+(x-pX)*0.4-10, pY+(y-pY)*0.4-10, 20, 20);
-    ctx.drawImage(c_dot, pX+(x-pX)*0.6-10, pY+(y-pY)*0.6-10, 20, 20);
-    ctx.drawImage(c_dot, pX+(x-pX)*0.8-10, pY+(y-pY)*0.8-10, 20, 20);
+    ctx.drawImage(c_dot, pX+(x-pX)*0.2-10, pY+(y-pY)*0.2-10, 30, 30);
+    ctx.drawImage(c_dot, pX+(x-pX)*0.4-10, pY+(y-pY)*0.4-10, 30, 30);
+    ctx.drawImage(c_dot, pX+(x-pX)*0.6-10, pY+(y-pY)*0.6-10, 30, 30);
+    ctx.drawImage(c_dot, pX+(x-pX)*0.8-10, pY+(y-pY)*0.8-10, 30, 30);
     ctx.globalAlpha = 0.9;
-    ctx.drawImage(ImageManager.crosshair, x-30, y-30);
+    ctx.drawImage(ImageManager.crosshair, x-30, y-30, 90, 90);
     ctx.globalAlpha = 1;
 }

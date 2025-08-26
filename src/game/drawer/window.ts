@@ -1,8 +1,9 @@
 import {Logger} from "../misc/Logger.ts";
+import {drawWaitingForOtherPlayers} from "../misc/loadingUI.ts";
 
 export class Window {
-    private readonly LOGICAL_WIDTH = 1920;
-    private readonly LOGICAL_HEIGHT = 1080;
+    private readonly LOGICAL_WIDTH = 3840;
+    private readonly LOGICAL_HEIGHT = 2160;
     private readonly ASPECT_RATIO = this.LOGICAL_WIDTH / this.LOGICAL_HEIGHT;
 
     private static _instance: Window;
@@ -104,6 +105,7 @@ export class Window {
 
         this._windowWidth = this.LOGICAL_WIDTH;
         this._windowHeight = this.LOGICAL_HEIGHT;
+        drawWaitingForOtherPlayers();
     }
 
     public clear() : void {
