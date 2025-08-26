@@ -105,7 +105,6 @@ export class Window {
 
         this._windowWidth = this.LOGICAL_WIDTH;
         this._windowHeight = this.LOGICAL_HEIGHT;
-        drawWaitingForOtherPlayers();
     }
 
     public clear() : void {

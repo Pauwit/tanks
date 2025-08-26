@@ -17,7 +17,7 @@ type LobbyDetailsProps = {
     onStart?: () => void;
 };
 
-const defaultLobby: LobbyDataModel = {
+export const defaultLobby: LobbyDataModel = {
     name: "",
     status: LobbyStatus.Waiting,
     players: [],

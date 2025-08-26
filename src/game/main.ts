@@ -10,7 +10,10 @@ import {MapManager} from "./map/mapManager.ts";
 import {BombManager} from "./bomb/bombManager.ts";
 import {ExplosionManager} from "./explosion/explosionManager.ts";
 import {GameLoop} from "./loop.ts";
-import {drawWaitingForOtherPlayers} from "./misc/loadingUI.ts";
+import {drawErrorOccurred, drawGettingLobbyInfo, drawWaitingForOtherPlayers} from "./misc/loadingUI.ts";
+import {getLobby} from "../firebase/calls/getLobby.ts";
+import {LobbyManager} from "./firebase/LobbyManager.ts";
+import {sleep} from "./misc/misc.ts";
 
 Logger.log("main", "Starting main...")
 
@@ -77,4 +80,22 @@ function startGameLoop() {
 // Init Gameloop
 // startGameLoop();
 
-drawWaitingForOtherPlayers();
+
+let hasRun = false;
+export async function startLoading(lobbyId: string) {
+    // TEMP
+    if (hasRun) return;
+    hasRun = true;
+
+    drawGettingLobbyInfo();
+    const lobby = await getLobby(lobbyId);
+    if (lobby === null) {
+        drawErrorOccurred();
+        return;
+    }
+    Logger.log("main", "Got the following lobby :", lobby);
+    LobbyManager.start(lobby);
+
+    drawWaitingForOtherPlayers();
+
+}

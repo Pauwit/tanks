@@ -21,3 +21,11 @@ function drawLoadingText(text: string) {
 export function drawWaitingForOtherPlayers() {
     drawLoadingText("Waiting for other players...");
 }
+
+export function drawGettingLobbyInfo() {
+    drawLoadingText("Getting lobby info...");
+}
+
+export function drawErrorOccurred() {
+    drawLoadingText("An error occurred. Please reload the page.");
+}

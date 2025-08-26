@@ -1,8 +1,14 @@
 import {useEffect} from "react";
 
-export function GameCanvas() {
+type GameCanvasProps = {
+    id : string;
+};
+
+export function GameCanvas({id} : GameCanvasProps) {
     useEffect(() => {
-        import('../../../game/main.ts'); // Will run after canvas exists
+        import('../../../game/main.ts').then((module) => {
+            module.startLoading(id);
+        }); // Will run after canvas exists
     }, []);
 
     return (
