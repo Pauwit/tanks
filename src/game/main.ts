@@ -96,6 +96,15 @@ export async function startLoading(lobbyId: string) {
     Logger.log("main", "Got the following lobby :", lobby);
     LobbyManager.start(lobby);
 
+    // TODO: Can be displayed in canvas while waiting
     drawWaitingForOtherPlayers();
+    // startGameLoop()
+}
 
+// Exposes function. has to be done with a lot of cheat/debug functions once the multiplayer works
+// @ts-ignore
+window.testFunction = () => {
+    console.log("This is a message.");
+    console.log(LobbyManager.Instance.isOwner);
+    return "test";
 }

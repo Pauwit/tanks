@@ -98,7 +98,7 @@ export abstract class Tank implements IUpdatable, IDrawable {
     draw(ctx: CanvasRenderingContext2D): void {
         if (this._dead) {
             const img = ImageManager.playerDeath;
-            ctx.drawImage(img, this.x - img.width/2, this.y - img.height/2);
+            ctx.drawImage(img, this.x - img.width/2, this.y - img.height/2, img.width * 2, img.height * 2);
         }
         else {
             this._base.draw(ctx);
