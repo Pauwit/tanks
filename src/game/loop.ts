@@ -106,6 +106,7 @@ export class GameLoop {
 
         Logger.log("GameLoop", "Starting...");
         Logger.log("GameLoop", "Target FPS is set to", this.targetFps);
+        Window.Instance.canvas.style.cursor = 'none';
 
         this._isRunning = true;
         this._lastTimestamp = performance.now();
@@ -126,6 +127,7 @@ export class GameLoop {
     // The stop() method safely shuts down the game loop
     public stop() {
         if (!this._lastRequestId) return;
+        Window.Instance.canvas.style.cursor = 'auto';
         this._isRunning = false;
         cancelAnimationFrame(this._lastRequestId);
         this._lastRequestId = undefined;

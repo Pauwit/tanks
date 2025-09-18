@@ -32,6 +32,10 @@ export class Window {
         this._deltaDisplay = deltaDisplay;
         this._fpsDisplay = fpsDisplay;
 
+        document.body.style.overflow = "hidden";
+        this.handleResize(canvas);
+        window.addEventListener('resize', () => Window.Instance.handleResize(canvas));
+
         // Prevent right click and tab
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', (event) => {

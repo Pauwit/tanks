@@ -19,17 +19,10 @@ import {sleep} from "./misc/misc.ts";
 
 Logger.log("main", "Starting main...")
 
-// Init canvas
-const canvas = <HTMLCanvasElement>document.getElementById('canvas');
-document.body.style.overflow = "hidden";
-canvas.style.cursor = 'none';
-
 // Init window
-Drawer.Window.SetInstance(canvas,
+Drawer.Window.SetInstance(<HTMLCanvasElement>document.getElementById('canvas'),
     <HTMLElement>document.getElementById('fpsDisplay'),
     <HTMLElement>document.getElementById('deltaDisplay'));
-Window.Instance.handleResize(canvas);
-window.addEventListener('resize', () => Window.Instance.handleResize(canvas));
 
 // Init inputs
 Mouse.Instance;
@@ -43,13 +36,13 @@ const rect2 = new Drawer.Rectangle(400, 400, 100, 100, 45, "#f00");
 const rect3 = new Drawer.Rectangle(800, 1600, 1600, 100, 0);
 const c1 = new Drawer.Circle(1800, 600, 60, "#0f0");
 const c2 = new Drawer.Circle(1800, 1200, 160, "#00f");
-
-const player = new PlayerTank("0", 100, 100);
 MapManager.add(rect1);
 MapManager.add(rect2);
 MapManager.add(c1);
 MapManager.add(c2);
 MapManager.add(rect3);
+
+const player = new PlayerTank("0", 100, 100);
 
 function startGameLoop() {
     function render() : void {
@@ -111,9 +104,10 @@ export async function startLoading(lobbyId: string) {
 
     LobbyManager.Instance.waitingState = LobbyWaitingState.InitializingCanvas;
 
-    // Init Gameloop
+    // Init GameLoop
     startLoadingLoop();
 
+    // Getting lobby info
     LobbyManager.Instance.waitingState = LobbyWaitingState.GettingLobbyInfo;
     const lobby = await getLobby(lobbyId);
     if (lobby === null) {
@@ -130,14 +124,8 @@ export async function startLoading(lobbyId: string) {
     }
 }
 
-// Exposes function. has to be done with a lot of cheat/debug functions once the multiplayer works
-// @ts-ignore
-window.testFunction = () => {
-    console.log("This is a message.");
-    console.log(LobbyManager.Instance.isOwner);
-    return "test";
-}
-
+// Exposed functions
+// TODO: Has to be done with a lot of cheat/debug functions once the multiplayer works
 // @ts-ignore
 window.stopGameLoop = () => {
     Logger.log(null, "Stopping Game Loop...")
