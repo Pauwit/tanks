@@ -74,5 +74,5 @@ lobbies:
 (Can evolve with time)
 
 TODO :
-- Lobby start and loading canvas
 - Game and firebase sync
+- Map storage and manager
