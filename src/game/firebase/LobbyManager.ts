@@ -1,15 +1,17 @@
 import type {LobbyDataModel} from "../../firebase/models/lobbyDataModel.ts";
 import {Firebase} from "../../firebase/firebase.ts";
 import {defaultLobby} from "../../ui/components/LobbyDetails/LobbyDetails.tsx";
+import {LobbyWaitingState} from "../enums/lobbyWaitingState.ts";
 
 export class LobbyManager {
     private static _instance: LobbyManager = new LobbyManager();
 
     private _isOwner: boolean = false;
     private _lobby: LobbyDataModel = defaultLobby;
+    private _waitingState: LobbyWaitingState;
 
     private constructor() {
-
+        this._waitingState = LobbyWaitingState.None;
     }
 
     public static start(lobby: LobbyDataModel) {
@@ -27,5 +29,13 @@ export class LobbyManager {
 
     public get lobby(): LobbyDataModel {
         return this._lobby;
+    }
+
+    public get waitingState(): LobbyWaitingState {
+        return this._waitingState;
+    }
+
+    public set waitingState(value: LobbyWaitingState) {
+        this._waitingState = value;
     }
 }

@@ -4,6 +4,9 @@ import {Window} from "./drawer/window.ts";
 import {clamp} from "./misc/misc.ts";
 import {Logger} from "./misc/Logger.ts";
 
+export type UpdateFunctionType = (dt: number) => void;
+export type RenderFunctionType = () => void;
+
 export class GameLoop {
     // FPS settings
 
@@ -70,7 +73,7 @@ export class GameLoop {
     }
 
     // This method uses an accumulator pattern to handle time
-    private updateGameLogic(update: (dt: number) => void) {
+    private updateGameLogic(update: UpdateFunctionType) {
         this._accumulator += this._deltaTime;
 
         if (this._accumulator > this.maxDeltaTime) {
@@ -84,20 +87,20 @@ export class GameLoop {
         }
     }
 
-    private callUpdate(update: (dt: number) => void): void {
+    private callUpdate(update: UpdateFunctionType): void {
         update(this.targetFrameTime / 1000);
         Mouse.Instance.resetMouse();
         Keyboard.Instance.resetKeyboard();
     }
 
-    private callRender(render: () => void) {
+    private callRender(render: RenderFunctionType) {
         render();
         Window.Instance.setFPSDisplay(GameLoop.Instance.fps);
         Window.Instance.setDeltaDisplay(GameLoop.Instance.deltaTime);
     }
 
     // The start method takes two callbacks: update for game logic and physics, and render for drawing the game
-    public start(update: (dt: number) => void, render: () => void) {
+    public start(update: UpdateFunctionType, render: RenderFunctionType) {
         if (this._isRunning)
             return;
 

@@ -1,5 +1,4 @@
 import {Logger} from "../misc/Logger.ts";
-import {drawWaitingForOtherPlayers} from "../misc/loadingUI.ts";
 
 export class Window {
     private readonly LOGICAL_WIDTH = 3840;

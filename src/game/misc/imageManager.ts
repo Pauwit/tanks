@@ -12,6 +12,7 @@ export class ImageManager {
     private readonly _crosshair = new Image();
     private readonly _crosshairDot = new Image();
     private readonly _playerDeath = new Image();
+    private readonly _loadingIcon = new Image();
 
     private constructor() {
         this.importImages();
@@ -49,6 +50,10 @@ export class ImageManager {
         return this.Instance._playerDeath;
     }
 
+    public static get LoadingIcon() {
+        return this.Instance._loadingIcon;
+    }
+
     private importImages() : void {
         Logger.log("ImageManager", "Importing images...");
 
@@ -59,6 +64,7 @@ export class ImageManager {
         this._crosshair.src = this.imagePath("aim.png");
         this._crosshairDot.src = this.imagePath("aimdot.png");
         this._playerDeath.src = this.imagePath("playerDeath.png");
+        this._loadingIcon.src = this.imagePath("load.png");
 
         Logger.log("ImageManager", "Finished importing images");
     }

@@ -77,7 +77,7 @@ const TitleScreen: React.FC<TitleScreenProps> = ({ onStart }) => {
             {signIn ? (
                 <>
                     <img
-                        src="/icons/load.png"
+                        src="/images/load.png"
                         alt="Loading..."
                         className="spinning"
                         width={52}
