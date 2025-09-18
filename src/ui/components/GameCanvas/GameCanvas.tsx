@@ -7,7 +7,7 @@ type GameCanvasProps = {
 export function GameCanvas({id} : GameCanvasProps) {
     useEffect(() => {
         import('../../../game/main.ts').then((module) => {
-            module.startLoading(id);
+            module.main(id);
         }); // Will run after canvas exists
     }, []);
 
