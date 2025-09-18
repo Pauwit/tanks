@@ -7,10 +7,11 @@ export function drawText(text: string, x: number, y: number, fontSize: number = 
     ctx.fillStyle = color;
     ctx.font = `${fontSize}px sans-serif`;
 
-    const textWidth = ctx.measureText(text).width;
-    const textHeight = ctx.measureText(text).emHeightAscent;
+    // Center align horizontally and vertically
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
 
-    ctx.fillText(text, x - textWidth / 2, y - fontSize / 2 + textHeight);
+    ctx.fillText(text, x, y);
 
     ctx.restore();
 }

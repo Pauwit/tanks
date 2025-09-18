@@ -15,8 +15,8 @@ export class LobbyManager {
     }
 
     public static start(lobby: LobbyDataModel) {
-        this._instance._isOwner = lobby.config.owner === Firebase.uid;
-        this._instance._lobby = lobby;
+        this.Instance._isOwner = lobby.config.owner === Firebase.uid;
+        this.Instance._lobby = lobby;
     }
 
     public static get Instance(): LobbyManager {

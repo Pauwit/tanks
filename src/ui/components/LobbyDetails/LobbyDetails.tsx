@@ -10,6 +10,7 @@ import {leaveLobby} from "../../../firebase/calls/leaveLobby.ts";
 import {setLobbyOwner} from "../../../firebase/calls/setLobbyOwner.ts";
 import {setStatus} from "../../../firebase/calls/setStatus.ts";
 import {Logger} from "../../../game/misc/Logger.ts";
+import {showError} from "../ErrorContext/errorStore.ts";
 
 type LobbyDetailsProps = {
     id : string;
@@ -41,9 +42,13 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack, onStart}: LobbyD
                 const tmp = snapshot.val() as LobbyDataModel;
                 setLobby(tmp);
                 setLoading(false);
-                // TODO : when status changes, load canvas
+                if (tmp.status === LobbyStatus.Loading) {
+                    Logger.log("LobbyDetails", "Game started!");
+                    onStart?.()
+                }
             } else {
                 Logger.error("lobby", "Lobby got deleted with id :", id);
+                showError("Lobby got deleted");
                 onBack?.();
             }
         });
@@ -54,9 +59,8 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack, onStart}: LobbyD
     }, [id]);
 
     async function handleStartGame() {
-        Logger.log("LobbyDetails", "Clicked on Start Game");
+        Logger.log("LobbyDetails", "Starting game...");
         await setStatus(id, LobbyStatus.Loading);
-        // TODO : show canvas
         onStart?.();
     }
 
