@@ -10,10 +10,17 @@ export type RenderFunctionType = () => void;
 export class GameLoop {
     // FPS settings
 
-    private readonly DEFAULT_FPS = 180;
+    private readonly DEFAULT_FPS = 165;
     private readonly MIN_FPS = 20;
     private readonly MAX_FPS = this.DEFAULT_FPS;
-    private targetFps: number = this.DEFAULT_FPS; // This has to change with the screen fps
+    // This has to change with the screen fps
+    private targetFps: number = this.DEFAULT_FPS;
+
+    // The time in seconds the fps and delta time display refreshes
+    private readonly DISPLAY_REFRESH = 0.5;
+    private _displayDTCounter: number = 0;
+    private _displayFrameRenderCounter: number = 0;
+    private _displayFrameUpdateCounter: number = 0;
 
     // Stores the animation frame ID for cleanup when stopping the loop
     private _lastRequestId?: number;
@@ -69,18 +76,24 @@ export class GameLoop {
     private calculateDeltaTime(timestamp: number): number {
         const deltaTime = timestamp - this._lastTimestamp;
         this._lastTimestamp = timestamp;
-        return Math.min(deltaTime, this.maxDeltaTime);
+        //return Math.min(deltaTime, this.maxDeltaTime);  Removed to catch up to live server
+        return deltaTime;
     }
 
     // This method uses an accumulator pattern to handle time
     private updateGameLogic(update: UpdateFunctionType) {
         this._accumulator += this._deltaTime;
 
-        if (this._accumulator > this.maxDeltaTime) {
-            this._accumulator = this.maxDeltaTime;
-        }
+        //if (this._accumulator > this.maxDeltaTime) {   Removed to catch up to live server
+        //    this._accumulator = this.maxDeltaTime;
+        //}
 
         const NumberOfUpdates = Math.floor(this._accumulator / this.targetFrameTime);
+        if (NumberOfUpdates > 2) {
+            Logger.warn("GameLoop", "Catching up. deltaTime:", Math.round(this._deltaTime * 100) / 100,
+                ", NumberOfUpdates:", NumberOfUpdates);
+        }
+
         for (let i = 0; i < NumberOfUpdates; i++) {
             this.callUpdate(update);
             this._accumulator -= this.targetFrameTime;
@@ -91,12 +104,23 @@ export class GameLoop {
         update(this.targetFrameTime / 1000);
         Mouse.Instance.resetMouse();
         Keyboard.Instance.resetKeyboard();
+        this._displayFrameUpdateCounter++;
     }
 
     private callRender(render: RenderFunctionType) {
         render();
-        Window.Instance.setFPSDisplay(GameLoop.Instance.fps);
-        Window.Instance.setDeltaDisplay(GameLoop.Instance.deltaTime);
+
+        // Display logic
+        this._displayFrameRenderCounter++;
+        this._displayDTCounter += this._deltaTime / 1000;
+        if (this._displayDTCounter >= this.DISPLAY_REFRESH) {
+            Window.Instance.setFPSRenderDisplay(this._displayFrameRenderCounter / this.DISPLAY_REFRESH);
+            Window.Instance.setFPSUpdateDisplay(this._displayFrameUpdateCounter / this.DISPLAY_REFRESH);
+            Window.Instance.setDeltaDisplay(this._displayDTCounter * 1000 / this._displayFrameRenderCounter);
+            this._displayDTCounter = 0;
+            this._displayFrameRenderCounter = 0;
+            this._displayFrameUpdateCounter = 0;
+        }
     }
 
     // The start method takes two callbacks: update for game logic and physics, and render for drawing the game
@@ -118,7 +142,6 @@ export class GameLoop {
             if (!this._isRunning) return;
             this._lastRequestId = requestAnimationFrame(loop);
             this._deltaTime = this.calculateDeltaTime(timestamp);
-            Logger.log(null, "dt:", this._deltaTime);
             this.updateGameLogic(update);
             this.callRender(render);
             // this.discoverScreenFPS();
