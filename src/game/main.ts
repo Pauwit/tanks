@@ -10,8 +10,10 @@ Logger.log("main", "Starting main...")
 
 // Init window
 Drawer.Window.SetInstance(<HTMLCanvasElement>document.getElementById('canvas'),
-    <HTMLElement>document.getElementById('fpsDisplay'),
-    <HTMLElement>document.getElementById('deltaDisplay'));
+    <HTMLElement>document.getElementById('deltaDisplay'),
+    <HTMLElement>document.getElementById('fpsRenderDisplay'),
+    <HTMLElement>document.getElementById('fpsUpdateDisplay')
+);
 
 // Init inputs
 Mouse.Instance;

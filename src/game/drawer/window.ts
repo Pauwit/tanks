@@ -7,8 +7,8 @@ export class Window {
 
     private static _instance: Window;
 
-    public static SetInstance(canvas: HTMLCanvasElement, deltaDisplay : HTMLElement, fpsDisplay : HTMLElement): void {
-        this._instance = new Window(canvas, deltaDisplay, fpsDisplay);
+    public static SetInstance(canvas: HTMLCanvasElement, deltaDisplay : HTMLElement, fpsRenderDisplay : HTMLElement, fpsUpdateDisplay : HTMLElement): void {
+        this._instance = new Window(canvas, deltaDisplay, fpsRenderDisplay, fpsUpdateDisplay);
     }
 
     public static get Instance(): Window {
@@ -20,17 +20,19 @@ export class Window {
     private _windowWidth : number;
     private _windowHeight : number;
     private readonly _deltaDisplay : HTMLElement;
-    private readonly _fpsDisplay : HTMLElement;
+    private readonly _fpsRenderDisplay : HTMLElement;
+    private readonly _fpsUpdateDisplay : HTMLElement;
     private _scale = {x: 1, y: 1};
 
-    private constructor(canvas: HTMLCanvasElement, deltaDisplay : HTMLElement, fpsDisplay : HTMLElement) {
+    private constructor(canvas: HTMLCanvasElement, deltaDisplay : HTMLElement, fpsRenderDisplay : HTMLElement, fpsUpdateDisplay : HTMLElement) {
         this._canvas = canvas;
         this._ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
         this._windowWidth = canvas.width;
         this._windowHeight = canvas.height;
 
         this._deltaDisplay = deltaDisplay;
-        this._fpsDisplay = fpsDisplay;
+        this._fpsRenderDisplay = fpsRenderDisplay;
+        this._fpsUpdateDisplay = fpsUpdateDisplay;
 
         document.body.style.overflow = "hidden";
         this.handleResize(canvas);
@@ -65,8 +67,12 @@ export class Window {
         return this._deltaDisplay;
     }
 
-    get fpsDisplay(): HTMLElement {
-        return this._fpsDisplay;
+    get fpsRenderDisplay(): HTMLElement {
+        return this._fpsRenderDisplay;
+    }
+
+    get fpsUpdateDisplay(): HTMLElement {
+        return this._fpsUpdateDisplay;
     }
 
     get scaleX(): number {
@@ -119,8 +125,12 @@ export class Window {
         this.deltaDisplay.textContent = Math.round(delta * 100) / 100 + ' ms';
     }
 
-    public setFPSDisplay(fps : number) {
-        this.fpsDisplay.textContent = Math.round(fps) + ' FPS';
+    public setFPSRenderDisplay(fps : number) {
+        this.fpsRenderDisplay.textContent = 'R ' + Math.round(fps) + ' FPS';
+    }
+
+    public setFPSUpdateDisplay(fps : number) {
+        this.fpsUpdateDisplay.textContent = 'U ' + Math.round(fps) + ' FPS';
     }
 
     public outOfBounds(x: number, y: number) {
