@@ -6,7 +6,6 @@ import LobbyDetails from "./ui/components/LobbyDetails/LobbyDetails.tsx";
 import {useState} from "react";
 import TitleScreen from "./ui/components/TitleScreen/TitleScreen.tsx";
 import {GameCanvas} from "./ui/components/GameCanvas/GameCanvas.tsx";
-import type {LobbyDataModel} from "./firebase/models/lobbyDataModel.ts";
 
 function App() {
     const [selectedLobbyId, setSelectedLobbyId] = useState<string | null>(null);
