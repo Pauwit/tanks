@@ -10,9 +10,9 @@ export type RenderFunctionType = () => void;
 export class GameLoop {
     // FPS settings
 
-    private readonly DEFAULT_FPS = 165;
+    private readonly DEFAULT_FPS = 60;
     private readonly MIN_FPS = 20;
-    private readonly MAX_FPS = this.DEFAULT_FPS;
+    private readonly MAX_FPS = 240;
     // This has to change with the screen fps
     private targetFps: number = this.DEFAULT_FPS;
 
@@ -120,6 +120,8 @@ export class GameLoop {
             this._displayDTCounter = 0;
             this._displayFrameRenderCounter = 0;
             this._displayFrameUpdateCounter = 0;
+
+            this.discoverScreenFPS();
         }
     }
 
@@ -174,12 +176,10 @@ export class GameLoop {
         if (this.targetFps < 165 && GameLoop.Instance.fps >= 165) {
             Logger.warn("GameLoop", "Changed target FPS from", this.targetFps, "to", 165);
             this.targetFps = 165;
-        }
-        if (this.targetFps < 144 && GameLoop.Instance.fps >= 144) {
+        } else if (this.targetFps < 144 && GameLoop.Instance.fps >= 144) {
             Logger.warn("GameLoop", "Changed target FPS from", this.targetFps, "to", 144);
             this.targetFps = 144;
-        }
-        if (this.targetFps < 120 && GameLoop.Instance.fps >= 120) {
+        } else if (this.targetFps < 120 && GameLoop.Instance.fps >= 120) {
             Logger.warn("GameLoop", "Changed target FPS from", this.targetFps, "to", 120);
             this.targetFps = 120;
         }
