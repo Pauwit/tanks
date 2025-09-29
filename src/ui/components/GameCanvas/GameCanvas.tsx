@@ -15,8 +15,9 @@ export function GameCanvas({id} : GameCanvasProps) {
     return (
         <>
             <div id="all">
-                <div id="fpsDisplay"></div>
                 <div id="deltaDisplay"></div>
+                <div id="fpsUpdateDisplay"></div>
+                <div id="fpsRenderDisplay"></div>
                 <canvas id="canvas"></canvas>
             </div>
         </>
