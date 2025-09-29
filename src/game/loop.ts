@@ -101,8 +101,10 @@ export class GameLoop {
 
     // The start method takes two callbacks: update for game logic and physics, and render for drawing the game
     public start(update: UpdateFunctionType, render: RenderFunctionType) {
-        if (this._isRunning)
+        if (this._isRunning) {
+            Logger.log("GameLoop", "Loop is already running");
             return;
+        }
 
         Logger.log("GameLoop", "Starting...");
         Logger.log("GameLoop", "Target FPS is set to", this.targetFps);
@@ -116,22 +118,28 @@ export class GameLoop {
             if (!this._isRunning) return;
             this._lastRequestId = requestAnimationFrame(loop);
             this._deltaTime = this.calculateDeltaTime(timestamp);
+            Logger.log(null, "dt:", this._deltaTime);
             this.updateGameLogic(update);
             this.callRender(render);
             // this.discoverScreenFPS();
         };
 
-        requestAnimationFrame(loop);
+        this._lastRequestId = requestAnimationFrame(loop);
+        Logger.log("GameLoop", "Started loop");
     }
 
     // The stop() method safely shuts down the game loop
     public stop() {
-        if (!this._lastRequestId) return;
+        if (!this._lastRequestId) {
+            Logger.log("GameLoop", "Nothing to stop");
+            return;
+        }
         Window.Instance.canvas.style.cursor = 'auto';
         this._isRunning = false;
         cancelAnimationFrame(this._lastRequestId);
         this._lastRequestId = undefined;
         this._gameStartTime = 0;
+        Logger.log("GameLoop", "Stopped loop");
     }
 
     // The setTargetFPS() method controls game speed

@@ -34,7 +34,7 @@ export async function main(lobbyId: string) {
 
 // Exposed functions
 // TODO: Has to be done with a lot of cheat/debug functions once the multiplayer works
-// @ts-ignore
+// @ts-expect-error TS2339
 window.stopGameLoop = () => {
     Logger.log(null, "Stopping Game Loop...")
     GameLoop.Instance.stop();

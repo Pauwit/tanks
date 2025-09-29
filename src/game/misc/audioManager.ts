@@ -5,14 +5,14 @@ export class AudioManager {
 
     private static instance : AudioManager = new AudioManager();
 
-    private readonly _moveSound = new Audio();
-    private readonly _destroyedBullet = new Audio();
-    private readonly _bounceBullet = new Audio();
-    private readonly _shoot1 = new Audio();
-    private readonly _bombPlace = new Audio();
-    private readonly _bombBip = new Audio();
-    private readonly _explosion = new Audio();
-    private readonly _destroyedTank = new Audio();
+    private readonly _moveSound = new Audio(this.audioPath("move.wav"));
+    private readonly _destroyedBullet = new Audio(this.audioPath("bullet_des.wav"));
+    private readonly _bounceBullet = new Audio(this.audioPath("bounce.wav"));
+    private readonly _shoot1 = new Audio(this.audioPath("bullet_shoot1.wav"));
+    private readonly _bombPlace = new Audio(this.audioPath("bomb_place.wav"));
+    private readonly _bombBip = new Audio(this.audioPath("bomb_bip.wav"));
+    private readonly _explosion = new Audio(this.audioPath("explosion.wav"));
+    private readonly _destroyedTank = new Audio(this.audioPath("destroy.wav"));
 
     private constructor() {
         this.importAudio();
@@ -65,6 +65,7 @@ export class AudioManager {
     private importAudio() : void {
         Logger.log("AudioManager", "Importing audio...");
 
+        /*
         this._moveSound.src = this.audioPath("move.wav");
         this._destroyedBullet.src = this.audioPath("bullet_des.wav");
         this._bounceBullet.src = this.audioPath("bounce.wav");
@@ -73,6 +74,7 @@ export class AudioManager {
         this._bombBip.src = this.audioPath("bomb_bip.wav");
         this._explosion.src = this.audioPath("explosion.wav");
         this._destroyedTank.src = this.audioPath("destroy.wav");
+         */
 
         this._moveSound.volume = 0.1;
         this._destroyedBullet.volume = 0.5;

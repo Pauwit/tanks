@@ -10,8 +10,7 @@ import { LoadingSpinner } from "../misc/LoadingSpinner.ts";
 import {drawText} from "./drawMisc.ts";
 import {LobbyManager} from "../firebase/LobbyManager.ts";
 import {LobbyWaitingState} from "../enums/lobbyWaitingState.ts";
-
-
+import {Logger} from "../misc/Logger.ts";
 
 // Test stuff for the map
 // TEMP
