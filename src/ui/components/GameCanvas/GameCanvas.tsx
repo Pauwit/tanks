@@ -1,3 +1,4 @@
+import './GameCanvas.css'
 import {useEffect} from "react";
 
 type GameCanvasProps = {
