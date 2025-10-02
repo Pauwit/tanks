@@ -15,18 +15,12 @@ import {Firebase} from "../../firebase/firebase.ts";
 
 export class PlayerTank extends Tank {
 
-    private readonly _id: string;
     private readonly _throttler: UpdateThrottler;
 
     constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
                 tankStats: TankStats = Constants.defaultTankStats) {
-        super(x, y, turretRotation, baseRotation, tankStats, Constants.playerTankBaseColor, Constants.playerTankTurretColor); // wheels: "#002845"
-        this._id = id;
+        super(id, x, y, turretRotation, baseRotation, tankStats, Constants.playerTankBaseColor, Constants.playerTankTurretColor); // wheels: "#002845"
         this._throttler = new UpdateThrottler(`lobbies/${LobbyManager.id}/game/players/${Firebase.uid}/`, Constants.throttlePlayerUpdate);
-    }
-
-    get id(): string {
-        return this._id;
     }
 
     override update(deltaTime: number): boolean {
@@ -70,7 +64,7 @@ export class PlayerTank extends Tank {
             this.moving = false;
         } else {
             this.moving = true;
-            this.baseRotation = direction.rotation;
+            this.desiredBaseRotation = direction.rotation;
         }
 
         // Place bomb

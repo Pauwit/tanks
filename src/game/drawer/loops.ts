@@ -10,7 +10,8 @@ import { LoadingSpinner } from "../misc/LoadingSpinner.ts";
 import {drawText} from "./drawMisc.ts";
 import {LobbyManager} from "../firebase/lobbyManager.ts";
 import {LobbyWaitingState} from "../enums/lobbyWaitingState.ts";
-import {Logger} from "../misc/Logger.ts";
+import {EnemyTank} from "../tank/enemyTank.ts";
+import {Firebase} from "../../firebase/firebase.ts";
 
 // Main game loop
 export function startGameLoop() {
@@ -29,7 +30,12 @@ export function startGameLoop() {
     MapManager.add(c2);
     MapManager.add(rect3);
 
-    const player = new PlayerTank("0", 100, 100);
+    const player = new PlayerTank(Firebase.uid, 100, 100);
+    let enemies: EnemyTank[] = [];
+    for (const p of LobbyManager.lobby.players) {
+        if (p.uid === Firebase.uid) continue;
+        enemies.push(new EnemyTank(p.uid));
+    }
 
     function render() : void {
         Window.Instance.clear();
@@ -39,6 +45,9 @@ export function startGameLoop() {
         player.draw(Window.Instance.ctx);
         MapManager.Instance.draw(Window.Instance.ctx);
         ExplosionManager.Instance.draw(Window.Instance.ctx);
+        for (const enemy of enemies) {
+            enemy.draw(Window.Instance.ctx);
+        }
 
         player.drawCrosshair();
     }

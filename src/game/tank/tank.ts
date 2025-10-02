@@ -22,9 +22,10 @@ export abstract class Tank implements IUpdatable, IDrawable {
     private _moving: boolean;
 
     protected _dead: boolean;
+    private readonly _id: string;
 
 
-    protected constructor(x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
+    protected constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
                           tankStats: TankStats = Constants.defaultTankStats, baseColor: string, turretColor: string) {
 
         this._base = new Rectangle(x, y, Constants.tankBaseWidth, Constants.tankBaseHeight, baseRotation, baseColor);
@@ -36,6 +37,11 @@ export abstract class Tank implements IUpdatable, IDrawable {
         this._baseRotationDirection = false;
 
         this._dead = false;
+        this._id = id;
+    }
+
+    get id(): string {
+        return this._id;
     }
 
     protected get x(): number {
@@ -44,6 +50,16 @@ export abstract class Tank implements IUpdatable, IDrawable {
 
     protected get y(): number {
         return this._base.y;
+    }
+
+    protected set x(x: number) {
+        this._base.x = x;
+        this._turret.x = x;
+    }
+
+    protected set y(y: number) {
+        this._base.y = y;
+        this._turret.y = y;
     }
 
     public get position(): Point {
@@ -62,7 +78,11 @@ export abstract class Tank implements IUpdatable, IDrawable {
         return this._base.rotation;
     }
 
-    protected set baseRotation(desired: number) {
+    protected set baseRotation(baseRotation: number) {
+        this._base.rotation = baseRotation;
+    }
+
+    protected set desiredBaseRotation(desired: number) {
         desired = mod(desired, 360);
         if (desired == this._baseDesiredRotation) {
             return;

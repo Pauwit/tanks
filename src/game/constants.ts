@@ -21,6 +21,8 @@ export namespace Constants {
 
     export const playerTankBaseColor = "#004d86";
     export const playerTankTurretColor = "#0088c0";
+    export const enemyTankBaseColor = "#990000";
+    export const enemyTankTurretColor = "#ff3333";
 
     export const moveAngleThreshold: number = 3;
 
@@ -50,5 +52,5 @@ export namespace Constants {
             .map(() => new Array(mapWidth).fill(BlockType.None)),
     };
 
-    export const throttlePlayerUpdate: number = 50; // in ms
+    export const throttlePlayerUpdate: number = 15; // in ms
 }

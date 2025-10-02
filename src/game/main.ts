@@ -48,7 +48,7 @@ window.stopGameLoop = () => {
 
 // @ts-expect-error TS2339
 window.listenPos = () => {
-    listenToChildChange(`lobbies/${LobbyManager.id}/game/players/`, (uid: string, data: any) => {
+    listenToChildChange(`lobbies/${LobbyManager.id}/game/players/${Firebase.uid}`, (uid: string, data: any) => {
         Logger.log("listen", "uid:", uid, "data:", data);
     });
 }
