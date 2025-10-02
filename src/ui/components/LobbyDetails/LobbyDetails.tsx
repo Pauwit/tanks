@@ -42,7 +42,7 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack, onStart}: LobbyD
                 const tmp = snapshot.val() as LobbyDataModel;
                 setLobby(tmp);
                 setLoading(false);
-                if (tmp.status === LobbyStatus.Loading) {
+                if (tmp.status === LobbyStatus.Loading || tmp.status === LobbyStatus.Started) {
                     Logger.log("LobbyDetails", "Game started!");
                     onStart?.()
                 }
