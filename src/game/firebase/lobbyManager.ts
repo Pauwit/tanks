@@ -25,23 +25,23 @@ export class LobbyManager {
         return this._instance;
     }
 
-    public get isOwner(): boolean {
-        return this._isOwner;
+    public static get isOwner(): boolean {
+        return this.Instance._isOwner;
     }
 
-    public get lobby(): LobbyDataModel {
-        return this._lobby;
+    public static get lobby(): LobbyDataModel {
+        return this.Instance._lobby;
     }
 
-    public get waitingState(): LobbyWaitingState {
-        return this._waitingState;
+    public static get waitingState(): LobbyWaitingState {
+        return this.Instance._waitingState;
     }
 
-    public get id(): string {
-        return this._id;
+    public static get id(): string {
+        return this.Instance._id;
     }
 
-    public set waitingState(value: LobbyWaitingState) {
-        this._waitingState = value;
+    public static set waitingState(value: LobbyWaitingState) {
+        this.Instance._waitingState = value;
     }
 }

@@ -1,5 +1,5 @@
 import type {LobbyDataModel} from "../../firebase/models/lobbyDataModel.ts";
-import {LobbyManager} from "./LobbyManager.ts";
+import {LobbyManager} from "./lobbyManager.ts";
 import {LobbyWaitingState} from "../enums/lobbyWaitingState.ts";
 import {initLobby} from "../../firebase/calls/initLobby.ts";
 import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
@@ -14,16 +14,16 @@ import {getStatus} from "../../firebase/calls/getStatus.ts";
 import {getLobby} from "../../firebase/calls/getLobby.ts";
 
 export async function handleOwner(lobbyId: string, lobby: LobbyDataModel) {
-    LobbyManager.Instance.waitingState = LobbyWaitingState.InitializingGame;
+    LobbyManager.waitingState = LobbyWaitingState.InitializingGame;
 
     if (!(await initLobby(lobbyId, lobby))) {
         showError("The game couldn't get initialized");
-        LobbyManager.Instance.waitingState = LobbyWaitingState.Error;
+        LobbyManager.waitingState = LobbyWaitingState.Error;
         await setStatus(lobbyId, LobbyStatus.Error);
         return;
     }
 
-    LobbyManager.Instance.waitingState = LobbyWaitingState.WaitingForPlayers;
+    LobbyManager.waitingState = LobbyWaitingState.WaitingForPlayers;
 
     // Waits for all players to join
     const awaitedCount = lobby.players.length;
@@ -35,7 +35,7 @@ export async function handleOwner(lobbyId: string, lobby: LobbyDataModel) {
         if (counter >= timeout) {
             Logger.error("game", "Players took too long to join")
             showError("Players took too long to join");
-            LobbyManager.Instance.waitingState = LobbyWaitingState.Error;
+            LobbyManager.waitingState = LobbyWaitingState.Error;
             await setStatus(lobbyId, LobbyStatus.Error);
             return;
         }
@@ -49,19 +49,19 @@ export async function handleOwner(lobbyId: string, lobby: LobbyDataModel) {
     // Change game status
     if (!(await setStatus(lobbyId, LobbyStatus.Started))) {
         showError("Could not change lobby status");
-        LobbyManager.Instance.waitingState = LobbyWaitingState.Error;
+        LobbyManager.waitingState = LobbyWaitingState.Error;
         await setStatus(lobbyId, LobbyStatus.Error);
         return;
     }
 
     // Start game
     Logger.log("game", "Starting game...");
-    LobbyManager.Instance.waitingState = LobbyWaitingState.None;
+    LobbyManager.waitingState = LobbyWaitingState.None;
     startGameLoop();
 }
 
 export async function handlePlayer(lobbyId: string, lobby: LobbyDataModel) {
-    LobbyManager.Instance.waitingState = LobbyWaitingState.WaitingForOwner;
+    LobbyManager.waitingState = LobbyWaitingState.WaitingForOwner;
 
     // Waits for owner to initialize game
     let counter = 0;
@@ -70,14 +70,14 @@ export async function handlePlayer(lobbyId: string, lobby: LobbyDataModel) {
     while (!(await registerPlayerToGame(lobbyId))) {
         if (counter >= timeout) {
             showError("Could not register to the game");
-            LobbyManager.Instance.waitingState = LobbyWaitingState.Error;
+            LobbyManager.waitingState = LobbyWaitingState.Error;
             return;
         }
         await sleep(wait);
         counter += wait;
     }
 
-    LobbyManager.Instance.waitingState = LobbyWaitingState.WaitingForPlayers;
+    LobbyManager.waitingState = LobbyWaitingState.WaitingForPlayers;
 
     // Test game status
     counter = 0;
@@ -95,33 +95,33 @@ export async function handlePlayer(lobbyId: string, lobby: LobbyDataModel) {
     if (counter >= timeout) {
         Logger.error("game", "Players took too long to join")
         showError("Players took too long to join");
-        LobbyManager.Instance.waitingState = LobbyWaitingState.Error;
+        LobbyManager.waitingState = LobbyWaitingState.Error;
         return;
     }
 
     // Start game
     Logger.log("game", "Starting game...");
-    LobbyManager.Instance.waitingState = LobbyWaitingState.None;
+    LobbyManager.waitingState = LobbyWaitingState.None;
     startGameLoop();
 }
 
 export async function startLoading(lobbyId: string) {
-    LobbyManager.Instance.waitingState = LobbyWaitingState.InitializingCanvas;
+    LobbyManager.waitingState = LobbyWaitingState.InitializingCanvas;
 
     // Init GameLoop
     startLoadingLoop();
 
     // Getting lobby info
-    LobbyManager.Instance.waitingState = LobbyWaitingState.GettingLobbyInfo;
+    LobbyManager.waitingState = LobbyWaitingState.GettingLobbyInfo;
     const lobby = await getLobby(lobbyId);
     if (lobby === null) {
-        LobbyManager.Instance.waitingState = LobbyWaitingState.Error;
+        LobbyManager.waitingState = LobbyWaitingState.Error;
         return;
     }
     Logger.log("main", "Got the following lobby :", lobby);
     LobbyManager.start(lobbyId, lobby);
 
-    if (LobbyManager.Instance.isOwner) {
+    if (LobbyManager.isOwner) {
         await handleOwner(lobbyId, lobby);
     } else {
         await handlePlayer(lobbyId, lobby);

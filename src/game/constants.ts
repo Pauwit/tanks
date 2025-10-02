@@ -49,4 +49,6 @@ export namespace Constants {
             .fill(BlockType.None)
             .map(() => new Array(mapWidth).fill(BlockType.None)),
     };
+
+    export const throttlePlayerUpdate: number = 50; // in ms
 }

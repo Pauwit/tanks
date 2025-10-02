@@ -9,15 +9,20 @@ import {Mouse} from "../input/mouse.ts";
 import {BulletManager} from "../bullet/bulletManager.ts";
 import {AudioManager} from "../misc/audioManager.ts";
 import {BombManager} from "../bomb/bombManager.ts";
+import {UpdateThrottler} from "../firebase/updateThrottler.ts";
+import {LobbyManager} from "../firebase/lobbyManager.ts";
+import {Firebase} from "../../firebase/firebase.ts";
 
 export class PlayerTank extends Tank {
 
     private readonly _id: string;
+    private readonly _throttler: UpdateThrottler;
 
     constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
                 tankStats: TankStats = Constants.defaultTankStats) {
         super(x, y, turretRotation, baseRotation, tankStats, Constants.playerTankBaseColor, Constants.playerTankTurretColor); // wheels: "#002845"
         this._id = id;
+        this._throttler = new UpdateThrottler(`lobbies/${LobbyManager.id}/game/players/${Firebase.uid}/`, Constants.throttlePlayerUpdate);
     }
 
     get id(): string {
@@ -31,7 +36,18 @@ export class PlayerTank extends Tank {
         this.handleMouseInput();
         this.checkDeath();
 
-        return super.update(deltaTime);
+        const ret = super.update(deltaTime);
+
+        this._throttler.tryUpdate({
+            position: {
+                x: this.x,
+                y: this.y,
+            },
+            rotation: this.baseRotation,
+            look: this.turretRotation,
+        });
+
+        return ret;
     }
 
     private handleKeyboardInput(): void {

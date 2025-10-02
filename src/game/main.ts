@@ -7,7 +7,7 @@ import {GameLoop} from "./loop.ts";
 import {startLoading} from "./firebase/startLoading.ts";
 import {updatePosition} from "../firebase/calls/updatePosition.ts";
 import {Firebase} from "../firebase/firebase.ts";
-import {LobbyManager} from "./firebase/LobbyManager.ts";
+import {LobbyManager} from "./firebase/lobbyManager.ts";
 import {listenToChildChange} from "../firebase/calls/listenToChildChange.ts";
 
 Logger.log("main", "Starting main...")
@@ -48,7 +48,7 @@ window.stopGameLoop = () => {
 
 // @ts-expect-error TS2339
 window.listenPos = () => {
-    listenToChildChange(`lobbies/${LobbyManager.Instance.id}/game/players/${Firebase.uid}/`, (uid: string, data: any) => {
+    listenToChildChange(`lobbies/${LobbyManager.id}/game/players/`, (uid: string, data: any) => {
         Logger.log("listen", "uid:", uid, "data:", data);
     });
 }
@@ -56,6 +56,8 @@ window.listenPos = () => {
 // @ts-expect-error TS2339
 window.updatePos = async () => {
     Logger.log("updatePos", "Sending request...");
-    await updatePosition(LobbyManager.Instance.id, Firebase.uid, 10, 11, 12, 13);
+    await updatePosition(LobbyManager.id, Firebase.uid, 10, 11, 12, 13);
     Logger.log("updatePos", "Send");
 }
+
+
