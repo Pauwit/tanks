@@ -127,62 +127,64 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
                         <Settings size={20} />
                     </button>
                 </div>
-                <table className="lobby-table">
-                    <thead>
-                    <tr>
-                        <th className="name-col">Name</th>
-                        <th className="players-col">Players</th>
-                        <th className="status-col">
-                            <div className="header-with-icon">
-                                <span>Status</span>
-                                <div className="button-container">
-                                    <button
-                                        onClick={handleRefresh}
-                                        className="refresh-button"
-                                        title="Refresh"
-                                        disabled={loading}
-                                    >
-                                        <RefreshCw size={16} className={loading ? 'spinning' : ''} />
-                                    </button>
-                                    <button
-                                        onClick={handleAddLobby}
-                                        className="add-button"
-                                        title="Add"
-                                        disabled={loading}
-                                    >
-                                        <Plus size={16} />
-                                    </button>
+                <div className="lobby-table-scroll">
+                    <table className="lobby-table">
+                        <thead>
+                        <tr>
+                            <th className="name-col">Name</th>
+                            <th className="players-col">Players</th>
+                            <th className="status-col">
+                                <div className="header-with-icon">
+                                    <span>Status</span>
+                                    <div className="button-container">
+                                        <button
+                                            onClick={handleRefresh}
+                                            className="refresh-button"
+                                            title="Refresh"
+                                            disabled={loading}
+                                        >
+                                            <RefreshCw size={16} className={loading ? 'spinning' : ''} />
+                                        </button>
+                                        <button
+                                            onClick={handleAddLobby}
+                                            className="add-button"
+                                            title="Add"
+                                            disabled={loading}
+                                        >
+                                            <Plus size={16} />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {lobbies.map((lobby) => {
-                        const isJoinable = isLobbyJoinable(lobby);
-                        return (
-                            <tr
-                                key={lobby.id}
-                                className={`lobby-row ${(isJoinable && !loading) ? 'clickable' : 'disabled'}`}
-                                onClick={() => isJoinable && handleJoin(lobby.id)}
-                            >
-                                <td className="lobby-name">{lobby.name}</td>
-                                <td className="lobby-players">
-                                    {lobby.players.length} / {lobby.maxPlayers}
-                                </td>
-                                <td className="lobby-status">
-                                    <span>{lobby.status}</span>
-                                    {isJoinable && (
-                                        <span className="join-icon">
-                                            <LogIn size={18} strokeWidth={2} />
-                                        </span>
-                                    )}
-                                </td>
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                </table>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {lobbies.map((lobby) => {
+                            const isJoinable = isLobbyJoinable(lobby);
+                            return (
+                                <tr
+                                    key={lobby.id}
+                                    className={`lobby-row ${(isJoinable && !loading) ? 'clickable' : 'disabled'}`}
+                                    onClick={() => isJoinable && handleJoin(lobby.id)}
+                                >
+                                    <td className="lobby-name">{lobby.name}</td>
+                                    <td className="lobby-players">
+                                        {lobby.players.length} / {lobby.maxPlayers}
+                                    </td>
+                                    <td className="lobby-status">
+                                        <span>{lobby.status}</span>
+                                        {isJoinable && (
+                                            <span className="join-icon">
+                                                <LogIn size={18} strokeWidth={2} />
+                                            </span>
+                                        )}
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     );

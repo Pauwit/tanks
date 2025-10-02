@@ -6,6 +6,16 @@
     max-width: 800px;
     margin: 2rem auto;
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+
+    max-height: calc(100vh - 4rem); /* Don't exceed viewport */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.lobby-table-scroll {
+    overflow-y: auto;
+    flex: 1;
 }
 
 .lobby-table {
@@ -21,6 +31,18 @@
     font-size: 0.95rem;
     color: #ccc;
     border-bottom: 1px solid #333;
+}
+
+.lobby-header {
+    min-height: 40px;
+    height: 40px;
+}
+
+.lobby-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #111;
+    z-index: 1;
 }
 
 .name-col {
@@ -169,7 +191,7 @@
     right: 0;
     background-color: #222;
     border-radius: 12px;
-    padding: 6px;
+    padding: 4px;
     border: none;
     color: #ccc;
     cursor: pointer;
