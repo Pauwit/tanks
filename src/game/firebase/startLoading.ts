@@ -12,6 +12,8 @@ import {startGameLoop, startLoadingLoop} from "../drawer/loops.ts";
 import {registerPlayerToGame} from "../../firebase/calls/registerPlayerToGame.ts";
 import {getStatus} from "../../firebase/calls/getStatus.ts";
 import {getLobby} from "../../firebase/calls/getLobby.ts";
+import {TestExistence} from "../../firebase/calls/testExistence.ts";
+import {Firebase} from "../../firebase/firebase.ts";
 
 export async function handleOwner(lobbyId: string, lobby: LobbyDataModel) {
     LobbyManager.waitingState = LobbyWaitingState.InitializingGame;
@@ -120,6 +122,17 @@ export async function startLoading(lobbyId: string) {
     }
     Logger.log("main", "Got the following lobby :", lobby);
     LobbyManager.start(lobbyId, lobby);
+
+    // Verify if game was already started and player correctly joined
+    if (await TestExistence(`lobbies/${lobbyId}/game/players/${Firebase.uid}`)) {
+        Logger.log("game", "Game already started");
+        LobbyManager.waitingState = LobbyWaitingState.None;
+
+        // Retrieve previous infos
+        const player = lobby.game?.players[Firebase.uid]!;
+        startGameLoop(player.position.x, player.position.y, player.rotation, player.look);
+        return;
+    }
 
     if (LobbyManager.isOwner) {
         await handleOwner(lobbyId, lobby);
