@@ -77,6 +77,10 @@ const LobbiesTable: React.FC<LobbiesTableProps> = ({ onSelectLobby }) => {
     };
 
     function isLobbyJoinable(lobby: LobbySummaryModel): boolean {
+        if (lobby.status === LobbyStatus.Error) {
+            return false;
+        }
+
         // If player already in playerList, can join
         for (const player of lobby.players) {
             if (player.uid === Firebase.uid) {
