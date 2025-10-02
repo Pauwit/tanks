@@ -5,6 +5,10 @@ import {Keyboard} from "./input/keyboard.ts";
 import {Gamepad} from "./input/gamepad.ts";
 import {GameLoop} from "./loop.ts";
 import {startLoading} from "./firebase/startLoading.ts";
+import {updatePosition} from "../firebase/calls/updatePosition.ts";
+import {Firebase} from "../firebase/firebase.ts";
+import {LobbyManager} from "./firebase/LobbyManager.ts";
+import {listenToChildChange} from "../firebase/calls/listenToChildChange.ts";
 
 Logger.log("main", "Starting main...")
 
@@ -38,6 +42,20 @@ export async function main(lobbyId: string) {
 // TODO: Has to be done with a lot of cheat/debug functions once the multiplayer works
 // @ts-expect-error TS2339
 window.stopGameLoop = () => {
-    Logger.log(null, "Stopping Game Loop...")
+    Logger.log(null, "Stopping Game Loop...");
     GameLoop.Instance.stop();
+}
+
+// @ts-expect-error TS2339
+window.listenPos = () => {
+    listenToChildChange(`lobbies/${LobbyManager.Instance.id}/game/players/${Firebase.uid}/`, (uid: string, data: any) => {
+        Logger.log("listen", "uid:", uid, "data:", data);
+    });
+}
+
+// @ts-expect-error TS2339
+window.updatePos = async () => {
+    Logger.log("updatePos", "Sending request...");
+    await updatePosition(LobbyManager.Instance.id, Firebase.uid, 10, 11, 12, 13);
+    Logger.log("updatePos", "Send");
 }
