@@ -119,7 +119,7 @@ export async function startLoading(lobbyId: string) {
         return;
     }
     Logger.log("main", "Got the following lobby :", lobby);
-    LobbyManager.start(lobby);
+    LobbyManager.start(lobbyId, lobby);
 
     if (LobbyManager.Instance.isOwner) {
         await handleOwner(lobbyId, lobby);

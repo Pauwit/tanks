@@ -9,14 +9,16 @@ export class LobbyManager {
     private _isOwner: boolean = false;
     private _lobby: LobbyDataModel = defaultLobby;
     private _waitingState: LobbyWaitingState;
+    private _id: string = "0";
 
     private constructor() {
         this._waitingState = LobbyWaitingState.None;
     }
 
-    public static start(lobby: LobbyDataModel) {
+    public static start(lobbyId: string, lobby: LobbyDataModel) {
         this.Instance._isOwner = lobby.config.owner === Firebase.uid;
         this.Instance._lobby = lobby;
+        this.Instance._id = lobbyId;
     }
 
     public static get Instance(): LobbyManager {
@@ -33,6 +35,10 @@ export class LobbyManager {
 
     public get waitingState(): LobbyWaitingState {
         return this._waitingState;
+    }
+
+    public get id(): string {
+        return this._id;
     }
 
     public set waitingState(value: LobbyWaitingState) {
