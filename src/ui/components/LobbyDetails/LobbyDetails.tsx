@@ -60,7 +60,9 @@ const LobbyDetails: React.FC<LobbyDetailsProps> = ({id, onBack, onStart}: LobbyD
 
     async function handleStartGame() {
         Logger.log("LobbyDetails", "Starting game...");
-        await setStatus(id, LobbyStatus.Loading);
+        if (lobby.status === LobbyStatus.Waiting) {
+            await setStatus(id, LobbyStatus.Loading);
+        }
         onStart?.();
     }
 
