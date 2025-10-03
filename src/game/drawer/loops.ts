@@ -31,7 +31,7 @@ export function startGameLoop(x: number = 100, y: number = 100, baseRotation: nu
     MapManager.add(rect3);
 
     const player = new PlayerTank(Firebase.uid, x, y, turretRotation, baseRotation);
-    let enemies: EnemyTank[] = [];
+    const enemies: EnemyTank[] = [];
     for (const p of LobbyManager.lobby.players) {
         if (p.uid === Firebase.uid) continue;
         const pGame = LobbyManager.lobby.game?.players[p.uid];

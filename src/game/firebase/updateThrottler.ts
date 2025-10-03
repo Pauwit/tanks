@@ -12,6 +12,7 @@ export class UpdateThrottler {
         this._throttleTime = throttleTime;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public tryUpdate(data: Record<string, any>): void {
         const now = Date.now();
         if (now - this._lastUpdateTime < this._throttleTime) return;
@@ -19,6 +20,7 @@ export class UpdateThrottler {
         this._lastUpdateTime = now;
 
         // Clean undefined fields
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const cleanData: Record<string, any> = {};
         for (const [key, value] of Object.entries(data)) {
             if (value !== undefined) cleanData[key] = value;

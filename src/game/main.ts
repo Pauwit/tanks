@@ -48,6 +48,7 @@ window.stopGameLoop = () => {
 
 // @ts-expect-error TS2339
 window.listenPos = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     listenToChildChange(`lobbies/${LobbyManager.id}/game/players/${Firebase.uid}`, (uid: string, data: any) => {
         Logger.log("listen", "uid:", uid, "data:", data);
     });

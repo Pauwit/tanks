@@ -14,6 +14,7 @@ export class EnemyTank extends Tank {
         Logger.log(null, "init");
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private onChange(uid: string, param: string, data: any) {
         //Logger.log("onChange", "uid:", uid, "param:", param, "data:", data);
         switch (param) {
