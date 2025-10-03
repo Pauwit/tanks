@@ -9,8 +9,8 @@ export async function registerPlayerToGame(lobbyId: string): Promise<boolean> {
     const player: GamePlayerModel = {
         dead: false,
         position: { x: 0, y: 0 },
-        rotation: 0,
-        look: 0
+        baseRotation: 0,
+        turretRotation: 0
     };
 
     try {

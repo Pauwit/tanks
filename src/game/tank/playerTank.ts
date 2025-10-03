@@ -12,6 +12,7 @@ import {BombManager} from "../bomb/bombManager.ts";
 import {UpdateThrottler} from "../firebase/updateThrottler.ts";
 import {LobbyManager} from "../firebase/lobbyManager.ts";
 import {Firebase} from "../../firebase/firebase.ts";
+import type {GamePlayerModel} from "../../firebase/models/gamePlayerModel.ts";
 
 export class PlayerTank extends Tank {
 
@@ -37,15 +38,16 @@ export class PlayerTank extends Tank {
 
         const ret = super.update(deltaTime);
 
-        this._throttler.tryUpdate({
+        const infos: GamePlayerModel = {
             position: {
                 x: this.x,
                 y: this.y,
             },
-            rotation: this.baseRotation,
-            look: this.turretRotation,
+            baseRotation: this.baseRotation,
+            turretRotation: this.turretRotation,
             dead: this._dead,
-        });
+        }
+        this._throttler.tryUpdate(infos);
 
         return ret;
     }

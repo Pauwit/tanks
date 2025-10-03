@@ -20,8 +20,8 @@ export async function initLobby(lobbyId: string, lobby: LobbyDataModel): Promise
     const currentPlayerObject: GamePlayerModel = {
         dead: false,
         position: { x: 0, y: 0 },
-        rotation: 0,
-        look: 0
+        baseRotation: 0,
+        turretRotation: 0
     }
 
     const gameObject: LobbyGameModel = {

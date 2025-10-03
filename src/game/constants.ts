@@ -19,8 +19,8 @@ export namespace Constants {
             y: 100,
         },
         dead: false,
-        look: 0,
-        rotation: 0,
+        turretRotation: 0,
+        baseRotation: 0,
     }
 
     export const tankBaseWidth: number = 110;

@@ -22,10 +22,10 @@ export class EnemyTank extends Tank {
                 this.x = data.x;
                 this.y = data.y;
                 break;
-            case "look":
+            case "turretRotation":
                 this.turretRotation = data;
                 break;
-            case "rotation":
+            case "baseRotation":
                 this.baseRotation = data;
                 break;
             case "dead":

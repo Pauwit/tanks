@@ -32,7 +32,7 @@ export function startGameLoop(playerLobby: GamePlayerModel = Constants.defaultPl
     MapManager.add(c2);
     MapManager.add(rect3);
 
-    const player = new PlayerTank(Firebase.uid, playerLobby.position.x, playerLobby.position.y, playerLobby.look, playerLobby.rotation);
+    const player = new PlayerTank(Firebase.uid, playerLobby.position.x, playerLobby.position.y, playerLobby.turretRotation, playerLobby.baseRotation);
     const enemies: EnemyTank[] = [];
     for (const p of LobbyManager.lobby.players) {
         if (p.uid === Firebase.uid) continue;
@@ -41,7 +41,7 @@ export function startGameLoop(playerLobby: GamePlayerModel = Constants.defaultPl
             enemies.push(new EnemyTank(p.uid));
         } else {
             // Init other players with their infos
-            enemies.push(new EnemyTank(p.uid, pGame.position.x, pGame.position.y, pGame.look, pGame.rotation, Constants.defaultTankStats, pGame.dead));
+            enemies.push(new EnemyTank(p.uid, pGame.position.x, pGame.position.y, pGame.turretRotation, pGame.baseRotation, Constants.defaultTankStats, pGame.dead));
         }
     }
 

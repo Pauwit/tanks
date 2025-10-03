@@ -45,8 +45,8 @@ lobbies:
                     position :
                         x : 102
                         y : 62
-                    rotation : 15
-                    look : 144
+                    baseRotation : 15
+                    turretRotation : 144
                 - uid2 : ...
             bullets :
                 - id1 :
