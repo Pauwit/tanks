@@ -12,9 +12,11 @@ import {LobbyManager} from "../firebase/lobbyManager.ts";
 import {LobbyWaitingState} from "../enums/lobbyWaitingState.ts";
 import {EnemyTank} from "../tank/enemyTank.ts";
 import {Firebase} from "../../firebase/firebase.ts";
+import type {GamePlayerModel} from "../../firebase/models/gamePlayerModel.ts";
+import {Constants} from "../constants.ts";
 
 // Main game loop
-export function startGameLoop(x: number = 100, y: number = 100, baseRotation: number = 0, turretRotation: number = 0) {
+export function startGameLoop(playerLobby: GamePlayerModel = Constants.defaultPlayer) {
     GameLoop.Instance.stop();
 
     // Test stuff for the map
@@ -30,7 +32,7 @@ export function startGameLoop(x: number = 100, y: number = 100, baseRotation: nu
     MapManager.add(c2);
     MapManager.add(rect3);
 
-    const player = new PlayerTank(Firebase.uid, x, y, turretRotation, baseRotation);
+    const player = new PlayerTank(Firebase.uid, playerLobby.position.x, playerLobby.position.y, playerLobby.look, playerLobby.rotation);
     const enemies: EnemyTank[] = [];
     for (const p of LobbyManager.lobby.players) {
         if (p.uid === Firebase.uid) continue;
@@ -39,7 +41,7 @@ export function startGameLoop(x: number = 100, y: number = 100, baseRotation: nu
             enemies.push(new EnemyTank(p.uid));
         } else {
             // Init other players with their infos
-            enemies.push(new EnemyTank(p.uid, pGame.position.x, pGame.position.y, pGame.look, pGame.rotation));
+            enemies.push(new EnemyTank(p.uid, pGame.position.x, pGame.position.y, pGame.look, pGame.rotation, Constants.defaultTankStats, pGame.dead));
         }
     }
 

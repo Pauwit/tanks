@@ -26,7 +26,7 @@ export abstract class Tank implements IUpdatable, IDrawable {
 
 
     protected constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
-                          tankStats: TankStats = Constants.defaultTankStats, baseColor: string, turretColor: string) {
+                          tankStats: TankStats = Constants.defaultTankStats, baseColor: string, turretColor: string, dead = false) {
 
         this._base = new Rectangle(x, y, Constants.tankBaseWidth, Constants.tankBaseHeight, baseRotation, baseColor);
         this._turret = new Rectangle(x, y, Constants.tankTurretSize, Constants.tankTurretSize, turretRotation, turretColor);
@@ -36,7 +36,7 @@ export abstract class Tank implements IUpdatable, IDrawable {
         this._moving = false;
         this._baseRotationDirection = false;
 
-        this._dead = false;
+        this._dead = dead;
         this._id = id;
     }
 

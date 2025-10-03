@@ -130,7 +130,7 @@ export async function startLoading(lobbyId: string) {
 
         // Retrieve previous infos
         const player = lobby.game!.players[Firebase.uid]!;
-        startGameLoop(player.position.x, player.position.y, player.rotation, player.look);
+        startGameLoop(player);
         return;
     }
 

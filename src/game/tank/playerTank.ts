@@ -18,13 +18,18 @@ export class PlayerTank extends Tank {
     private readonly _throttler: UpdateThrottler;
 
     constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
-                tankStats: TankStats = Constants.defaultTankStats) {
-        super(id, x, y, turretRotation, baseRotation, tankStats, Constants.playerTankBaseColor, Constants.playerTankTurretColor); // wheels: "#002845"
+                tankStats: TankStats = Constants.defaultTankStats, dead = false) {
+        super(id, x, y, turretRotation, baseRotation, tankStats, Constants.playerTankBaseColor, Constants.playerTankTurretColor, dead); // wheels: "#002845"
         this._throttler = new UpdateThrottler(`lobbies/${LobbyManager.id}/game/players/${Firebase.uid}/`, Constants.throttlePlayerUpdate);
     }
 
     override update(deltaTime: number): boolean {
-        if (this._dead) return super.update(deltaTime);
+        if (this._dead) {
+            this._throttler.tryUpdate({
+                dead: this._dead,
+            });
+            return super.update(deltaTime);
+        }
 
         this.handleKeyboardInput();
         this.handleMouseInput();
@@ -39,6 +44,7 @@ export class PlayerTank extends Tank {
             },
             rotation: this.baseRotation,
             look: this.turretRotation,
+            dead: this._dead,
         });
 
         return ret;

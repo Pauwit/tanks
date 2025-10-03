@@ -5,6 +5,7 @@ import type {ExplosionStats} from "./explosion/explosionStats.ts";
 import type {Map} from "./map/map.ts";
 import {Point} from "./drawer/point.ts";
 import {BlockType} from "./enums/blockType.ts";
+import type {GamePlayerModel} from "../firebase/models/gamePlayerModel.ts";
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Constants {
@@ -12,6 +13,15 @@ export namespace Constants {
     export const defaultBulletStats: BulletStats = {moveSpeed: 800, maxBounces: 1};
     export const defaultExplosionStats: ExplosionStats = {explosionSize: 260, explosionDuration: 5, explosionExpansionTime: 1.2};
     export const defaultBombStats: BombStats = {tickTime: 6, explosionStats: defaultExplosionStats};
+    export const defaultPlayer: GamePlayerModel = {
+        position: {
+            x: 100,
+            y: 100,
+        },
+        dead: false,
+        look: 0,
+        rotation: 0,
+    }
 
     export const tankBaseWidth: number = 110;
     export const tankBaseHeight: number = 80;
