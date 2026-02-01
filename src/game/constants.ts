@@ -15,9 +15,10 @@ export namespace Constants {
     export const defaultBombStats: BombStats = {tickTime: 6, explosionStats: defaultExplosionStats};
     export const defaultPlayer: GamePlayerModel = {
         position: {
-            x: 100,
-            y: 100,
+            x: 0,
+            y: 0,
         },
+        moving: false,
         dead: false,
         turretRotation: 0,
         baseRotation: 0,
@@ -62,5 +63,5 @@ export namespace Constants {
             .map(() => new Array(mapWidth).fill(BlockType.None)),
     };
 
-    export const throttlePlayerUpdate: number = 15; // in ms
+    export const throttlePlayerUpdate: number = 16  ; // in ms
 }

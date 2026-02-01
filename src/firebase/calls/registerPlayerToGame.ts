@@ -1,17 +1,11 @@
 import { ref, get, set } from "firebase/database";
 import {Firebase} from "../firebase.ts";
 import {Logger} from "../../game/misc/Logger.ts";
-import type {GamePlayerModel} from "../models/gamePlayerModel.ts";
+import {Constants} from "../../game/constants.ts";
 
 export async function registerPlayerToGame(lobbyId: string): Promise<boolean> {
     const playerRef = ref(Firebase.db, `lobbies/${lobbyId}/game/players/${Firebase.uid}`);
     const gameRef = ref(Firebase.db, `lobbies/${lobbyId}/game`);
-    const player: GamePlayerModel = {
-        dead: false,
-        position: { x: 0, y: 0 },
-        baseRotation: 0,
-        turretRotation: 0
-    };
 
     try {
         const snapshot = await get(gameRef);
@@ -29,7 +23,7 @@ export async function registerPlayerToGame(lobbyId: string): Promise<boolean> {
             return true;
         }
 
-        await set(playerRef, player);
+        await set(playerRef, Constants.defaultPlayer);
 
         Logger.log("game", `Player ${Firebase.uid} registered to the game successfully`);
         return true;

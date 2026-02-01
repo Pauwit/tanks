@@ -43,6 +43,7 @@ export class PlayerTank extends Tank {
                 x: this.x,
                 y: this.y,
             },
+            moving: this.moving,
             baseRotation: this.baseRotation,
             turretRotation: this.turretRotation,
             dead: this._dead,
@@ -69,9 +70,9 @@ export class PlayerTank extends Tank {
         }
 
         if (direction.zero) {
-            this.moving = false;
+            this.desiredMoving = false;
         } else {
-            this.moving = true;
+            this.desiredMoving = true;
             this.desiredBaseRotation = direction.rotation;
         }
 

@@ -7,11 +7,18 @@ import {Logger} from "../misc/Logger.ts";
 
 export class EnemyTank extends Tank {
 
+    // Workaround for moving
+    private _move: boolean;
+
     constructor(id: string, x: number = 0, y: number = 0, turretRotation: number = 0, baseRotation: number = 0,
                 tankStats: TankStats = Constants.defaultTankStats, dead = false) {
         super(id, x, y, turretRotation, baseRotation, tankStats, Constants.enemyTankBaseColor, Constants.enemyTankTurretColor, dead); // wheels: "#4d0000"
+
+        this._move = false;
+
         listenToChildChange(`lobbies/${LobbyManager.id}/game/players/${id}`, (uid, param, data) => this.onChange(uid, param, data));
-        Logger.log(null, "init");
+
+        Logger.log(null, "Init enemy");
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,6 +38,9 @@ export class EnemyTank extends Tank {
             case "dead":
                 this._dead = data;
                 break;
+            case "moving":
+                this._move = data;
+                break;
             default:
                 Logger.error("EnemyTank", "Got unknown parameter from firebase. Name:", param, "; value:", data);
                 break;
@@ -38,6 +48,10 @@ export class EnemyTank extends Tank {
     }
 
     override update(deltaTime: number): boolean {
+        // No need to check desired rotation as it is checked locally by each player
+        Logger.log(null, this._move);
+        this.move(this._move, deltaTime);
+
         return true;
     }
 }

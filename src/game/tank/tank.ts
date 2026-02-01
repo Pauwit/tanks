@@ -20,6 +20,7 @@ export abstract class Tank implements IUpdatable, IDrawable {
     private _baseDesiredRotation: number;
     private _baseRotationDirection: boolean;
     private _moving: boolean;
+    private _desiredMoving: boolean;
 
     protected _dead: boolean;
     private readonly _id: string;
@@ -34,6 +35,7 @@ export abstract class Tank implements IUpdatable, IDrawable {
         this._tankStats = tankStats;
         this._baseDesiredRotation = mod(baseRotation, 360);
         this._moving = false;
+        this._desiredMoving = false;
         this._baseRotationDirection = false;
 
         this._dead = dead;
@@ -106,12 +108,27 @@ export abstract class Tank implements IUpdatable, IDrawable {
         return this._turret.rotation;
     }
 
-    protected set moving(moving: boolean) {
+    private set moving(moving: boolean) {
         this._moving = moving;
     }
 
+    protected get moving(): boolean {
+        return this._moving;
+    }
+
+    protected set desiredMoving(desiredMoving: boolean) {
+        this._desiredMoving = desiredMoving;
+    }
+
+    protected get desiredMoving(): boolean {
+        return this._desiredMoving;
+    }
+
     update(deltaTime: number): boolean {
-        if (this._dead) return true;
+        if (this._dead) {
+            this.moving = false;
+            return true;
+        }
 
         this.handleBaseRotationUpdate(deltaTime);
         this.handleBaseMovementUpdate(deltaTime);
@@ -131,7 +148,7 @@ export abstract class Tank implements IUpdatable, IDrawable {
         }
     }
 
-    private handleBaseRotationUpdate(deltaTime: number): void {
+    protected handleBaseRotationUpdate(deltaTime: number): void {
         if (this._baseDesiredRotation != this._base.rotation) {
             const direction = this._baseRotationDirection ? -1 : 1;
             this._base.rotate(direction * this._tankStats.rotationSpeed * deltaTime);
@@ -142,13 +159,24 @@ export abstract class Tank implements IUpdatable, IDrawable {
         }
     }
 
-    private handleBaseMovementUpdate(deltaTime: number): void {
-        if (this._moving && this._baseDesiredRotation == this._base.rotation) {
+    protected handleBaseMovementUpdate(deltaTime: number): void {
+        const condition = this.desiredMoving && this._baseDesiredRotation == this._base.rotation;
+        this.move(condition, deltaTime);
+    }
+
+    protected move(condition: boolean, deltaTime: number): void {
+        if (condition) {
             const direction = degToPoint(this._base.rotation);
             direction.scale(this._tankStats.moveSpeed * deltaTime);
             this._base.translate_point(direction);
             this._turret.translate_point(direction);
+
+            this.moving = true;
         }
+        else {
+            this.moving = false;
+        }
+
     }
 
     public applyCollision(rect: Rectangle | null): void {

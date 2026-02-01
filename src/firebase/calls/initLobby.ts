@@ -3,10 +3,10 @@ import {Firebase} from "../firebase.ts";
 import {Logger} from "../../game/misc/Logger.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import type {LobbyGameModel} from "../models/lobbyGameModel.ts";
-import type {GamePlayerModel} from "../models/gamePlayerModel.ts";
 import {defaultBullet} from "../models/gameBulletModel.ts";
 import {defaultMine} from "../models/gameMineModel.ts";
 import {defaultExplosion} from "../models/gameExplosionModel.ts";
+import {Constants} from "../../game/constants.ts";
 
 export async function initLobby(lobbyId: string, lobby: LobbyDataModel): Promise<boolean> {
     if (Firebase.uid !== lobby.config.owner) {
@@ -17,16 +17,9 @@ export async function initLobby(lobbyId: string, lobby: LobbyDataModel): Promise
     const lobbyGameRef = ref(Firebase.db, `lobbies/${lobbyId}/game`);
 
     // Init the lobby
-    const currentPlayerObject: GamePlayerModel = {
-        dead: false,
-        position: { x: 0, y: 0 },
-        baseRotation: 0,
-        turretRotation: 0
-    }
-
     const gameObject: LobbyGameModel = {
         players: {
-            [Firebase.uid]: currentPlayerObject
+            [Firebase.uid]: Constants.defaultPlayer
         },
         bullets: {
             //[-1]: defaultBullet

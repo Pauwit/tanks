@@ -67,6 +67,9 @@ export function startGameLoop(playerLobby: GamePlayerModel = Constants.defaultPl
         BombManager.Instance.update(deltaTime);
         ExplosionManager.Instance.update(deltaTime);
         player.update(deltaTime);
+        for (const enemy of enemies) {
+            enemy.update(deltaTime);
+        }
 
         player.applyCollision(MapManager.applyCollision(player.base));
     }
