@@ -173,7 +173,10 @@ export class GameLoop {
     }
 
     private discoverScreenFPS(): void {
-        if (this.targetFps < 165 && GameLoop.Instance.fps >= 165) {
+        if (this.targetFps < 240 && GameLoop.Instance.fps >= 240) {
+            Logger.log("GameLoop", "Changed target FPS from", this.targetFps, "to", 240);
+            this.targetFps = 240;
+        } else if (this.targetFps < 165 && GameLoop.Instance.fps >= 165) {
             Logger.log("GameLoop", "Changed target FPS from", this.targetFps, "to", 165);
             this.targetFps = 165;
         } else if (this.targetFps < 144 && GameLoop.Instance.fps >= 144) {
