@@ -1,7 +1,8 @@
 import {Point} from "./point.ts";
 import {mod} from "../misc/misc.ts";
+import type {IDrawable} from "../interfaces/IDrawable.ts";
 
-export abstract class Shape {
+export abstract class Shape implements IDrawable {
     private _x: number;
     private _y: number;
     private _rotation: number;
