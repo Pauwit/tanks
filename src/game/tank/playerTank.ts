@@ -45,6 +45,7 @@ export class PlayerTank extends Tank {
             },
             moving: this.moving,
             baseRotation: this.baseRotation,
+            desiredRotation: this.desiredBaseRotation,
             turretRotation: this.turretRotation,
             dead: this._dead,
         }

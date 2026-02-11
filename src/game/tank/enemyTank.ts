@@ -32,6 +32,9 @@ export class EnemyTank extends Tank {
             case "turretRotation":
                 this.turretRotation = data;
                 break;
+            case "desiredRotation":
+                this.desiredBaseRotation = data;
+                break;
             case "baseRotation":
                 this.baseRotation = data;
                 break;
@@ -49,8 +52,9 @@ export class EnemyTank extends Tank {
 
     override update(deltaTime: number): boolean {
         // No need to check desired rotation as it is checked locally by each player
-        Logger.log(null, this._move);
+
         this.move(this._move, deltaTime);
+        this.handleBaseRotationUpdate(deltaTime);
 
         return true;
     }

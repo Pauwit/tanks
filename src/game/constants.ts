@@ -22,6 +22,7 @@ export namespace Constants {
         dead: false,
         turretRotation: 0,
         baseRotation: 0,
+        desiredRotation: 0,
     }
 
     export const tankBaseWidth: number = 110;
@@ -63,5 +64,5 @@ export namespace Constants {
             .map(() => new Array(mapWidth).fill(BlockType.None)),
     };
 
-    export const throttlePlayerUpdate: number = 16  ; // in ms
+    export const throttlePlayerUpdate: number = 16; // in ms
 }
