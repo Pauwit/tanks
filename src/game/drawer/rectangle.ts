@@ -1,6 +1,6 @@
 import {Shape} from "./shape.ts";
 import {degToRad} from "../misc/misc.ts";
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 
 export class Rectangle extends Shape {
     private _width: number;

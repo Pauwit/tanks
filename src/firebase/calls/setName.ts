@@ -1,7 +1,7 @@
 import {set, ref} from "firebase/database";
 import {Firebase} from "../firebase.ts";
 import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 
 export async function setName(name: string): Promise<boolean> {
     if (name === "") {

@@ -1,4 +1,4 @@
-import {Logger} from "./Logger.ts";
+import {Logger} from "./logger.ts";
 
 export class ImageManager {
     private readonly PATH_IMAGES : string = "/public/images/";

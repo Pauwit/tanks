@@ -2,7 +2,7 @@ import { ref, update } from "firebase/database";
 import {Firebase} from "../firebase.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import type {LobbyPlayerModel} from "../models/lobbyPlayerModel.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 
 export async function leaveLobby(lobby: LobbyDataModel, lobbyId: string): Promise<boolean> {
     if (lobby === null) {

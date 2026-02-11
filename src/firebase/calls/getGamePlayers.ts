@@ -1,6 +1,6 @@
 import {get, ref} from "firebase/database";
 import {Firebase} from "../firebase.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 import type {GamePlayerModel} from "../models/gamePlayerModel.ts";
 
 export async function getGamePlayers(lobbyId: string): Promise<Record<string, GamePlayerModel>> {

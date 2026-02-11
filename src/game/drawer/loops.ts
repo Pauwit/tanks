@@ -6,7 +6,7 @@ import {Window} from "./window.ts";
 import { BulletManager } from "../bullet/bulletManager.ts";
 import {BombManager} from "../bomb/bombManager.ts";
 import {ExplosionManager} from "../explosion/explosionManager.ts";
-import { LoadingSpinner } from "../misc/LoadingSpinner.ts";
+import {LoadingSpinner} from "../misc/loadingSpinner.ts";
 import {drawText} from "./drawMisc.ts";
 import {LobbyManager} from "../firebase/lobbyManager.ts";
 import {LobbyWaitingState} from "../enums/lobbyWaitingState.ts";

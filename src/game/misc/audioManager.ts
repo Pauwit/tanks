@@ -1,4 +1,4 @@
-import {Logger} from "./Logger.ts";
+import {Logger} from "./logger.ts";
 
 export class AudioManager {
     private readonly PATH_AUDIO : string = "/public/audio/";

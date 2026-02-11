@@ -1,4 +1,4 @@
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 
 export class Window {
     private readonly LOGICAL_WIDTH = 3840;

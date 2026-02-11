@@ -1,6 +1,6 @@
 import {get, ref} from "firebase/database";
 import {Firebase} from "../firebase.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 import type {LobbyStatus} from "../../game/enums/lobbyStatus.ts";
 
 export async function getStatus(id: string): Promise<LobbyStatus | null> {

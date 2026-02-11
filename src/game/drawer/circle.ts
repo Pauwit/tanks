@@ -1,5 +1,5 @@
 import {Shape} from "./shape.ts";
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 
 export class Circle extends Shape {
     private _radius: number;

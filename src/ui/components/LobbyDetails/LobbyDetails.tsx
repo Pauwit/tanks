@@ -9,7 +9,7 @@ import {deleteLobby} from "../../../firebase/calls/deleteLobby.ts";
 import {leaveLobby} from "../../../firebase/calls/leaveLobby.ts";
 import {setLobbyOwner} from "../../../firebase/calls/setLobbyOwner.ts";
 import {setStatus} from "../../../firebase/calls/setStatus.ts";
-import {Logger} from "../../../game/misc/Logger.ts";
+import {Logger} from "../../../game/misc/logger.ts";
 import {showError} from "../ErrorContext/errorStore.ts";
 
 type LobbyDetailsProps = {

@@ -9,7 +9,7 @@ import {getLobby} from "../../../firebase/calls/getLobby.ts";
 import {Firebase} from "../../../firebase/firebase.ts";
 import SettingsPopup from "../SettingsPopup/SettingsPopup.tsx";
 import LobbyCreationPopup from "../LobbyCreationPopup/LobbyCreationPopup.tsx";
-import {Logger} from "../../../game/misc/Logger.ts";
+import {Logger} from "../../../game/misc/logger.ts";
 import {joinLobby} from "../../../firebase/calls/joinLobby.ts";
 
 

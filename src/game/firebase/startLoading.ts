@@ -5,7 +5,7 @@ import {initLobby} from "../../firebase/calls/initLobby.ts";
 import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
 import {setStatus} from "../../firebase/calls/setStatus.ts";
 import {LobbyStatus} from "../enums/lobbyStatus.ts";
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 import {sleep} from "../misc/misc.ts";
 import {getGamePlayers} from "../../firebase/calls/getGamePlayers.ts";
 import {startGameLoop, startLoadingLoop} from "../drawer/loops.ts";

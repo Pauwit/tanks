@@ -3,7 +3,7 @@ import type {TankStats} from "./tankStats.ts";
 import {Constants} from "../constants.ts";
 import {listenToChildChange} from "../../firebase/calls/listenToChildChange.ts";
 import {LobbyManager} from "../firebase/lobbyManager.ts";
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 
 export class EnemyTank extends Tank {
 

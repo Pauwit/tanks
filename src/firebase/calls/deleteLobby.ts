@@ -1,5 +1,5 @@
 import { getDatabase, ref, remove } from "firebase/database";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 
 /**
  * Deletes a lobby by its ID from the Firebase Realtime Database.

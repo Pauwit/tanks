@@ -1,6 +1,6 @@
 import { ref, update } from "firebase/database";
 import {Firebase} from "../firebase.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import type {LobbyGameModel} from "../models/lobbyGameModel.ts";
 import {defaultBullet} from "../models/gameBulletModel.ts";

@@ -2,7 +2,7 @@ import {Mouse} from "./input/mouse.ts";
 import {Keyboard} from "./input/keyboard.ts";
 import {Window} from "./drawer/window.ts";
 import {clamp} from "./misc/misc.ts";
-import {Logger} from "./misc/Logger.ts";
+import {Logger} from "./misc/logger.ts";
 
 export type UpdateFunctionType = (dt: number) => void;
 export type RenderFunctionType = () => void;

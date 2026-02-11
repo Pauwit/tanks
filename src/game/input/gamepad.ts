@@ -1,4 +1,4 @@
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 
 export class Gamepad {
     private static instance: Gamepad = new Gamepad();

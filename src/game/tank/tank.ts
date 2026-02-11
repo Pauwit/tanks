@@ -9,7 +9,7 @@ import {BulletManager} from "../bullet/bulletManager.ts";
 import {ExplosionManager} from "../explosion/explosionManager.ts";
 import {ImageManager} from "../misc/imageManager.ts";
 import {Window} from "../drawer/window.ts";
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 
 export abstract class Tank implements IUpdatable, IDrawable {
     private _base: Rectangle;

@@ -4,7 +4,7 @@ import {LobbyStatus} from "../../game/enums/lobbyStatus.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
 import {Firebase} from "../firebase.ts";
 import {showError} from "../../ui/components/ErrorContext/errorStore.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 
 const DEFAULT_CONFIG: LobbyConfigModel = {
     gamemode: "classic",

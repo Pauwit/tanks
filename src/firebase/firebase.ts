@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {authenticate} from "./auth.ts";
-import {Logger} from "../game/misc/Logger.ts";
+import {Logger} from "../game/misc/logger.ts";
 
 // T ODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries

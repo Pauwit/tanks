@@ -1,4 +1,4 @@
-import {Logger} from "./Logger.ts";
+import {Logger} from "./logger.ts";
 
 class Node<T> {
     private _prev: Node<T> | null;

@@ -1,6 +1,6 @@
 import { ref, update } from "firebase/database";
 import {Firebase} from "../firebase.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 import {getLobby} from "./getLobby.ts";
 
 export async function joinLobby(lobbyId: string): Promise<boolean> {

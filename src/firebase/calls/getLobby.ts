@@ -1,7 +1,7 @@
 import {get, ref} from "firebase/database";
 import {Firebase} from "../firebase.ts";
 import type {LobbyDataModel} from "../models/lobbyDataModel.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 
 export async function getLobby(id: string): Promise<LobbyDataModel | null> {
     const lobbyRef = ref(Firebase.db, `lobbies/${id}`);

@@ -1,6 +1,6 @@
 import { ref, get, set } from "firebase/database";
 import {Firebase} from "../firebase.ts";
-import {Logger} from "../../game/misc/Logger.ts";
+import {Logger} from "../../game/misc/logger.ts";
 import {Constants} from "../../game/constants.ts";
 
 export async function registerPlayerToGame(lobbyId: string): Promise<boolean> {

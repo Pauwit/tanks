@@ -1,6 +1,6 @@
 import {type DatabaseReference, ref, update} from "firebase/database";
 import {Firebase} from "../../firebase/firebase.ts";
-import {Logger} from "../misc/Logger.ts";
+import {Logger} from "../misc/logger.ts";
 
 export class UpdateThrottler {
     private _lastUpdateTime: number = 0;
