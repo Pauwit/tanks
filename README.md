@@ -1,4 +1,4 @@
-# Tanks
+# Tanks in a Nutshell
 
 A real-time multiplayer tank battle game built with **React**, **TypeScript**, and **Firebase**. This project features a lobby system, real-time synchronization of game state, and support for both keyboard/mouse and gamepad inputs.
 
