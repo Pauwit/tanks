@@ -21,7 +21,7 @@ A real-time multiplayer tank battle game built with **React**, **TypeScript**, a
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/your-username/tanks.git](https://github.com/your-username/tanks.git)
+    git clone https://github.com/Pauwit/tanks.git
     cd tanks
     ```
 
