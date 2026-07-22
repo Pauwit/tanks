@@ -2,7 +2,7 @@
 
 A real-time multiplayer tank battle game built with **React**, **TypeScript**, and **Firebase**. This project features a lobby system, real-time synchronization of game state, and support for both keyboard/mouse and gamepad inputs.
 
-## 🚀 Tech Stack
+## Tech Stack
 
 * **Core Framework**: [React](https://react.dev/) (v19) + [Vite](https://vitejs.dev/)
 * **Language**: [TypeScript](https://www.typescriptlang.org/)
@@ -10,14 +10,14 @@ A real-time multiplayer tank battle game built with **React**, **TypeScript**, a
 * **Styling & UI**: CSS Modules, Framer Motion, FontAwesome, Lucide React
 * **Game Rendering**: HTML5 Canvas API
 
-## ✨ Features
+## Features
 
 * **Multiplayer Lobbies**: Create, join, and manage game lobbies.
 * **Real-time Gameplay**: Synchronized player positions, rotations, projectiles, and explosions via Firebase Realtime Database.
 * **Cross-Input Support**: Full support for Gamepad (Dual Stick) and Keyboard/Mouse.
 * **Dynamic Game Loop**: Custom game loop engine handling physics, collisions, and rendering independent of React renders.
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 1.  **Clone the repository**
     ```bash
@@ -49,7 +49,7 @@ A real-time multiplayer tank battle game built with **React**, **TypeScript**, a
     npm run dev
     ```
 
-## 🎮 Controls
+## Controls
 
 ### Gamepad
 The game supports dual-stick controls for tank movement and aiming.
@@ -64,7 +64,7 @@ The game supports dual-stick controls for tank movement and aiming.
 ### Keyboard & Mouse
 *Standard WASD keys for movement and Mouse for aiming are supported.*
 
-## 📂 Project Structure
+## Project Structure
 
 The project is divided into two main sections: the **UI** (React) and the **Game Engine** (Canvas/TypeScript classes).
 
